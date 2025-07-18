@@ -203,6 +203,11 @@
   .social-links a:hover svg path {
     fill: var(--gray-900);
   }
+  a.router-link-active {
+  font-weight: bold;
+  color: #3f51b5;
+}
+
 
   @media screen and (max-width: 650px) {
     .content {
@@ -219,6 +224,7 @@
   }
 </style>
 <app-header></app-header>
+<router-outlet></router-outlet>
 <main class="main">
   <div class="content">
     <div class="left-side">
