@@ -1,0 +1,31 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Shirt",
+      "price": 25
+    },
+    {
+      "id": 2,
+      "name": "Shoes",
+      "price": 60
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "email": "john@example.com",
+      "password": "123456"
+    }
+  ],
+  "seller": [
+    {
+      "id": "e780",
+      "name": "Sachidananda Padhiali",
+      "email": "sagarpadhiali99@gmail.com",
+      "phno": "07008878436",
+      "password": "Pass@123",
+      "confirmPassword": "Pass@123"
+    }
+  ]
+}

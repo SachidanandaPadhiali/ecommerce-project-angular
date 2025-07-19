@@ -5,7 +5,7 @@
         <h2>Seller Sign Up</h2>
         <p class="subtitle">Sign up to get started</p>
 
-        <form (ngSubmit)="signUp()">
+        <form (ngSubmit)="signUp(user)">
           <div class="input-group">
             <input type="text" [(ngModel)]="user.name" name="name" placeholder="Name" required>
           </div>
@@ -39,7 +39,7 @@
 
           <p class="login-link">
             Already have an account?
-            <a routerLink="/sign-in" class="login-link">Log In</a>
+            <a routerLink="/log-in" class="login-link">Log In</a>
           </p>
         </form>
       </div>
