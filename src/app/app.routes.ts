@@ -4,26 +4,12 @@ import { SellerAuth } from './seller-auth/seller-auth';
 import { SellerHome } from './seller-home/seller-home';
 import { Login } from './login/login';
 import { UserHome } from './user-home/user-home';
+import { authGuard } from './auth-guard';
 
 export const routes: Routes = [
-    {
-        component: Home,
-        path: ''
-    },
-    {
-        component: SellerAuth,
-        path: 'seller-auth'
-    },
-    {
-        component: Login,
-        path: 'log-in'
-    },
-    {
-        component: SellerHome,
-        path: 'seller-home'
-    },
-    {
-        component: UserHome,
-        path: 'user/home'
-    }
+    { path: '', component: Home },
+    { path: 'seller-auth', component: SellerAuth},
+    { path: 'log-in', component: Login },
+    { path: 'user-home', component: UserHome, canActivate: [authGuard], data: { role: 'user' } },
+    { path: 'seller-home', component: SellerHome, canActivate: [authGuard], data: { role: 'seller' } }
 ];
