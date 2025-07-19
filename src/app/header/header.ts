@@ -5,7 +5,7 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule, FormsModule,RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
@@ -19,6 +19,6 @@ export class Header {
 
   onSearch() {
     console.log('Searching for:', this.searchQuery);
-    // Add routing or API call here
   }
+
 }

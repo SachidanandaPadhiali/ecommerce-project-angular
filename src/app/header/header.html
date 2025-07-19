@@ -10,21 +10,23 @@
             <a routerLink="/">Home</a>
             <a routerLink="/shop">Shop</a>
             <a routerLink="/cart">Cart</a>
-            <a routerLink="seller-auth">Seller</a>
+            <a routerLink="/seller-auth">Seller</a>
+            <a class="login-btn" routerLink="/log-in">Log In</a>
         </div>
 
-        <div class="login-btn">
-            <a routerLink="/log-in">Log In</a>
+        <div class="menu" [ngClass]="{ 'active': isMenuOpen }" (click)="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
 
-        <button class="menu-toggle" (click)="toggleMenu()">
-            ☰
-        </button>
     </div>
 
     <div class="nav-links mobile" *ngIf="isMenuOpen">
         <a routerLink="/" (click)="toggleMenu()">Home</a>
         <a routerLink="/shop" (click)="toggleMenu()">Shop</a>
         <a routerLink="/cart" (click)="toggleMenu()">Cart</a>
+        <a routerLink="/seller-auth" (click)="toggleMenu()">Seller</a>
+        <a class="login-btn" routerLink="/log-in" (click)="toggleMenu()">Log In</a>
     </div>
 </nav>
