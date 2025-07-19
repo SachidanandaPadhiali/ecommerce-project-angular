@@ -28,6 +28,7 @@ export class AuthService {
   }
 
   logout() {
+    console.warn("Log-Out service is called");
     if (typeof window !== 'undefined') {
       localStorage.clear();
     }
