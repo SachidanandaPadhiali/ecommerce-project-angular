@@ -191,6 +191,97 @@
       "price": 2,
       "category": "aa",
       "description": "aaa"
+    },
+    {
+      "id": "ffc8",
+      "name": "Asus Zenfone Max Pro M1",
+      "price": 13999,
+      "category": "Mobile",
+      "description": "Phone"
+    },
+    {
+      "id": "1675",
+      "name": "",
+      "price": 0,
+      "category": "",
+      "description": ""
+    },
+    {
+      "id": "514c",
+      "name": "Asus Zenphone Max Pro M1",
+      "price": 13999,
+      "category": "Mobile",
+      "description": "Phone"
+    },
+    {
+      "id": "9963",
+      "name": "HP Omen",
+      "price": 129999,
+      "category": "Laptop",
+      "description": "Gaming Laptop"
+    },
+    {
+      "id": "076a",
+      "name": "HP Predator",
+      "price": 99999,
+      "category": "Laptop",
+      "description": "Gaming Laptop"
+    },
+    {
+      "id": "843f",
+      "name": "a",
+      "price": 11,
+      "category": "aa",
+      "description": "aaa"
+    },
+    {
+      "id": "1fb0",
+      "name": "a",
+      "price": 11,
+      "category": "aa",
+      "description": "aaa"
+    },
+    {
+      "id": "452b",
+      "name": "a",
+      "price": 33,
+      "category": "aa",
+      "description": "aaa"
+    },
+    {
+      "id": "da26",
+      "name": "a",
+      "price": 24684,
+      "category": "aa",
+      "description": "123aq"
+    },
+    {
+      "id": "3ca1",
+      "name": "a",
+      "price": 10,
+      "category": "as",
+      "description": "asasa"
+    },
+    {
+      "id": "322a",
+      "name": "Microsoft Surface Book",
+      "price": 149999,
+      "category": "Laptop",
+      "description": "Touchscreen laptop"
+    },
+    {
+      "id": "1a97",
+      "name": "ad",
+      "price": 19856,
+      "category": "aad",
+      "description": "adsad"
+    },
+    {
+      "id": "15e6",
+      "name": "ds",
+      "price": 745478,
+      "category": "asd",
+      "description": "dsadf"
     }
   ],
   "users": [

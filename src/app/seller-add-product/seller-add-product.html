@@ -3,9 +3,9 @@
         <div class="form-container" style="text-align: center;">
             <h1>ADD NEW PRODUCT</h1>
             <br /><br />
-            <div *ngIf="successMessage">{{ successMessage }}</div>
-            <div *ngIf="errorMessage">{{ errorMessage }}</div>
-            <form (ngSubmit)="handleAddProduct(productForm)" #productForm="ngForm">
+            <div *ngIf="successMessage" class="message success">{{ successMessage }}</div>
+            <div *ngIf="errorMessage" class="message error">{{ errorMessage }}</div>
+            <form (ngSubmit)="submit()" #productForm="ngForm">
                 <div class="input-group">
                     <input type="text" name="name" [(ngModel)]="product.name" placeholder="Product Name" required />
                 </div>

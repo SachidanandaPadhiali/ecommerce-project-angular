@@ -1,9 +1,9 @@
-import { Component, NgZone, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { FormsModule, NgForm } from '@angular/forms';
+import { Component, NgZone } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef } from '@angular/core';
+import { Product } from '../models/product.model';
+import { ProductService } from '../services/product-service';
 
 @Component({
   selector: 'app-seller-add-product',
@@ -13,42 +13,43 @@ import { ChangeDetectorRef } from '@angular/core';
   styleUrl: './seller-add-product.css'
 })
 export class SellerAddProduct {
-  product = {
+  successMessage: string | undefined;
+  errorMessage: string | undefined;
+
+  product: Product = {
     name: '',
     price: 0,
     category: '',
     description: ''
   };
+  constructor(private productService: ProductService, private cd: ChangeDetectorRef, private ngZone: NgZone) { }
 
-  successMessage: string | null = null;
-  errorMessage: string | null = null;
+  submit() {
+    this.productService.addProduct(this.product).subscribe((result) => {
+      if (result) {
+        this.ngZone.run(() => {
+          this.successMessage = 'Product added successfully!';
+          this.cd.detectChanges();
+        });
 
-  constructor(private http: HttpClient, private ngZone: NgZone, private cd: ChangeDetectorRef, @Inject(PLATFORM_ID) private platformId: Object) { }
+        this.resetForm();
 
-  handleAddProduct(form: NgForm): void {
-    this.http.post('http://localhost:3000/products', this.product).subscribe({
-      next: () => {
-        this.successMessage = 'Product added successfully!';
-        form.resetForm();
-
-        if (isPlatformBrowser(this.platformId)) {
-          setTimeout(() => {
-            this.ngZone.run(() => {
-              this.successMessage = null;
-              this.cd.detectChanges();
-            });
-          }, 3000);
-        }
-
-      },
-      error: () => {
-        this.errorMessage = 'Failed to add product!';
         setTimeout(() => {
           this.ngZone.run(() => {
-            this.errorMessage = null;
+            this.successMessage = undefined;
+            this.cd.detectChanges();
           });
         }, 3000);
       }
     });
+  }
+
+  resetForm() {
+    this.product = {
+      name: '',
+      price: 0,
+      category: '',
+      description: ''
+    };
   }
 }
