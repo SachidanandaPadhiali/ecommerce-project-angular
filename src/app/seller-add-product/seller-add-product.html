@@ -1,0 +1,25 @@
+<div class="main-content">
+    <div class="form-overlay">
+        <div class="form-container">
+            <h1>ADD NEW PRODUCT</h1>
+            <br /><br />
+            <form (ngSubmit)="handleAddProduct()" #productForm="ngForm">
+                <div class="input-group">
+                    <input type="text" name="name" [(ngModel)]="product.name" placeholder="Product Name" required />
+                </div>
+                <div class="input-group">
+                    <input type="number" name="price" [(ngModel)]="product.price" placeholder="Price" required />
+                </div>
+                <div class="input-group">
+                    <input type="text" name="category" [(ngModel)]="product.category" placeholder="Category" required />
+                </div>
+                <div class="input-group">
+                    <textarea name="description" [(ngModel)]="product.description" placeholder="Description"></textarea>
+                </div>
+                <button type="submit" class="main-btn">Add Product</button>
+                <div *ngIf="successMessage" style="color: green">{{ successMessage }}</div>
+                <div *ngIf="errorMessage" style="color: red">{{ errorMessage }}</div>
+            </form>
+        </div>
+    </div>
+</div>

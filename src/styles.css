@@ -40,7 +40,7 @@ body {
     width: 200px;
 }
 
-.sign-in-overlay {
+.form-overlay {
     inset: 0;
     display: flex;
     align-items: center;
@@ -82,6 +82,17 @@ body {
 }
 
 input {
+    width: 100%;
+    text-align: left;
+    padding: var(--mb-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--white);
+    font-size: .95rem;
+    transition: .5s;
+}
+
+textarea {
     width: 100%;
     text-align: left;
     padding: var(--mb-2);
@@ -155,7 +166,7 @@ input:focus {
         padding: 1.5rem;
     }
 
-    .sign-in-overlay {
+    .form-overlay {
         margin: 0;
     }
 }
