@@ -12,10 +12,10 @@ import { Seller } from '../services/seller';
 })
 export class SellerAuth implements OnInit {
 
-  constructor(private seller: Seller, private router:Router) { }
+  constructor(private newSeller: Seller, private router:Router) { }
   ngOnInit(): void { }
 
-  user = {
+  seller = {
     name: '',
     email: '',
     phno: '',
@@ -23,10 +23,10 @@ export class SellerAuth implements OnInit {
     confirmPassword: ''
   };
 
-  duplicateUser: string | null = null;
+  duplicateSeller: string | null = null;
 
   get passwordMismatch(): boolean {
-    return this.user.password !== this.user.confirmPassword;
+    return this.seller.password !== this.seller.confirmPassword;
   }
 
   isPasswordValid(password: string): boolean {
@@ -40,25 +40,25 @@ export class SellerAuth implements OnInit {
 
   signUp(data: object): void {
     if (this.passwordMismatch) return;
-    if (!this.isPasswordValid(this.user.password)) return;
-    if (!this.isPasswordLong(this.user.password)) return;
+    if (!this.isPasswordValid(this.seller.password)) return;
+    if (!this.isPasswordLong(this.seller.password)) return;
 
-    this.seller.checkDuplicateEmail(this.user.email).subscribe((res) => {
+    this.newSeller.checkDuplicateEmail(this.seller.email).subscribe((res) => {
       if (res.length > 0) {
         // Duplicate found
-        this.duplicateUser = 'Email already registered... Please LogIn Instead';
+        this.duplicateSeller = 'Email already registered... Please LogIn Instead';
         return;
       }
 
       // No duplicate, proceed with sign-up
-      this.seller.userSignUp(data).subscribe({
+      this.newSeller.sellerSignUp(data).subscribe({
         next: () => {
-          this.duplicateUser = null;
+          this.duplicateSeller = null;
           this.router.navigate(['/log-in']);
         },
         error: (err) => {
           console.error('Sign-up failed:', err);
-          this.duplicateUser = 'Registration failed';
+          this.duplicateSeller = 'Registration failed';
         }
       });
     });

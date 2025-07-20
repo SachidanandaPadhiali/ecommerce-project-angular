@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, NgZone, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Router, RouterModule } from '@angular/router';
+import { ChangeDetectorRef } from '@angular/core';
+
 @Component({
   selector: 'app-seller-add-product',
+  standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './seller-add-product.html',
   styleUrl: './seller-add-product.css'
@@ -20,18 +23,32 @@ export class SellerAddProduct {
   successMessage: string | null = null;
   errorMessage: string | null = null;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private ngZone: NgZone, private cd: ChangeDetectorRef, @Inject(PLATFORM_ID) private platformId: Object) { }
 
-  handleAddProduct(): void {
+  handleAddProduct(form: NgForm): void {
     this.http.post('http://localhost:3000/products', this.product).subscribe({
-      next: (res) => {
+      next: () => {
         this.successMessage = 'Product added successfully!';
-        this.product = { name: '', price: 0, category: '', description: '' };
+        form.resetForm();
+
+        if (isPlatformBrowser(this.platformId)) {
+          setTimeout(() => {
+            this.ngZone.run(() => {
+              this.successMessage = null;
+              this.cd.detectChanges();
+            });
+          }, 3000);
+        }
+
       },
-      error: (err) => {
-        this.errorMessage = 'Failed to add product';
+      error: () => {
+        this.errorMessage = 'Failed to add product!';
+        setTimeout(() => {
+          this.ngZone.run(() => {
+            this.errorMessage = null;
+          });
+        }, 3000);
       }
     });
   }
-
 }
