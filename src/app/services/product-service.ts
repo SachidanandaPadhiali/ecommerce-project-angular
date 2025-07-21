@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Product } from '../models/product.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,5 +15,10 @@ export class ProductService {
   addProduct(data: Product) {
     console.warn("Product Service is called");
     return this.http.post('http://localhost:3000/products', data);
+  }
+
+  viewProductBySeller(sellerId: String): Observable<Product[]> {
+    console.log("SellerID:",sellerId);
+    return this.http.get<Product[]>(`http://localhost:3000/products?sellerId=${sellerId}`);
   }
 }

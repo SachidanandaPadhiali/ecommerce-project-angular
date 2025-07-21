@@ -16,7 +16,10 @@ export class SellerAddProduct {
   successMessage: string | undefined;
   errorMessage: string | undefined;
 
+  sellerId:string = JSON.parse(localStorage.getItem('seller') || '{}')?.id;
+
   product: Product = {
+    sellerId: this.sellerId,
     name: '',
     price: 0,
     category: '',
@@ -46,6 +49,7 @@ export class SellerAddProduct {
 
   resetForm() {
     this.product = {
+      sellerId: this.sellerId,
       name: '',
       price: 0,
       category: '',

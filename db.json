@@ -1,287 +1,28 @@
 {
   "products": [
     {
-      "id": "1",
-      "name": "Shirt",
-      "price": 25
-    },
-    {
-      "id": "2",
-      "name": "Shoes",
-      "price": 60
-    },
-    {
-      "id": "7fca",
+      "id": "d753",
+      "sellerId": "e780",
       "name": "samsung galaxy s23",
-      "price": 34999,
-      "category": "mobile",
-      "description": "Samsung Phone"
+      "price": 45999,
+      "category": "Mobile",
+      "description": "Phone"
     },
     {
-      "id": "292f",
-      "name": "",
-      "price": 0,
-      "category": "",
-      "description": ""
-    },
-    {
-      "id": "7d13",
-      "name": "Asus  Zenbook 13 OLED",
-      "price": 78999,
-      "category": "Laptop",
-      "description": "Laptop"
-    },
-    {
-      "id": "acd5",
-      "name": "Asus ZenBook 13 OLED",
-      "price": 88999,
-      "category": "Laptop",
-      "description": "ASUS LAPTOP"
-    },
-    {
-      "id": "a13b",
-      "name": "",
-      "price": 0,
-      "category": "",
-      "description": ""
-    },
-    {
-      "id": "5ae5",
-      "name": "a",
-      "price": 1999,
-      "category": "a",
-      "description": "a"
-    },
-    {
-      "id": "9362",
-      "name": "",
-      "price": 0,
-      "category": "",
-      "description": ""
-    },
-    {
-      "id": "b1a9",
-      "name": "aa",
-      "price": 22112,
-      "category": "aaaa",
-      "description": "ss"
-    },
-    {
-      "id": "c03a",
-      "name": "aa",
-      "price": 223,
-      "category": "aaa",
-      "description": "aaaa"
-    },
-    {
-      "id": "3ffa",
-      "name": "samsung galaxy s23",
-      "price": 43888,
-      "category": "mobile",
-      "description": "dnasiduashndiasidas"
-    },
-    {
-      "id": "b3bc",
-      "name": "samsung galaxy s24 Ultra",
-      "price": 88799,
-      "category": "mobile",
-      "description": "samsung"
-    },
-    {
-      "id": "113c",
-      "name": "samsung galaxy s25",
+      "id": "4595",
+      "sellerId": "e780",
+      "name": "samsung galaxy s23 Ultra",
       "price": 79999,
-      "category": "mobile",
-      "description": "phone"
-    },
-    {
-      "id": "e9d2",
-      "name": "OnePlus 13",
-      "price": 49999,
       "category": "Mobile",
-      "description": "Phone"
+      "description": "Phone Premium"
     },
     {
-      "id": "fd60",
-      "name": "OnePlus 12",
-      "price": 41999,
-      "category": "Mobile",
-      "description": "Phone"
-    },
-    {
-      "id": "244c",
-      "name": "Macbook Pro M2",
-      "price": 110999,
-      "category": "Laptop",
-      "description": "Laptop"
-    },
-    {
-      "id": "a54f",
-      "name": "ASUS FX553VD",
-      "price": 68999,
-      "category": "Laptop",
-      "description": "Laptop"
-    },
-    {
-      "id": "1b5f",
-      "name": null,
-      "price": null,
-      "category": null,
-      "description": null
-    },
-    {
-      "id": "30e8",
-      "name": "Asus ZenBook 16 OLED",
-      "price": 129999,
-      "category": "Laptop",
-      "description": "Laptop"
-    },
-    {
-      "id": "42fc",
-      "name": "Macbook Pro M1",
-      "price": 119999,
-      "category": "Laptop",
-      "description": "Laptop"
-    },
-    {
-      "id": "f524",
-      "name": "Samsung Galaxy Book",
-      "price": 109999,
-      "category": "Laptop",
-      "description": "Laptop"
-    },
-    {
-      "id": "05db",
-      "name": "Asus ZenBook duo",
-      "price": 159999,
-      "category": "Laptop",
-      "description": "Laptop"
-    },
-    {
-      "id": "8d8a",
-      "name": "Asus ZenBook 13",
-      "price": 50999,
-      "category": "Laptop",
-      "description": "Laptop"
-    },
-    {
-      "id": "7234",
-      "name": "test",
-      "price": 11999,
-      "category": "tp",
-      "description": "tp"
-    },
-    {
-      "id": "9ee0",
-      "name": "a",
-      "price": 1,
-      "category": "a",
-      "description": "aa"
-    },
-    {
-      "id": "5961",
-      "name": "a",
-      "price": 2121,
-      "category": "aa",
-      "description": "aaa"
-    },
-    {
-      "id": "0a75",
-      "name": "a",
-      "price": 2,
-      "category": "aa",
-      "description": "aaa"
-    },
-    {
-      "id": "ffc8",
-      "name": "Asus Zenfone Max Pro M1",
-      "price": 13999,
-      "category": "Mobile",
-      "description": "Phone"
-    },
-    {
-      "id": "1675",
-      "name": "",
-      "price": 0,
-      "category": "",
-      "description": ""
-    },
-    {
-      "id": "514c",
-      "name": "Asus Zenphone Max Pro M1",
-      "price": 13999,
-      "category": "Mobile",
-      "description": "Phone"
-    },
-    {
-      "id": "9963",
-      "name": "HP Omen",
-      "price": 129999,
-      "category": "Laptop",
-      "description": "Gaming Laptop"
-    },
-    {
-      "id": "076a",
-      "name": "HP Predator",
-      "price": 99999,
-      "category": "Laptop",
-      "description": "Gaming Laptop"
-    },
-    {
-      "id": "843f",
-      "name": "a",
-      "price": 11,
-      "category": "aa",
-      "description": "aaa"
-    },
-    {
-      "id": "1fb0",
-      "name": "a",
-      "price": 11,
-      "category": "aa",
-      "description": "aaa"
-    },
-    {
-      "id": "452b",
-      "name": "a",
-      "price": 33,
-      "category": "aa",
-      "description": "aaa"
-    },
-    {
-      "id": "da26",
-      "name": "a",
-      "price": 24684,
-      "category": "aa",
-      "description": "123aq"
-    },
-    {
-      "id": "3ca1",
-      "name": "a",
-      "price": 10,
-      "category": "as",
-      "description": "asasa"
-    },
-    {
-      "id": "322a",
-      "name": "Microsoft Surface Book",
-      "price": 149999,
-      "category": "Laptop",
-      "description": "Touchscreen laptop"
-    },
-    {
-      "id": "1a97",
-      "name": "ad",
-      "price": 19856,
-      "category": "aad",
-      "description": "adsad"
-    },
-    {
-      "id": "15e6",
-      "name": "ds",
-      "price": 745478,
-      "category": "asd",
-      "description": "dsadf"
+      "id": "284f",
+      "sellerId": "e515",
+      "name": "Shirt",
+      "price": 499,
+      "category": "Clothing",
+      "description": "Cloth Shirt Smooth Cotton"
     }
   ],
   "users": [
@@ -297,6 +38,14 @@
       "name": "Sachidananda Padhiali",
       "email": "sagarpadhiali99@gmail.com",
       "phno": "07008878436",
+      "password": "Pass@123",
+      "confirmPassword": "Pass@123"
+    },
+    {
+      "id": "e515",
+      "name": "Laxman Padhiali",
+      "email": "laxmanpadhiali@gmail.com",
+      "phno": "9861284498",
       "password": "Pass@123",
       "confirmPassword": "Pass@123"
     }

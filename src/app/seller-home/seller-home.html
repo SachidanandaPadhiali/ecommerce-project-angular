@@ -1,3 +1,19 @@
 <div class="main-content">
-    <h1>WELCOME TO SELLER PAGE</h1>
+    <h1 style="text-align: center;">YOUR PRODUCTS</h1>
+    <div class="product-container">
+        <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+        <div *ngIf="products.length > 0; else noProducts">
+            <div *ngFor="let product of products" class="product-card">
+                <h3>{{ product.name }}</h3>
+                <p>Price: ₹{{ product.price }}</p>
+                <p>Category: {{ product.category }}</p>
+                <p>Description: {{ product.description }}</p>
+            </div>
+        </div>
+
+        <ng-template #noProducts>
+            <p>No products available.</p>
+        </ng-template>
+    </div>
 </div>
