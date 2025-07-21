@@ -24,8 +24,6 @@ export class SellerHome implements OnInit {
         next: (data) => {
           this.ngZone.run(() => {
             this.products = data;
-            console.log("PRODUCTS");
-            console.log(this.products);
             this.cd.detectChanges();
           });
         },
