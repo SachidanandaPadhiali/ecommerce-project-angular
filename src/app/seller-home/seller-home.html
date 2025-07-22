@@ -1,16 +1,37 @@
 <div class="main-content">
-    <h1 style="text-align: center;">YOUR PRODUCTS</h1>
+    <h1 style="text-align: center; padding-bottom: 1%;">YOUR PRODUCTS</h1>
     <div class="product-container">
         <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
 
-        <div *ngIf="products.length > 0; else noProducts">
-            <div *ngFor="let product of products" class="product-card">
-                <h3>{{ product.name }}</h3>
-                <p>Price: ₹{{ product.price }}</p>
-                <p>Category: {{ product.category }}</p>
-                <p>Description: {{ product.description }}</p>
-            </div>
-        </div>
+        <table class="table-fill">
+            <thead>
+                <tr>
+                    <th class="text-center">Product</th>
+                    <th class="text-center">Price</th>
+                    <th class="text-center">category</th>
+                    <th class="text-center">Description</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="table-hover">
+                <tr *ngFor="let product of products">
+                    <td class="text-left hoverable">{{ product.name }}</td>
+                    <td class="text-center hoverable">&#8377;{{ product.price }}</td>
+                    <td class="text-center hoverable">{{ product.category }}</td>
+                    <td class="text-center hoverable">{{ product.description }}</td>
+                    <td class="prod-action">
+                        <button class="btn action-btn edit-btn">
+                            <span>Edit</span>
+                        </button>
+                        <!-- Button triggers the delete method -->
+                        <button class="btn action-btn delete-btn">
+                            <span>Delete</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
         <ng-template #noProducts>
             <p>No products available.</p>
