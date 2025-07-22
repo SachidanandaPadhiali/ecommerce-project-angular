@@ -1,17 +1,19 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { AuthService } from '../services/auth-service';
 
 @Component({
   selector: 'app-header',
+  standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
-export class Header {
+export class Header implements OnInit {
   isMenuOpen = false;
   searchQuery: string = '';
   authService = inject(AuthService);
@@ -24,9 +26,13 @@ export class Header {
     console.log('Searching for:', this.searchQuery);
   }
   menuType: String = 'default';
-  constructor(private route: Router) { }
+
+  constructor(private router: Router) { }
+
   ngOnInit(): void {
-    this.route.events.subscribe((val: any) => {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((val: any) => {
       if (val.url) {
         if (val.url.includes('log') || val.url.includes('auth')) {
           this.menuType = 'auth';

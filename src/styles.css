@@ -358,6 +358,14 @@ th {
     padding: 10px;
 }
 
+th:first-child {
+    border-top-left-radius: 20px;
+}
+
+th:last-child {
+    border-top-right-radius: 20px;
+}
+
 tr {
     color: var(--box-bg);
     font-weight: normal;

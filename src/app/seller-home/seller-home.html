@@ -21,11 +21,12 @@
                     <td class="text-center hoverable">{{ product.category }}</td>
                     <td class="text-center hoverable">{{ product.description }}</td>
                     <td class="prod-action">
-                        <button class="btn action-btn edit-btn">
+                        <button class="btn action-btn edit-btn text-center">
                             <span>Edit</span>
                         </button>
                         <!-- Button triggers the delete method -->
-                        <button class="btn action-btn delete-btn">
+                        <button class="btn action-btn delete-btn" *ngIf="product.id"
+                            (click)="removeProduct(product.id)">
                             <span>Delete</span>
                         </button>
                     </td>

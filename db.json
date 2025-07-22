@@ -1,28 +1,28 @@
 {
   "products": [
     {
-      "id": "d753",
-      "sellerId": "e780",
-      "name": "samsung galaxy s23",
-      "price": 45999,
-      "category": "Mobile",
-      "description": "Phone"
-    },
-    {
-      "id": "4595",
-      "sellerId": "e780",
-      "name": "samsung galaxy s23 Ultra",
-      "price": 79999,
-      "category": "Mobile",
-      "description": "Phone Premium"
-    },
-    {
       "id": "284f",
       "sellerId": "e515",
       "name": "Shirt",
       "price": 499,
       "category": "Clothing",
       "description": "Cloth Shirt Smooth Cotton"
+    },
+    {
+      "id": "6a31",
+      "sellerId": "e780",
+      "name": "samsung galaxy s23 Ultra",
+      "price": 109999,
+      "category": "Mobile",
+      "description": "Mobile Phone Premium"
+    },
+    {
+      "id": "9b44",
+      "sellerId": "e780",
+      "name": "samsung galaxy s23",
+      "price": 45999,
+      "category": "Mobile",
+      "description": "Phone"
     }
   ],
   "users": [

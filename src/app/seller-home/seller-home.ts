@@ -17,6 +17,10 @@ export class SellerHome implements OnInit {
   constructor(private productService: ProductService, private cd: ChangeDetectorRef, private ngZone: NgZone) { }
 
   ngOnInit(): void {
+    this.loadProducts();
+  }
+
+  loadProducts() {
     const seller = JSON.parse(localStorage.getItem('seller') || '{}');
     this.sellerId = seller?.id;
     if (this.sellerId) {
@@ -37,4 +41,11 @@ export class SellerHome implements OnInit {
 
     }
   }
+
+  removeProduct(id: string) {
+    this.productService.removeProduct(id).subscribe(() => {
+      this.loadProducts();
+    });
+  }
+
 }

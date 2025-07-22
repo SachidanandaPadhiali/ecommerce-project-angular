@@ -16,7 +16,7 @@ export class SellerAddProduct {
   successMessage: string | undefined;
   errorMessage: string | undefined;
 
-  sellerId:string = JSON.parse(localStorage.getItem('seller') || '{}')?.id;
+  sellerId: string = "";
 
   product: Product = {
     sellerId: this.sellerId,
@@ -25,27 +25,38 @@ export class SellerAddProduct {
     category: '',
     description: ''
   };
+
   constructor(private productService: ProductService, private cd: ChangeDetectorRef, private ngZone: NgZone) { }
 
   submit() {
-    this.productService.addProduct(this.product).subscribe((result) => {
-      if (result) {
-        this.ngZone.run(() => {
-          this.successMessage = 'Product added successfully!';
-          this.cd.detectChanges();
-        });
+    const seller = JSON.parse(localStorage.getItem('seller') || '{}');
+    this.sellerId = seller?.id;
 
-        this.resetForm();
+    if (this.sellerId) {
+      this.product.sellerId = this.sellerId;   // ✅ Assign sellerId before saving
 
-        setTimeout(() => {
+      this.productService.addProduct(this.product).subscribe((result) => {
+        if (result) {
           this.ngZone.run(() => {
-            this.successMessage = undefined;
+            this.successMessage = 'Product added successfully!';
             this.cd.detectChanges();
           });
-        }, 3000);
-      }
-    });
+
+          this.resetForm();
+
+          setTimeout(() => {
+            this.ngZone.run(() => {
+              this.successMessage = undefined;
+              this.cd.detectChanges();
+            });
+          }, 3000);
+        }
+      });
+    } else {
+      this.errorMessage = 'Seller not logged in!';
+    }
   }
+
 
   resetForm() {
     this.product = {
