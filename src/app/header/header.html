@@ -1,6 +1,8 @@
 <nav class="navbar" *ngIf="menuType !== 'auth'">
     <div class="nav-container">
-        <div class="brand">🛒 E-Shop</div>
+        <div class="brand">
+            <img src="public/assets/image/eshopLogo.png" alt="E-Shop Logo" height="40">
+        </div>
 
         <div *ngIf="menuType=== 'default'" class="search-container">
             <input type="text" [(ngModel)]="searchQuery" (keyup.enter)="onSearch()" placeholder="Search products..." />
@@ -14,8 +16,19 @@
 
             <a *ngSwitchCase="'seller'" routerLink="/seller-home">Home</a>
             <a *ngSwitchCase="'seller'" routerLink="/seller-product">Add Product</a>
-            <a *ngSwitchCase="'seller'" routerLink="/profile">Profile</a>
-            <a *ngSwitchCase="'seller'" class="login-btn" routerLink="/" (click)="logOut()">Log Out</a>
+            <div class="dropdown" *ngSwitchCase="'seller'">
+                <button class="dropdown-toggle">
+                    <fa-icon [icon]="userIcon"></fa-icon> {{ sellerName }}
+                </button>
+                <div class="dropdown-menu">
+                    <a routerLink="/profile">
+                        <fa-icon [icon]="profileIcon"></fa-icon> Profile
+                    </a>
+                    <a class="logout-link" (click)="logOut()">
+                        <fa-icon [icon]="logoutIcon"></fa-icon> Logout
+                    </a>
+                </div>
+            </div>
         </div>
 
         <div class="menu" [ngClass]="{ 'active': isMenuOpen }" (click)="toggleMenu()">

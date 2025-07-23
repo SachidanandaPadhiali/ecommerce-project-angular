@@ -34,7 +34,7 @@ export class SellerAddProduct {
     this.sellerId = seller?.id;
 
     if (this.sellerId) {
-      this.product.sellerId = this.sellerId;   // ✅ Assign sellerId before saving
+      this.product.sellerId = this.sellerId;
 
       this.productService.addProduct(this.product).subscribe((result) => {
         if (result) {

@@ -35,15 +35,6 @@
       "category": "Laptop",
       "description": "Asus Laptop",
       "quantity": 51
-    },
-    {
-      "id": "8ae7",
-      "sellerId": "e780",
-      "name": "ASUS FX553VD",
-      "price": 72999,
-      "category": "Laptop",
-      "description": "Gaming Laptop",
-      "quantity": 10
     }
   ],
   "users": [

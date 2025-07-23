@@ -18,7 +18,6 @@ export class ProductService {
   }
 
   viewProductBySeller(sellerId: String): Observable<Product[]> {
-    console.log("SellerID:", sellerId);
     return this.http.get<Product[]>(`http://localhost:3000/products?sellerId=${sellerId}`);
   }
 
