@@ -1,8 +1,9 @@
 <nav class="navbar" *ngIf="menuType !== 'auth'">
     <div class="nav-container">
         <div class="brand">
-            <img src="public/assets/image/eshopLogo.png" alt="E-Shop Logo" height="40">
+            <img src="/assets/image/eshopLogo.png" alt="E-Shop Logo" height="30">
         </div>
+
 
         <div *ngIf="menuType=== 'default'" class="search-container">
             <input type="text" [(ngModel)]="searchQuery" (keyup.enter)="onSearch()" placeholder="Search products..." />
@@ -14,7 +15,7 @@
             <a *ngSwitchCase="'default'" routerLink="/seller-home">Seller</a>
             <a *ngSwitchCase="'default'" class="login-btn" routerLink="/log-in">Log In</a>
 
-            <a *ngSwitchCase="'seller'" routerLink="/seller-home">Home</a>
+            <a *ngSwitchCase="'seller'" routerLink="/seller-home">My Products</a>
             <a *ngSwitchCase="'seller'" routerLink="/seller-product">Add Product</a>
             <div class="dropdown" *ngSwitchCase="'seller'">
                 <button class="dropdown-toggle">
