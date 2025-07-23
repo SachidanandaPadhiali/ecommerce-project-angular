@@ -6,7 +6,8 @@
       "name": "Shirt",
       "price": 499,
       "category": "Clothing",
-      "description": "Cloth Shirt Smooth Cotton"
+      "description": "Cloth Shirt Smooth Cotton",
+      "quantity": 81
     },
     {
       "id": "6a31",
@@ -14,7 +15,8 @@
       "name": "samsung galaxy s23 Ultra",
       "price": 109999,
       "category": "Mobile",
-      "description": "Mobile Phone Premium"
+      "description": "Mobile Phone Premium",
+      "quantity": 81
     },
     {
       "id": "9b44",
@@ -22,7 +24,26 @@
       "name": "samsung galaxy s23",
       "price": 45999,
       "category": "Mobile",
-      "description": "Phone"
+      "description": "Phone",
+      "quantity": 81
+    },
+    {
+      "id": "b16d",
+      "sellerId": "e780",
+      "name": "Asus ZenBook 13 OLED",
+      "price": 78999,
+      "category": "Laptop",
+      "description": "Asus Laptop",
+      "quantity": 51
+    },
+    {
+      "id": "8ae7",
+      "sellerId": "e780",
+      "name": "ASUS FX553VD",
+      "price": 72999,
+      "category": "Laptop",
+      "description": "Gaming Laptop",
+      "quantity": 10
     }
   ],
   "users": [

@@ -23,7 +23,8 @@ export class SellerAddProduct {
     name: '',
     price: 0,
     category: '',
-    description: ''
+    description: '',
+    quantity: 0
   };
 
   constructor(private productService: ProductService, private cd: ChangeDetectorRef, private ngZone: NgZone) { }
@@ -64,7 +65,8 @@ export class SellerAddProduct {
       name: '',
       price: 0,
       category: '',
-      description: ''
+      description: '',
+      quantity: 0
     };
   }
 }
