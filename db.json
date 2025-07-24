@@ -35,6 +35,15 @@
       "category": "Laptop",
       "description": "Asus Laptop",
       "quantity": 51
+    },
+    {
+      "name": "Protronics Todd 7 Plus",
+      "price": 799,
+      "quantity": 115,
+      "category": "Mouse",
+      "description": "Wireless Mouse Bluetooth Rechargable",
+      "sellerId": "e780",
+      "id": "56e9"
     }
   ],
   "users": [

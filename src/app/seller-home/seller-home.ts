@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
 import { Product } from '../models/product.model';
 import { ProductService } from '../services/product-service';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-seller-home',
@@ -14,7 +15,7 @@ export class SellerHome implements OnInit {
 
   products: Product[] = [];
   sellerId: String = "";
-  constructor(private productService: ProductService, private cd: ChangeDetectorRef, private ngZone: NgZone) { }
+  constructor(private productService: ProductService, private cd: ChangeDetectorRef, private ngZone: NgZone, private router:Router) { }
 
   ngOnInit(): void {
     this.loadProducts();
@@ -42,6 +43,9 @@ export class SellerHome implements OnInit {
     }
   }
 
+  editProduct(productId: string): void {
+    this.router.navigate(['/seller-product', productId]);
+  }
   removeProduct(id: string) {
     this.productService.removeProduct(id).subscribe(() => {
       this.loadProducts();

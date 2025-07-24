@@ -1,27 +1,33 @@
 <div class="main-content">
     <div class="form-overlay">
         <div class="form-container" style="text-align: center;">
-            <h1>ADD NEW PRODUCT</h1>
-            <br /><br />
-            <div *ngIf="successMessage" class="message success">{{ successMessage }}</div>
-            <div *ngIf="errorMessage" class="message error">{{ errorMessage }}</div>
-            <form (ngSubmit)="submit()" #productForm="ngForm">
+            <div [ngSwitch]="headingType">
+                <h1 *ngSwitchCase="'addProduct'">ADD NEW PRODUCT</h1>
+                <h1 *ngSwitchCase="'updateProduct'">UPDATE PRODUCT</h1>
+            </div>
+            <br />
+            <form [formGroup]="productForm" (ngSubmit)="submit()">
                 <div class="input-group">
-                    <input type="text" name="name" [(ngModel)]="product.name" placeholder="Product Name" required />
+                    <input type="text" formControlName="name" placeholder="Product Name" />
                 </div>
                 <div class="input-group">
-                    <input type="number" name="price" [(ngModel)]="product.price" placeholder="Price" required />
+                    <input type="number" formControlName="price" placeholder="Price" />
                 </div>
                 <div class="input-group">
-                    <input type="number" name="quantity" [(ngModel)]="product.quantity" placeholder="Quantity" required />
+                    <input type="number" formControlName="quantity" placeholder="Quantity" />
                 </div>
                 <div class="input-group">
-                    <input type="text" name="category" [(ngModel)]="product.category" placeholder="Category" required />
+                    <input type="text" formControlName="category" placeholder="Category" />
                 </div>
                 <div class="input-group">
-                    <textarea name="description" [(ngModel)]="product.description" placeholder="Description"></textarea>
+                    <textarea formControlName="description" placeholder="Description"></textarea>
                 </div>
-                <button type="submit" class="main-btn">Add Product</button>
+                <br />
+                <div *ngIf="successMessage" class="message success">{{ successMessage }}</div>
+                <div *ngIf="errorMessage" class="message error">{{ errorMessage }}</div>
+                <button type="submit" class="main-btn">
+                    {{ headingType === 'updateProduct' ? 'Update' : 'Add' }} Product
+                </button>
             </form>
         </div>
     </div>
