@@ -51,6 +51,14 @@
       "id": "1",
       "email": "john@example.com",
       "password": "123456"
+    },
+    {
+      "id": "bc80",
+      "name": "test User",
+      "email": "test@test.com",
+      "phno": "8129318329",
+      "password": "Pass@123",
+      "confirmPassword": "Pass@123"
     }
   ],
   "seller": [

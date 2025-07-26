@@ -10,7 +10,7 @@ export class Seller {
   private apiUrl = 'http://localhost:3000/seller';
 
   sellerSignUp(data: any) {
-    return this.http.post("http://localhost:3000/seller", data)
+    return this.http.post(`${this.apiUrl}`, data)
   }
   
   checkDuplicateEmail(email: string) {
