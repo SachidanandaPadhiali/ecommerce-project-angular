@@ -19,15 +19,6 @@
       "quantity": 81
     },
     {
-      "id": "9b44",
-      "sellerId": "e780",
-      "name": "samsung galaxy s23",
-      "price": 45999,
-      "category": "Mobile",
-      "description": "Phone",
-      "quantity": 81
-    },
-    {
       "id": "b16d",
       "sellerId": "e780",
       "name": "Asus ZenBook 13 OLED",
@@ -44,6 +35,15 @@
       "description": "Wireless Mouse Bluetooth Rechargable",
       "sellerId": "e780",
       "id": "56e9"
+    },
+    {
+      "id": "40c9",
+      "name": "Samsung Galaxy S23",
+      "price": 45999,
+      "quantity": 21,
+      "category": "Mobile",
+      "description": "Phone",
+      "sellerId": "e780"
     }
   ],
   "users": [

@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../services/auth-service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ export class Login {
 
   errorMessage: string | null = null;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private authService: AuthService) { }
 
   handleSignIn(): void {
     const { email, password } = this.user;
@@ -46,6 +47,19 @@ export class Login {
         });
       }
     });
+  }
+
+  goToSignUp(): void {
+    const requiredRole = localStorage.getItem('role') || '{}';
+    console.log(requiredRole);
+    if (!this.authService.isAuthenticated(requiredRole)) {
+      if (requiredRole === 'seller') {
+        console.log("GOING TO SELLER");
+        this.router.navigate(['/seller-auth']);
+        return;
+      }
+      this.router.navigate(['/user-auth']);
+    }
   }
 }
 //Pass@123

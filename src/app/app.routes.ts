@@ -6,10 +6,12 @@ import { Login } from './login/login';
 import { UserHome } from './user-home/user-home';
 import { authGuard } from './auth-guard';
 import { SellerAddProduct } from './seller-add-product/seller-add-product';
+import { UserAuth } from './user-auth/user-auth';
 
 export const routes: Routes = [
     { path: '', component: Home },
     { path: 'seller-auth', component: SellerAuth },
+    { path: 'user-auth', component: UserAuth },
     { path: 'log-in', component: Login },
     { path: 'user-home', component: UserHome, canActivate: [authGuard], data: { role: 'user' } },
     { path: 'seller-home', component: SellerHome, canActivate: [authGuard], data: { role: 'seller' } },

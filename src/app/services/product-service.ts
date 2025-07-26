@@ -13,7 +13,6 @@ export class ProductService {
   constructor(private http: HttpClient) { }
 
   addProduct(data: Product) {
-    console.warn("Product Service is called");
     return this.http.post('http://localhost:3000/products', data);
   }
 

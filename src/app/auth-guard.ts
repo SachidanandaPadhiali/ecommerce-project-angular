@@ -14,7 +14,9 @@ export const authGuard: CanActivateFn = (route, state) => {
   });
 
   if (!authService.isAuthenticated(requiredRole)) {
-    console.warn('Redirecting to /log-in');
+    if(requiredRole === 'seller'){
+          return router.createUrlTree(['/seller-auth']);      
+    }
     return router.createUrlTree(['/log-in']);
   }
   return true;

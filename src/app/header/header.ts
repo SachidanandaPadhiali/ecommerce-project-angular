@@ -20,7 +20,7 @@ export class Header implements OnInit {
   userIcon = faUserCircle;
   profileIcon = faUser;
   logoutIcon = faRightFromBracket;
-  sellerName :string = "";
+  sellerName: string = "";
 
   isMenuOpen = false;
   searchQuery: string = '';
@@ -55,6 +55,16 @@ export class Header implements OnInit {
       }
 
     });
+  }
+
+  becomeSeller() {
+    localStorage.setItem('role', "seller");
+    this.router.navigate(['/seller-home']);
+  }
+
+  goToSignIn(): void {
+    localStorage.setItem('role', "user");
+    this.router.navigate(['/log-in']);
   }
 
   logOut() {

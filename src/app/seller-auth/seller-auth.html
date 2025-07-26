@@ -1,7 +1,7 @@
 <div class="form-overlay">
   <div class="sign-container">
     <div class="form-container">
-      <h2>Seller Sign Up</h2>
+      <h1>Seller Sign Up</h1>
       <p class="subtitle">Sign up to get started</p>
 
       <form (ngSubmit)="signUp(seller)">
@@ -34,12 +34,16 @@
           Password is not long enough.
         </p>
 
+        <p *ngIf="seller.password && isPasswordValid(seller.password) && isPasswordLong(seller.password) && !passwordMismatch" class="message success">
+          Valid Password.
+        </p>
+
         <button type="submit" class="main-btn">CREATE AN ACCOUNT</button>
         <p *ngIf="duplicateSeller" class="message error">{{ duplicateSeller }}</p>
 
         <p class="login-link">
           Already have an account?
-          <a routerLink="/log-in" class="login-link">Log In</a>
+          <a routerLink="/log-in" class="login-link">LOG IN</a>
         </p>
       </form>
     </div>

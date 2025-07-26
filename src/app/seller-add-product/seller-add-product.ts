@@ -49,8 +49,6 @@ export class SellerAddProduct implements OnInit {
         this.productId = id;
 
         this.productService.getProductById(this.productId!).subscribe((prod: Product) => {
-          console.log("Fetched product:", prod);
-
           this.productForm.patchValue({
             name: prod.name,
             price: prod.price,
@@ -62,35 +60,6 @@ export class SellerAddProduct implements OnInit {
       }
     });
   }
-
-  /*  submit() {
-      const seller = JSON.parse(localStorage.getItem('seller') || '{}');
-      this.sellerId = seller?.id;
-  
-      if (this.sellerId) {
-        this.product.sellerId = this.sellerId;
-  
-        this.productService.addProduct(this.product).subscribe((result) => {
-          if (result) {
-            this.ngZone.run(() => {
-              this.successMessage = 'Product added successfully!';
-              this.cd.detectChanges();
-            });
-  
-            this.resetForm();
-  
-            setTimeout(() => {
-              this.ngZone.run(() => {
-                this.successMessage = undefined;
-                this.cd.detectChanges();
-              });
-            }, 3000);
-          }
-        });
-      } else {
-        this.errorMessage = 'Seller not logged in!';
-      }
-    }*/
 
   submit() {
     const seller = JSON.parse(localStorage.getItem('seller') || '{}');
