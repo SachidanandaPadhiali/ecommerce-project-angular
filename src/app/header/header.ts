@@ -6,7 +6,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AuthService } from '../services/auth-service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faUser, faRightFromBracket, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faRightFromBracket, faUserCircle, faHeart } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-header',
@@ -18,6 +18,7 @@ import { faUser, faRightFromBracket, faUserCircle } from '@fortawesome/free-soli
 export class Header implements OnInit {
 
   userIcon = faUserCircle;
+  heartIcon = faHeart;
   profileIcon = faUser;
   logoutIcon = faRightFromBracket;
   sellerName: string = "";
@@ -49,6 +50,8 @@ export class Header implements OnInit {
           this.menuType = 'auth';
         } else if (localStorage.getItem('seller') && val.url.includes('seller')) {
           this.menuType = 'seller';
+        } else if (localStorage.getItem('user') && val.url.includes('user')) {
+          this.menuType = 'user';
         } else {
           this.menuType = 'default';
         }
