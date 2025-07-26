@@ -25,4 +25,42 @@ export class UserAuth  implements OnInit {
 
   duplicateUser: string | null = null;
 
+  get passwordMismatch(): boolean {
+    return this.user.password !== this.user.confirmPassword;
+  }
+
+  isPasswordValid(password: string): boolean {
+    const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!]).+$/;
+    return pattern.test(password);
+  }
+
+  isPasswordLong(password: string): boolean {
+    return password.length >= 8;
+  }
+
+  signUp(data: object): void {
+    if (this.passwordMismatch) return;
+    if (!this.isPasswordValid(this.user.password)) return;
+    if (!this.isPasswordLong(this.user.password)) return;
+
+    this.newuser.checkDuplicateEmail(this.user.email).subscribe((res) => {
+      if (res.length > 0) {
+        // Duplicate found
+        this.duplicateUser = 'Email already registered... Please LogIn Instead';
+        return;
+      }
+
+      // No duplicate, proceed with sign-up
+      this.newuser.userSignUp(data).subscribe({
+        next: () => {
+          this.duplicateUser = null;
+          this.router.navigate(['/log-in']);
+        },
+        error: (err) => {
+          console.error('Sign-up failed:', err);
+          this.duplicateUser = 'Registration failed';
+        }
+      });
+    });
+  }
 }
