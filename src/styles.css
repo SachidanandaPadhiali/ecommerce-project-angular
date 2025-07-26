@@ -273,12 +273,6 @@ input:focus {
 }
 
 .error {
-    padding: .8rem;
-    border-radius: 6px;
-    margin-bottom: 1rem;
-    font-size: .9rem;
-    text-align: center;
-    animation: fadeIn .3s ease-out;
     background: #FEE2E2;
     color: var(--error);
     border: 1px solid #FCA5A5;
@@ -288,6 +282,24 @@ input:focus {
     background: #DCFCE7;
     color: #166534;
     border: 1px solid #86EFAC;
+}
+
+.count {
+    padding: .5rem;
+    border-radius: 6px;
+    text-align: center;
+    background: #e3d5fc;
+    color: #2b069a;
+    border: 1px solid #a686ef;
+}
+
+.cart {
+    color: var(--primary);
+    background: var(--warning);
+}
+
+.cart:hover {
+    color: var(--white-text);
 }
 
 @keyframes fadeIn {
