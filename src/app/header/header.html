@@ -22,26 +22,15 @@
             <a *ngSwitchCase="'user'" routerLink="/shop">Shop</a>
             <a *ngSwitchCase="'user'" routerLink="/cart">Cart</a>
             <a *ngSwitchCase="'user'" routerLink="/wish-list"><fa-icon [icon]="heartIcon"></fa-icon></a>
-            <div class="dropdown" *ngSwitchCase="'seller'">
-                <button class="dropdown-toggle">
-                    <fa-icon [icon]="userIcon"></fa-icon> {{ sellerName }}
-                </button>
-                <div class="dropdown-menu">
-                    <a routerLink="/profile">
-                        <fa-icon [icon]="profileIcon"></fa-icon> Profile
-                    </a>
-                    <a (click)="logOut()">
-                        <fa-icon [icon]="logoutIcon"></fa-icon> Logout
-                    </a>
-                </div>
-            </div>
+
 
             <!-- ++++++++++ SELLER NAVIGATION ++++++++++ -->
             <a *ngSwitchCase="'seller'" routerLink="/seller-home">My Products</a>
             <a *ngSwitchCase="'seller'" routerLink="/seller-product">Add Product</a>
-            <div class="dropdown" *ngSwitchCase="'seller'">
+
+            <div class="dropdown" *ngIf="menuType !== 'default'" >
                 <button class="dropdown-toggle">
-                    <fa-icon [icon]="userIcon"></fa-icon> {{ sellerName }}
+                    <fa-icon [icon]="userIcon"></fa-icon> {{ name }}
                 </button>
                 <div class="dropdown-menu">
                     <a routerLink="/profile">
@@ -62,11 +51,15 @@
 
     </div>
 
-    <div class="nav-links mobile" *ngIf="isMenuOpen">
-        <a routerLink="/" (click)="toggleMenu()">Home</a>
-        <a routerLink="/shop" (click)="toggleMenu()">Shop</a>
-        <a routerLink="/cart" (click)="toggleMenu()">Cart</a>
-        <a routerLink="/seller-auth" (click)="toggleMenu()">Seller</a>
-        <a class="login-btn" routerLink="/log-in" (click)="toggleMenu()">Log In</a>
+    <div class="nav-links mobile" *ngIf="isMenuOpen"  [ngSwitch]="menuType">
+        <a routerLink="/" *ngSwitchCase="'default'" (click)="toggleMenu()">Home</a>
+        <a routerLink="/shop" *ngSwitchCase="'default'" (click)="toggleMenu()">Shop</a>
+        <a routerLink="/cart" *ngSwitchCase="'default'" (click)="toggleMenu()">Cart</a>
+        <a routerLink="/seller-auth" *ngSwitchCase="'default'" (click)="toggleMenu()">Seller</a>
+        <a class="login-btn" routerLink="/log-in" *ngSwitchCase="'default'" (click)="toggleMenu()">Log In</a>
+
+        <a routerLink="/" *ngSwitchCase="'default'" (click)="toggleMenu()">Home</a>
+        <a routerLink="/shop" *ngSwitchCase="'default'" (click)="toggleMenu()">Shop</a>
+        <a routerLink="/cart" *ngSwitchCase="'default'" (click)="toggleMenu()">Cart</a>
     </div>
 </nav>

@@ -21,7 +21,8 @@ export class Header implements OnInit {
   heartIcon = faHeart;
   profileIcon = faUser;
   logoutIcon = faRightFromBracket;
-  sellerName: string = "";
+
+  name: string = "";
 
   isMenuOpen = false;
   searchQuery: string = '';
@@ -39,9 +40,6 @@ export class Header implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-    const seller = JSON.parse(localStorage.getItem('seller') || '{}');
-    this.sellerName = seller?.name;
-
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((val: any) => {
@@ -50,8 +48,10 @@ export class Header implements OnInit {
           this.menuType = 'auth';
         } else if (localStorage.getItem('seller') && val.url.includes('seller')) {
           this.menuType = 'seller';
+          this.name = JSON.parse(localStorage.getItem('seller') || '{}')?.name;
         } else if (localStorage.getItem('user') && val.url.includes('user')) {
           this.menuType = 'user';
+          this.name = JSON.parse(localStorage.getItem('user') || '{}')?.name;
         } else {
           this.menuType = 'default';
         }
