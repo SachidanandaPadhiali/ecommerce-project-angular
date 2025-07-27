@@ -1,6 +1,6 @@
 .navbar {
     top: 0;
-    background: var(--bg);
+    background: var(--bg-transparent);
     box-shadow: var(--nav-shadow);
     padding: 0.75rem 1.5rem;
     position: fixed;
@@ -30,7 +30,7 @@
 }
 
 .search-container input:focus {
-    border-color: var(--accent);
+    border-color: var(--pill-accent);
     outline: none;
 }
 
