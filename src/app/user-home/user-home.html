@@ -26,24 +26,35 @@
     <!-- ++++++++++ CATEGORIES ++++++++++ -->
     <div id="categories">
         <ul>
-            <li> MOBILE </li>
-            <li> COMPUTER</li>
-            <li> LAPTOP</li>
-            <li> ACCESSORIES</li>
+            @for (categories of [
+            { title: 'mobile', src: 'assets/image/category/mobile.png' },
+            { title: 'computer', src: 'assets/image/category/computer.png' },
+            { title: 'laptop', src: 'assets/image/category/laptop.png' },
+            { title: 'accessories', src: 'assets/image/category/acc.png' },
+            { title: 'home', src: 'assets/image/category/home.png' },
+            { title: 'kitchen', src: 'assets/image/category/kitchen.png' },
+            { title: 'bathroom', src: 'assets/image/category/bathroom.png' },
+            { title: 'appliances', src: 'assets/image/category/appliances.png' },
+            { title: 'decor', src: 'assets/image/category/decor.png' },
+            { title: 'mens', src: 'assets/image/category/mens.png' },
+            { title: 'womens', src: 'assets/image/category/womens.png' },
+            { title: 'kids', src: 'assets/image/category/kids.png' },
+            { title: 'toys', src: 'assets/image/category/toys.png' },
+            { title: 'shoes', src: 'assets/image/category/shoes.png' },
+            { title: 'innerwear', src: 'assets/image/category/innerwear.png' },
+            { title: 'thermal', src: 'assets/image/category/thermal.png' },
+            ]; track categories.title) {
+            <div class="card">
+                <div class="imgBox">
+                    <img src="{{ categories.src }}" class="mouse">
+                </div>
 
-            <li> HOME</li>
-            <li> KITCHEN</li>
-            <li> BATHROOM</li>
-            <li> APPLIANCES</li>
-            <li> DECOR</li>
+                <div class="contentBox">
+                    <h3>{{ categories.title }}</h3>
+                    <a href="#" class="buy">SHOP</a>
+                </div>
 
-            <li> MENS</li>
-            <li> WOMENS</li>
-            <li> KIDS</li>
-            <li> TOYS</li>
-            <li> SHOES</li>
-            <li> INNERWEAR</li>
-            <li> THERMAL</li>
+            </div>}
         </ul>
     </div>
 
