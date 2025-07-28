@@ -59,7 +59,8 @@
     background: color-mix(in srgb, var(--french-violet) 5%, transparent);
     color: var(--french-violet);
     padding: 0.375rem 0.75rem;
-    border-radius: 2rem;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
     font-family: var(--inter-font);
     font-size: 0.875rem;
     font-weight: var(--font-semi-bold);
@@ -76,8 +77,18 @@
 .dropdown-menu {
     display: none;
     position: absolute;
-    min-width: 160px;
-    z-index: 1;
+    top: 100%;
+    right: 0;
+    width: 100px;
+    padding-top: 10px;
+    background: var(--bg);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+.dropdown:hover {
+    background: color-mix(in srgb, var(--french-violet) 25%, transparent);
 }
 
 .dropdown:hover .dropdown-menu {
@@ -85,17 +96,27 @@
 }
 
 .dropdown-menu a {
-    display: block;
-    margin-top: 10px;
-    text-decoration: none;
-    background: color-mix(in srgb, var(--french-violet) 5%, transparent);
-    color: var(--french-violet);
+    display: flex;
+    align-items: center;
+    padding: 6px 8px;
+    border-radius: 8px;
+    margin: 0;
+    background: none;
+    color: var(--dark-text);
     font-weight: var(--font-semi-bold);
     transition: background 0.3s ease;
 }
 
 .dropdown-menu a:hover {
-    background: color-mix(in srgb, var(--french-violet) 15%, transparent);
+    background: color-mix(in srgb, var(--electric-violet) 35%, transparent);
+    color: var(--dark-text);
+    cursor: pointer;
+}
+
+.dropdown-menu .logouttbtn:hover {
+    background: color-mix(in srgb, var(--hot-red) 95%, transparent);
+    color: var(--white-text);
+    cursor: pointer;
 }
 
 .login-btn {

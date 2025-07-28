@@ -8,6 +8,10 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+body::-webkit-scrollbar {
+    display: none;
+}
+
 h1 {
     font-size: 3.125rem;
     font-weight: 500;
