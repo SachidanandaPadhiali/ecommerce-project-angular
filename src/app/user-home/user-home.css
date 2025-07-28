@@ -18,19 +18,18 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    gap: 1rem;
     padding: .5rem 2rem;
     border-radius: 6px;
     font-size: .9rem;
     text-align: center;
     animation: fadeIn .3s ease-out;
-    background: #f2eaff;
+    background: var(--bg);
     color: #2b069a;
-    border: 1px solid #a686ef;
+    border: 1px solid #b2b1b3;
 }
 
 #elements ul li:hover {
-    background: color-mix(in srgb, var(--electric-violet) 15%, transparent);
+    background: color-mix(in srgb, var(--electric-violet) 5%, transparent);
     color: #2b069a;
     border: 1px solid #a686ef;
 }
@@ -94,6 +93,7 @@
     background: color-mix(in srgb, var(--electric-violet) 15%, transparent);
     color: #2b069a;
     border: 1px solid #a686ef;
+    cursor: pointer;
 }
 
 #categories ul li img {
@@ -161,6 +161,9 @@
 /* 1200px and above: 5 in one row */
 @media (min-width: 1200px) {
     #elements ul {
+        max-width: 1500px;
+        margin: 0 auto;
+        gap: 3rem;
         grid-template-columns: repeat(5, 1fr);
     }
 

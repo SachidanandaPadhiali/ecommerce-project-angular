@@ -5,64 +5,45 @@
     <!-- ++++++++++ ADVANTAGES ++++++++++ -->
     <div id="elements">
         <ul>
+            @for (advantage of [
+            { title: 'Free Delivery', subtitle: 'From all orders over 499', src: 'assets/image/svg/delivery.svg' },
+            { title: 'Return & Refund', subtitle: 'Free return and Exchange', src: 'assets/image/svg/return.svg' },
+            { title: 'Secure payment', subtitle: '100% Protected', src: 'assets/image/svg/secure.svg' },
+            { title: 'Gift voucher', subtitle: 'Refer a friend', src: 'assets/image/svg/voucher.svg' },
+            { title: 'Support 24/7', subtitle: 'Shop with an expert', src: 'assets/image/svg/support.svg' },
+            ]; track advantage.title) {
             <li>
-                <img class="image-left" src="assets/image/svg/delivery.svg" alt="delivery">
+                <img class="image-left" src="{{ advantage.src }}" alt="delivery">
                 <div class="info-right">
-                    <h4>Free Delivery</h4>
-                    <p>From all orders over 499</p>
+                    <h4>{{ advantage.title }}</h4>
+                    <p>{{ advantage.subtitle }}</p>
                 </div>
             </li>
-            <li>
-                <img class="image-left" src="assets/image/svg/return.svg" alt="delivery">
-                <div class="info-right">
-                    <h4>Return & Refund</h4>
-                    <p>Free return and Exchange</p>
-                </div>
-            </li>
-            <li>
-                <img class="image-left" src="assets/image/svg/secure.svg" alt="delivery">
-                <div class="info-right">
-                    <h4>Secure payment</h4>
-                    <p>100% Protected</p>
-                </div>
-            </li>
-            <li>
-                <img class="image-left" src="assets/image/svg/voucher.svg" alt="delivery">
-                <div class="info-right">
-                    <h4>Gift voucher</h4>
-                    <p>Refer a friend</p>
-                </div>
-            </li>
-            <li>
-                <img class="image-left" src="assets/image/svg/support.svg" alt="delivery">
-                <div class="info-right">
-                    <h4>Support 24/7</h4>
-                    <p>Shop with an expert</p>
-                </div>
-            </li>
+            }
         </ul>
     </div>
 
     <!-- ++++++++++ CATEGORIES ++++++++++ -->
     <div id="categories">
         <ul>
-            <li> PHONES</li>
-            <li> DESKTOP</li>
+            <li> MOBILE </li>
+            <li> COMPUTER</li>
             <li> LAPTOP</li>
             <li> ACCESSORIES</li>
-            <li> TVS</li>
-            <li> AC</li>
-            <li> COOLER</li>
-            <li> FAN</li>
-            <li> LIGHT</li>
-            <li> DRESSES</li>
-            <li> SHOES</li>
-            <li> KIDS WEAR</li>
-            <li> MENS WEAR</li>
-            <li> WOMENS WEAR</li>
-            <li> THERMAL WEAR</li>
-            <li> INNERWEAR</li>
+
+            <li> HOME</li>
+            <li> KITCHEN</li>
+            <li> BATHROOM</li>
+            <li> APPLIANCES</li>
+            <li> DECOR</li>
+
+            <li> MENS</li>
+            <li> WOMENS</li>
+            <li> KIDS</li>
             <li> TOYS</li>
+            <li> SHOES</li>
+            <li> INNERWEAR</li>
+            <li> THERMAL</li>
         </ul>
     </div>
 
