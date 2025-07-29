@@ -1,0 +1,35 @@
+<div class="main-content">
+    <div [ngClass]="{ 'product-list': true, loading: loading }">
+        <div *ngIf="!loading" class="grid">
+            <div class="product" *ngFor="let product of products">
+                <div class="badge" *ngIf="product.isOnSale">HOT SALE</div>
+
+                <img [src]="product.imageUrl" alt="Product Image" />
+
+                <div class="prod_detail">
+                    <h3>{{ truncateName(product.name) }}</h3>
+
+                    <div class="star-rating" *ngIf="product.rating !== undefined && product.rating > 0.5">
+                        <svg *ngFor="let n of maxStars" class="star" viewBox="0 0 24 24">
+                            <defs>
+                                <linearGradient [id]="'grad-' + product.id + '-' + n" x1="0" x2="100%" y1="0" y2="0">
+                                    <stop offset="0%" stop-color="gold" />
+                                    <stop [attr.offset]="getFill(n, product.rating)" stop-color="gold" />
+                                    <stop [attr.offset]="getFill(n, product.rating)" stop-color="#ccc" />
+                                    <stop offset="100%" stop-color="#ccc" />
+                                </linearGradient>
+                            </defs>
+                            <path [attr.fill]="'url(#grad-' + product.id + '-' + n + ')'"
+                                d="M12 2l2.9 6.9L22 9.3l-5 5 1.2 7.7L12 18l-6.2 4 1.2-7.7-5-5 7.1-0.4L12 2z" />
+                        </svg>
+                    </div>
+
+                    <h6>₹{{ product.price }}</h6>
+                    <button class="viewProduct" (click)="viewProduct(product.id)">View</button>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="error" class="error">{{ error }}</div>
+    </div>
+</div>

@@ -24,6 +24,10 @@ export class ProductService {
     return this.http.delete(`http://localhost:3000/products/${id}`);
   }
 
+  getProductsByCategory(category: string): Observable<Product[]> {
+    return this.http.get<Product[]>(`http://localhost:3000/products?category=${category}`);
+  }
+
   getProductById(id: string) {
     return this.http.get<Product>(`http://localhost:3000/products/${id}`);
   }

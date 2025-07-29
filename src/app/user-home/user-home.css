@@ -166,7 +166,7 @@
 /*============================================================================*/
 
 
-.card {
+.category-pill {
     position: relative;
     width: 6rem;
     height: 9rem;
@@ -176,12 +176,11 @@
     overflow: hidden;
 }
 
-.card:hover {
+.category-pill:hover {
     border: 1px solid #a686ef;
 }
 
-
-.card::before {
+.category-pill::before {
     content: "";
     position: absolute;
     top: -50%;
@@ -192,11 +191,11 @@
     transition: 0.5s;
 }
 
-.card:hover::before {
+.category-pill:hover::before {
     transform: skewY(90deg);
 }
 
-.card .imgBox {
+.category-pill .imgBox {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -205,7 +204,7 @@
     z-index: 1;
 }
 
-.card .contentBox {
+.category-pill .contentBox {
     position: relative;
     padding-top: 1rem;
     display: flex;
@@ -216,40 +215,45 @@
     transition: 0.5s;
 }
 
-.card:hover .contentBox {
+.category-pill:hover .contentBox {
     padding-top: 0.5rem;
 }
 
-.card .contentBox h3 {
-    font-size: 10px;
+.category-pill .contentBox h3 {
+    font-size: 11px;
     color: var(--dark-text);
-    font-weight: var(--font-medium);
+    font-weight: var(--font-semi-bold);
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-.card .contentBox .buy {
+.category-pill .contentBox a {
     position: relative;
     top: 100px;
     opacity: 0;
-    font-size: 12px;
-    padding: 0.3rem 0.5rem;
+    padding: 0.3rem;
+    width: 10rem;
+    height: 5rem;
+    overflow:hidden;
+    background: var(--primary);
     margin-top: 0.5rem;
+
+    font-size: 13px;
     color: var(--white-text);
     text-decoration: none;
-    background: var(--primary);
-    border-radius: 20px;
     text-transform: uppercase;
+    text-align: center;
     letter-spacing: 2px;
-    transition: 0.5s;
+    transition: 0.8s;
 }
 
-.card:hover .contentBox .buy {
+.category-pill:hover .contentBox a {
+    text-decoration: none;
     top: 0;
     opacity: 1;
 }
 
-.mouse {
+.category-pill .imgBox img {
     height: auto;
     width: 5rem;
 }

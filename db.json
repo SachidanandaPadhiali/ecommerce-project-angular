@@ -7,25 +7,32 @@
       "price": 499,
       "category": "Clothing",
       "description": "Cloth Shirt Smooth Cotton",
-      "quantity": 81
+      "quantity": 81,
+      "isOnSale": false,
+      "rating": 4.3
     },
     {
       "id": "6a31",
       "sellerId": "e780",
       "name": "samsung galaxy s23 Ultra",
       "price": 109999,
-      "category": "Mobile",
+      "category": "mobile",
       "description": "Mobile Phone Premium",
-      "quantity": 81
+      "quantity": 81,
+      "isOnSale": true,
+      "rating": 4.6,
+      "imageUrl": "assets/image/products/s23ultra.jpg"
     },
     {
       "id": "b16d",
       "sellerId": "e780",
       "name": "Asus ZenBook 13 OLED",
       "price": 78999,
-      "category": "Laptop",
+      "category": "laptop",
       "description": "Asus Laptop",
-      "quantity": 51
+      "quantity": 51,
+      "isOnSale": false,
+      "rating": 4.5
     },
     {
       "name": "Protronics Todd 7 Plus",
@@ -34,16 +41,21 @@
       "category": "Mouse",
       "description": "Wireless Mouse Bluetooth Rechargable",
       "sellerId": "e780",
-      "id": "56e9"
+      "id": "56e9",
+      "isOnSale": false,
+      "rating": 3.9
     },
     {
       "id": "40c9",
       "name": "Samsung Galaxy S23",
       "price": 45999,
       "quantity": 21,
-      "category": "Mobile",
+      "category": "mobile",
       "description": "Phone",
-      "sellerId": "e780"
+      "sellerId": "e780",
+      "isOnSale": false,
+      "rating": 4.9,
+      "imageUrl": "assets/image/products/s23.jpg"
     }
   ],
   "users": [

@@ -6,4 +6,7 @@ export interface Product {
     category: string;
     description: string;
     quantity: number;
+    isOnSale?: boolean;
+    rating?: number;
+    imageUrl?: string;
 }
