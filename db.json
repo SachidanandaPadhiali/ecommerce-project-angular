@@ -32,7 +32,8 @@
       "description": "Asus Laptop",
       "quantity": 51,
       "isOnSale": false,
-      "rating": 4.5
+      "rating": 4.5,
+      "imageUrl": "zenbookOled13.png"
     },
     {
       "name": "Protronics Todd 7 Plus",
@@ -49,7 +50,7 @@
       "id": "40c9",
       "name": "Samsung Galaxy S23",
       "price": 45999,
-      "quantity": 21,
+      "quantity": 1,
       "category": "mobile",
       "description": "Phone",
       "sellerId": "e780",
