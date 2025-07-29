@@ -30,13 +30,13 @@ export class Shop implements OnInit {
         switchMap((params: ParamMap) => {
           this.loading = true;
           this.category = params.get('name') || '';
-          console.log('Category from param:', this.category);
+
           return this.productService.getProductsByCategory(this.category);
         })
       )
       .subscribe({
         next: (data: Product[]) => {
-          console.log('Fetched products:', data);
+
           this.products = data;
           this.loading = false;
           this.cdr.detectChanges(); // ✅ Force view update

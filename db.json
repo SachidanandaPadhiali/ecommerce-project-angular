@@ -21,7 +21,7 @@
       "quantity": 81,
       "isOnSale": true,
       "rating": 4.6,
-      "imageUrl": "assets/image/products/s23ultra.jpg"
+      "imageUrl": "s23ultra.jpg"
     },
     {
       "id": "b16d",
@@ -55,7 +55,7 @@
       "sellerId": "e780",
       "isOnSale": false,
       "rating": 4.9,
-      "imageUrl": "assets/image/products/s23.jpg"
+      "imageUrl": "s23.jpg"
     }
   ],
   "users": [

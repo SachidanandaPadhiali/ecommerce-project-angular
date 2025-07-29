@@ -280,9 +280,14 @@ input:focus {
 }
 
 .cart {
+    width: 10rem;
+    height: 2rem;
     color: var(--primary);
     background: var(--warning);
-    margin: 1rem;
+    margin: 1rem 0;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 2px;
 }
 
 .cart:hover {
