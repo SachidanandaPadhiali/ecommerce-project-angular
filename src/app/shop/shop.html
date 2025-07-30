@@ -4,6 +4,8 @@
         <div *ngFor="let product of products">
             <div class="product">
                 <div class="saleBadge" *ngIf="product.isOnSale">RAINY SALE</div>
+                <div class="wishBadge" *ngIf="!wished">0</div>
+                <div class="wishedBadge" *ngIf="wished">1</div>
                 <div class="prod-img"> <img [src]="'assets/image/products/' + product.imageUrl"
                         alt="{{product.imageUrl}}" />
                 </div>

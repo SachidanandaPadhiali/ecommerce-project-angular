@@ -16,6 +16,7 @@ export class Shop implements OnInit {
   products: Product[] = [];
   category: string = '';
   loading: boolean = true;
+  wished: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
