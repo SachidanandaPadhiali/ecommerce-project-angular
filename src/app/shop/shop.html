@@ -1,80 +1,10 @@
 <div [ngClass]="{ 'product-list': true, loading: loading }">
     <h1>Products In {{ category }}</h1>
     <ul *ngIf="!loading" class="product-grid">
-        <div *ngFor="let product of products">
-            <div class="product">
-                <div class="saleBadge" *ngIf="product.isOnSale">RAINY SALE</div>
-                <div class="wishBadge" *ngIf="!wished">
-                    <fa-icon *ngIf="product.id" [icon]="wishList.has(product.id) ? prodWished : prodWish"
-                        (click)="toggleWish(product.id)">
-                    </fa-icon>
-                </div>
-                <div class="prod-img"> <img [src]="'assets/image/products/' + product.imageUrl"
-                        alt="{{product.imageUrl}}" />
-                </div>
-                <div class="prod-info">
-                    <div class="prod-category">{{ product.category }}</div>
-                    <h2 class="prod-title">{{ truncateName(product.name) }}</h2>
-                    <p class="prod-desc">{{ product.description }}</p>
-                    <div class="prod-features">
-                        <span class="prod-feature">Amoled Display</span>
-                        <span class="prod-feature">30-Hour Battery</span>
-                        <span class="prod-feature">200mp camera</span>
-                    </div>
-                    <div class="bottom-section">
-                        <div class="prod-price">
-                            <span class="base-price"> ₹{{ product.price }}</span>
-                            <span class="disc-price"> ₹{{ product.price }}</span>
-                        </div>
-                        <button class="addToCart">
-                            <span>Add to Cart</span><fa-icon class="cartIcon" [icon]="cart"></fa-icon>
-                        </button>
-                    </div>
-                    <div class="meta">
-                        <div class="prod-rating" *ngIf="product.rating !== undefined && product.rating > 0.5">
-                            <svg *ngFor="let n of maxStars" class="star" viewBox="0 0 24 24">
-                                <defs>
-                                    <linearGradient [id]="'grad-' + product.id + '-' + n" x1="0" x2="100%" y1="0"
-                                        y2="0">
-                                        <stop offset="0%" stop-color="orange" />
-                                        <stop [attr.offset]="getFill(n, product.rating)" stop-color="#F55E0B" />
-                                        <stop [attr.offset]="getFill(n, product.rating)" stop-color="#888" />
-                                        <stop offset="100%" stop-color="#888" />
-                                    </linearGradient>
-                                </defs>
-                                <path [attr.fill]="'url(#grad-' + product.id + '-' + n + ')'"
-                                    d="M12 2l2.9 6.9L22 9.3l-5 5 1.2 7.7L12 18l-6.2 4 1.2-7.7-5-5 7.1-0.4L12 2z" />
-                            </svg>
-                            <span class="rating-count"></span>
-                        </div>
-                        <div class="stock isInStock" *ngIf="product.quantity > 10">In Stock</div>
-                        <div class="stock runningOut" *ngIf="product.quantity > 0 && product.quantity < 10">only {{
-                            product.quantity }} left</div>
-                    </div>
-                </div>
-            </div>
-            <div class="prodDivider" role="separator" aria-label="Divider"></div>
-        </div>
-
-        <!--            <div class="star-rating" *ngIf="product.rating !== undefined && product.rating > 0.5">
-                <svg *ngFor="let n of maxStars" class="star" viewBox="0 0 24 24">
-                    <defs>
-                        <linearGradient [id]="'grad-' + product.id + '-' + n" x1="0" x2="100%" y1="0" y2="0">
-                            <stop offset="0%" stop-color="orange" />
-                            <stop [attr.offset]="getFill(n, product.rating)" stop-color="#F55E0B" />
-                            <stop [attr.offset]="getFill(n, product.rating)" stop-color="#888" />
-                            <stop offset="100%" stop-color="#888" />
-                        </linearGradient>
-                    </defs>
-                    <path [attr.fill]="'url(#grad-' + product.id + '-' + n + ')'"
-                        d="M12 2l2.9 6.9L22 9.3l-5 5 1.2 7.7L12 18l-6.2 4 1.2-7.7-5-5 7.1-0.4L12 2z" />
-                </svg>
-            </div>
-            <h2>₹{{ product.price }}</h2>
-            <button class="cart">Add To Cart</button>
-            <button class="viewProduct" (click)="viewProduct(product.id)">view product</button>
-    </div>
-</div>-->
+        <app-product-card *ngFor="let product of products" [product]="product" [wishList]="wishList"
+            (wishToggled)="toggleWish($event)">
+        </app-product-card>
+        <div class="prodDivider" role="separator" aria-label="Divider"></div>
     </ul>
 
     <div *ngIf="error" class="error">{{ error }}</div>

@@ -62,11 +62,10 @@
   "wishList": [
     {
       "userId": "bc80",
-      "productIds": ["b16d", "6a31"]
-    },
-    {
-      "userId": "1",
-      "productIds": ["b16d", "6a31"]
+      "productIds": [
+        "b16d"
+      ],
+      "id": "bc80"
     }
   ],
   "users": [
