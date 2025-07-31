@@ -49,7 +49,7 @@ export class Header implements OnInit {
         } else if (localStorage.getItem('seller') && val.url.includes('seller')) {
           this.menuType = 'seller';
           this.name = JSON.parse(localStorage.getItem('seller') || '{}')?.name;
-        } else if (localStorage.getItem('user') && val.url.includes('user')) {
+        } else if (localStorage.getItem('user') && (val.url.includes('user') || val.url.includes('shop'))) {
           this.menuType = 'user';
           this.name = JSON.parse(localStorage.getItem('user') || '{}')?.name;
         } else {

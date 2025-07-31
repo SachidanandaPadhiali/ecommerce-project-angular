@@ -4,8 +4,11 @@
         <div *ngFor="let product of products">
             <div class="product">
                 <div class="saleBadge" *ngIf="product.isOnSale">RAINY SALE</div>
-                <div class="wishBadge" *ngIf="!wished">0</div>
-                <div class="wishedBadge" *ngIf="wished">1</div>
+                <div class="wishBadge" *ngIf="!wished">
+                    <fa-icon *ngIf="product.id" [icon]="wishList.has(product.id) ? prodWished : prodWish"
+                        (click)="toggleWish(product.id)">
+                    </fa-icon>
+                </div>
                 <div class="prod-img"> <img [src]="'assets/image/products/' + product.imageUrl"
                         alt="{{product.imageUrl}}" />
                 </div>
@@ -24,13 +27,7 @@
                             <span class="disc-price"> ₹{{ product.price }}</span>
                         </div>
                         <button class="addToCart">
-                            <span>Add to Cart</span>
-                            <svg class="cartIcon" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2">
-                                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4" />
-                                <line x1="3" y1="6" x2="21" y2="6" />
-                                <path d="M16 10a4 4 0 01-8 0" />
-                            </svg>
+                            <span>Add to Cart</span><fa-icon class="cartIcon" [icon]="cart"></fa-icon>
                         </button>
                     </div>
                     <div class="meta">

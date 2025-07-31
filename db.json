@@ -59,6 +59,16 @@
       "imageUrl": "s23.jpg"
     }
   ],
+  "wishList": [
+    {
+      "userId": "bc80",
+      "productIds": ["b16d", "6a31"]
+    },
+    {
+      "userId": "1",
+      "productIds": ["b16d", "6a31"]
+    }
+  ],
   "users": [
     {
       "id": "1",

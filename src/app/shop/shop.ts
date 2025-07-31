@@ -4,11 +4,16 @@ import { ProductService } from '../services/product-service';
 import { CommonModule } from '@angular/common';
 import { switchMap } from 'rxjs/operators';
 import { Product } from '../models/product.model';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faHeart as fasHeart, faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'; // regular (outline)
+import { HttpClient } from '@angular/common/http';
+import { UserService } from '../services/user-service';
 
 @Component({
   selector: 'app-shop',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FontAwesomeModule],
   templateUrl: './shop.html',
   styleUrl: './shop.css'
 })
@@ -17,39 +22,52 @@ export class Shop implements OnInit {
   category: string = '';
   loading: boolean = true;
   wished: boolean = false;
+  prodWish = farHeart;
+  prodWished = fasHeart;
+  wishList: Set<string> = new Set();
+  cart = faCartShopping;
+  userId: string = '';
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
+    private userService: UserService,
     private router: Router,
-    private cdr: ChangeDetectorRef // ✅ Add this
+    private cdr: ChangeDetectorRef,
+    private http: HttpClient
   ) { }
 
   ngOnInit(): void {
-    this.route.paramMap
-      .pipe(
-        switchMap((params: ParamMap) => {
-          this.loading = true;
-          this.category = params.get('name') || '';
+    this.route.paramMap.pipe(
+      switchMap((params: ParamMap) => {
+        this.loading = true;
+        this.category = params.get('name') || '';
 
-          return this.productService.getProductsByCategory(this.category);
-        })
-      )
-      .subscribe({
-        next: (data: Product[]) => {
+        return this.productService.getProductsByCategory(this.category);
+      })
+    ).subscribe({
+      next: (data: Product[]) => {
 
-          this.products = data;
-          this.loading = false;
-          this.cdr.detectChanges(); // ✅ Force view update
-        },
-        error: (err) => {
-          console.error('Error fetching products:', err);
-          this.products = [];
-          this.loading = false;
-          this.cdr.detectChanges(); // ✅ Even on error
-        }
-      });
+        this.products = data;
+        this.loading = false;
+        this.cdr.detectChanges(); // ✅ Force view update
+      },
+      error: (err) => {
+        console.error('Error fetching products:', err);
+        this.products = [];
+        this.loading = false;
+        this.cdr.detectChanges(); // ✅ Even on error
+      }
+    });
+
+    this.userId = JSON.parse(localStorage.getItem('user') || '{}')?.id;
+    this.userService.getWishList(this.userId).subscribe(data => {
+      const entry = data[0]; // Assuming only one entry per user
+      console.log(entry);
+      this.wishList = new Set(entry?.productIds || []);
+    });
   }
+
   maxStars = [1, 2, 3, 4, 5];
   error = '';
 
@@ -68,8 +86,22 @@ export class Shop implements OnInit {
       console.error('Invalid product ID');
       return;
     }
-    // Navigate or handle as needed
     this.router.navigate(['/product', productId]);
+  }
+
+  toggleWish(prodId: string) {
+    if (!prodId) return;
+
+    this.wished = !this.wished;
+    this.userId = JSON.parse(localStorage.getItem('user') || '{}')?.id;
+
+    if (this.wishList.has(prodId)) {
+      this.wishList.delete(prodId);
+      this.userService.updateWishList(this.userId, Array.from(this.wishList)).subscribe();
+    } else {
+      this.wishList.add(prodId);
+      this.userService.updateWishList(this.userId, Array.from(this.wishList)).subscribe();
+    }
   }
 
 }

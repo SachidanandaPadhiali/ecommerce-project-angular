@@ -63,8 +63,9 @@
     font-size: 25px;
     font-weight: var(--font-medium);
     text-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-    z-index: 15;
     transition: 0.8s;
+    cursor: pointer;
+    z-index: 15;
 }
 
 .product:hover .wishBadge {
