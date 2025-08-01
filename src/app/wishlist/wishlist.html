@@ -3,6 +3,7 @@
         <app-product-card *ngFor="let product of products" [product]="product" [wishList]="wishList"
             (wishToggled)="toggleWish($event)">
         </app-product-card>
+        <div class="prodDivider" role="separator" aria-label="Divider"></div>
     </ul>
 
     <div *ngIf="error" class="error">{{ error }}</div>

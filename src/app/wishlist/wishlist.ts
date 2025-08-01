@@ -4,6 +4,7 @@ import { UserService } from '../services/user-service';
 import { Product } from '../models/product.model';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '../services/product-service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-wishlist',
@@ -15,6 +16,7 @@ export class Wishlist implements OnInit {
   products: Product[] = [];
   prodIds: string[] = [];
   loading: boolean = true;
+  wished: boolean = false;
   wishList: Set<string> = new Set();
   userId: string = '';
   error: string = '';
@@ -27,7 +29,9 @@ export class Wishlist implements OnInit {
     this.userService.getWishList(this.userId).subscribe({
       next: (data) => {
         this.prodIds = data.map(entry => entry.productIds).flat();
-        this.productService.getProductById(this.prodIds).subscribe({
+
+        const requests = this.prodIds.map(id => this.productService.getProductById(id));
+        forkJoin(requests).subscribe({
           next: (products: Product[]) => {
             this.products = products;
             this.loading = false;
@@ -40,8 +44,6 @@ export class Wishlist implements OnInit {
             this.cdr.detectChanges();
           }
         });
-
-        console.log('Wishlist product IDs:', this.prodIds);
       },
       error: (err) => {
         console.error('Error fetching wishlist:', err);
@@ -53,14 +55,20 @@ export class Wishlist implements OnInit {
 
   }
 
-  toggleWish(productId: string): void {
-    if (this.wishList.has(productId)) {
-      this.wishList.delete(productId);
-      this.userService.removeFromWishList(this.userId, productId);
+  toggleWish(prodId: string) {
+    if (!prodId) return;
+
+    this.wished = !this.wished;
+    this.userId = JSON.parse(localStorage.getItem('user') || '{}')?.id;
+
+    if (this.wishList.has(prodId)) {
+      this.wishList.delete(prodId);
     } else {
-      this.wishList.add(productId);
-      this.userService.wishProduct(this.userId, productId);
+      this.wishList.add(prodId);
     }
+
+    this.userService.updateWishList(this.userId, Array.from(this.wishList)).subscribe();
+    this.cdr.detectChanges(); // ✅ Force view update
   }
 
 }

@@ -32,6 +32,12 @@ export class ProductService {
     return this.http.get<Product>(`http://localhost:3000/products/${id}`);
   }
 
+  getProductsById(prodIds: string[]): Observable<Product[]> {
+    const queryParams = prodIds.map(id => `id=${id}`).join('&');
+    console.log("queryParams",queryParams);
+    return this.http.get<Product[]>(`http://localhost:3000/products?${queryParams}`);
+  }
+
   updateProduct(product: Product) {
     return this.http.put(`http://localhost:3000/products/${product.id}`, product);
   }

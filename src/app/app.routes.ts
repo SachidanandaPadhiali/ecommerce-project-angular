@@ -21,6 +21,6 @@ export const routes: Routes = [
     { path: 'seller-product', component: SellerAddProduct },
     { path: 'seller-product/:id', component: SellerAddProduct },
     { path: 'shop', component: Shop },
-    { path: 'wishlist', component: Wishlist, canActivate: [authGuard], data: { role: 'user' } },
+    { path: 'user/wishlist', component: Wishlist, canActivate: [authGuard], data: { role: 'user' } },
     { path: 'shop/category/:name', component: Shop, runGuardsAndResolvers: 'paramsChange' }
 ];

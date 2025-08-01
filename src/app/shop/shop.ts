@@ -83,8 +83,9 @@ export class Shop implements OnInit {
     } else {
       this.wishList.add(prodId);
     }
-
     this.userService.updateWishList(this.userId, Array.from(this.wishList)).subscribe();
+    this.cdr.detectChanges(); // ✅ Force view update
+
   }
 
 }
