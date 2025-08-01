@@ -28,7 +28,10 @@ export class Wishlist implements OnInit {
 
     this.userService.getWishList(this.userId).subscribe({
       next: (data) => {
+        const entry = data[0];
         this.prodIds = data.map(entry => entry.productIds).flat();
+
+        this.wishList = new Set((entry?.productIds || []).map(id => String(id)));
 
         const requests = this.prodIds.map(id => this.productService.getProductById(id));
         forkJoin(requests).subscribe({
@@ -58,7 +61,6 @@ export class Wishlist implements OnInit {
   toggleWish(prodId: string) {
     if (!prodId) return;
 
-    this.wished = !this.wished;
     this.userId = JSON.parse(localStorage.getItem('user') || '{}')?.id;
 
     if (this.wishList.has(prodId)) {
@@ -68,7 +70,6 @@ export class Wishlist implements OnInit {
     }
 
     this.userService.updateWishList(this.userId, Array.from(this.wishList)).subscribe();
-    this.cdr.detectChanges(); // ✅ Force view update
+    this.cdr.detectChanges();
   }
-
 }

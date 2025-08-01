@@ -3,6 +3,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faHeart as fasHeart, faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'; // regular (outline)
 import { CommonModule } from '@angular/common';
+import { Product } from '../models/product.model';
 
 @Component({
   selector: 'app-product-card',
@@ -18,9 +19,13 @@ export class ProductCard {
 
   maxStars = [1, 2, 3, 4, 5];
 
-  @Input() product: any;
-  @Input() wishList: Set<string> = new Set();
+  @Input() product!: Product;
+  @Input() wishList!: Set<string>;
   @Output() wishToggled = new EventEmitter<string>();
+
+  get isWished(): boolean {
+    return this.wishList.has(String(this.product.id));
+  }
 
   onHeartClick() {
     this.wishToggled.emit(this.product.id);

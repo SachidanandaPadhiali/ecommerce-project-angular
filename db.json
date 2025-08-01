@@ -39,12 +39,13 @@
       "name": "Protronics Todd 7 Plus",
       "price": 799,
       "quantity": 115,
-      "category": "Mouse",
+      "category": "accessories",
       "description": "Wireless Mouse Bluetooth Rechargable",
       "sellerId": "e780",
       "id": "56e9",
       "isOnSale": false,
-      "rating": 3.9
+      "rating": 3.9,
+      "imageUrl": "oad7.png"
     },
     {
       "id": "40c9",
@@ -63,7 +64,9 @@
     {
       "userId": "bc80",
       "productIds": [
-        "40c9"
+        "40c9",
+        "56e9",
+        "b16d"
       ],
       "id": "bc80"
     }

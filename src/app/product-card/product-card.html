@@ -1,9 +1,7 @@
 <div class="product">
     <div class="saleBadge" *ngIf="product.isOnSale">RAINY SALE</div>
-    <fa-icon [icon]="wishList.has(product.id!) ? prodWished : prodWish" (click)="onHeartClick()" class="wishBadge">
+    <fa-icon [icon]="isWished ? prodWished : prodWish" (click)="onHeartClick()" class="wishBadge">
     </fa-icon>
-    <div *ngif="wishList.has(product.id) ? 1 : 0" (click)="onHeartClick()" class="saleBadge" >
-    </div>
     <div class="prod-img"> <img [src]="'assets/image/products/' + product.imageUrl" alt="{{product.imageUrl}}" />
     </div>
     <div class="prod-info">
