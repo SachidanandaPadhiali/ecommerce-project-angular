@@ -29,38 +29,42 @@ export class Shop implements OnInit {
     private productService: ProductService,
     private userService: UserService,
     private router: Router,
-    private cdr: ChangeDetectorRef,
-    private http: HttpClient
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
-    this.route.paramMap.pipe(
-      switchMap((params: ParamMap) => {
-        this.loading = true;
-        this.category = params.get('name') || '';
+    this.userId = JSON.parse(localStorage.getItem('user') || '{}')?.id;
+    this.userService.getWishList(this.userId).subscribe({
+      next: (data) => {
+        const prodIds = data.map(entry => entry.productIds).flat();
+        this.wishList = new Set(prodIds.map(id => String(id)));  // ✅ store as strings
+        this.route.paramMap.pipe(
+          switchMap((params: ParamMap) => {
+            this.loading = true;
+            this.category = params.get('name') || '';
 
-        return this.productService.getProductsByCategory(this.category);
-      })
-    ).subscribe({
-      next: (data: Product[]) => {
+            return this.productService.getProductsByCategory(this.category);
+          })
+        ).subscribe({
+          next: (data: Product[]) => {
 
-        this.products = data;
-        this.loading = false;
-        this.cdr.detectChanges(); // ✅ Force view update
+            this.products = data;
+            this.loading = false;
+            this.cdr.detectChanges(); // ✅ Force view update
+          },
+          error: (err) => {
+            console.error('Error fetching products:', err);
+            this.products = [];
+            this.loading = false;
+            this.cdr.detectChanges(); // ✅ Even on error
+          }
+        });
+
       },
       error: (err) => {
-        console.error('Error fetching products:', err);
-        this.products = [];
-        this.loading = false;
-        this.cdr.detectChanges(); // ✅ Even on error
+        console.error('Error fetching wishlist:', err);
+        this.wishList = new Set(); // Fallback
       }
-    });
-
-    this.userId = JSON.parse(localStorage.getItem('user') || '{}')?.id;
-    this.userService.getWishList(this.userId).subscribe(data => {
-      const entry = data[0]; // Assuming only one entry per user
-      console.log(entry);
-      this.wishList = new Set(entry?.productIds || []);
     });
   }
 
@@ -84,6 +88,8 @@ export class Shop implements OnInit {
       this.wishList.add(prodId);
     }
     this.userService.updateWishList(this.userId, Array.from(this.wishList)).subscribe();
+    this.cdr.detectChanges(); // ✅ Force view update
+
   }
 
 }
