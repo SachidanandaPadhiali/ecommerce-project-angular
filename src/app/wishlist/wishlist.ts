@@ -18,6 +18,7 @@ export class Wishlist implements OnInit {
   loading: boolean = true;
   wished: boolean = false;
   wishList: Set<string> = new Set();
+  
   userId: string = '';
   error: string = '';
 
@@ -62,6 +63,8 @@ export class Wishlist implements OnInit {
     if (!prodId) return;
 
     this.userId = JSON.parse(localStorage.getItem('user') || '{}')?.id;
+    // Remove from UI immediately
+    this.products = this.products.filter(p => String(p.id) !== prodId);
 
     if (this.wishList.has(prodId)) {
       this.wishList.delete(prodId);
