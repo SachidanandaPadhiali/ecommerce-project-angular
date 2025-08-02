@@ -15,14 +15,16 @@
         </div>
         <div class="bottom-section">
             <div class="prod-price">
-                <span class="base-price"> ₹{{ product.price }}</span>
-                <span class="disc-price"> ₹{{ product.price }}</span>
+                <span class="base-price" style="text-decoration: none;" *ngIf="product.quantity === 0"> ₹{{ product.price }}</span>
+                <span class="base-price" *ngIf="product.quantity > 0"> ₹{{ product.price }}</span>
+                <span class="disc-price" *ngIf="product.quantity > 0"> ₹{{ product.price }}</span>
             </div>
-            <button class="addToCart">
+            <button class="addToCart" *ngIf="product.quantity > 0">
                 <span>Add to Cart</span><fa-icon class="cartIcon" [icon]="cart"></fa-icon>
             </button>
         </div>
-        <div class="meta">
+            <div class="stock outOfStock" *ngIf="product.quantity === 0">Out Of Stock</div>
+        <div class="meta" *ngIf="product.quantity > 0">
             <div class="prod-rating" *ngIf="product.rating !== undefined && product.rating > 0.5">
                 <svg *ngFor="let n of maxStars" class="star" viewBox="0 0 24 24">
                     <defs>
@@ -39,7 +41,7 @@
                 <span class="rating-count"></span>
             </div>
             <div class="stock isInStock" *ngIf="product.quantity > 10">In Stock</div>
-            <div class="stock runningOut" *ngIf="product.quantity > 0 && product.quantity < 10">only {{
+            <div class="stock runningOut" *ngIf="product.quantity > 0 && product.quantity <= 10">only {{
                 product.quantity }} left</div>
         </div>
     </div>

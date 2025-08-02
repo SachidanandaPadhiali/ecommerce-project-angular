@@ -233,6 +233,12 @@ input:focus {
 }
 
 @media (max-width: 480px) {
+
+    h1 {
+        font-size: var(--h1-font-size);
+        letter-spacing: 0;
+    }
+
     .sign-container {
         margin: 1rem;
         padding: 1.5rem;
@@ -483,24 +489,31 @@ td.text-right {
 
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
 }
 
-@media (min-width: 480px) {
+@media (min-width: 640px) {
     .product-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 960px) {
     .product-grid {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         /* optional: 3 cards on tablets */
     }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1250px) {
+    .product-grid {
+        grid-template-columns: repeat(4, 1fr);
+        /* 4 cards on desktop */
+    }
+}
+
+@media (min-width: 1380px) {
     .product-grid {
         grid-template-columns: repeat(6, 1fr);
         /* 4 cards on desktop */
@@ -722,20 +735,76 @@ td.text-right {
 }
 
 .outOfStock {
+    font-size: 15px;
+    text-shadow: 0 3px 5px rgba(255, 0, 0, 0.3);
     color: var(--error);
 }
 
-@media (max-width: 400px) {
+.nowishlist {
+    padding-top: 60px;
+    margin: auto;
+    width: 30%;
+}
+
+@media (max-width: 500px) {
+
+    .product-grid {
+        gap: 0.1rem;
+    }
+
     .product {
-        width: 90%;
+        width: 100%;
+        border: var(--border);
+        padding: 0.1rem;
+        box-shadow: none;
+        margin: 0;
+    }
+
+    .prodDivider {
+        margin: auto;
+        height: 50%;
+        width: 2px;
+        background: var(--red-to-pink-to-purple-vertical-gradient);
+        margin-block: 1rem;
+    }
+
+    .nowishlist {
+        width: 100%;
+    }
+
+    .saleBadge {
+        padding: 0 5px;
+        font-size: 7px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .wishBadge {
+        position: absolute;
+        opacity: 1;
+        top: 1rem;
+        right: 1rem;
+        color: var(--accent);
+        font-size: 15px;
+        font-weight: var(--font-medium);
+        text-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        transition: none;
+        cursor: pointer;
+        z-index: 15;
+    }
+
+    .prod-category,
+    .prod-desc,
+    .prod-features {
+        display: none;
     }
 
     .prod-title {
-        font-size: 16px;
+        font-size: 10px;
     }
 
     .prod-img {
-        height: 180px;
+        height: 80px;
     }
 
     .bottom-section {
@@ -752,36 +821,21 @@ td.text-right {
         width: 100%;
         justify-content: center;
     }
-}
 
-@media (max-width: 500px) {
-    .product {
-        width: 100%;
-        border: var(--border);
-        padding: 2rem;
-        box-shadow: none;
-        margin: 0;
+    .star {
+        height: 15px;
+        width: 15px;
     }
 
-    .prodDivider {
-        height: 1px;
-        width: 100%;
-        background: var(--red-to-pink-to-purple-horizontal-gradient);
-        margin-block: 1.5rem;
+    .rating-count {
+        margin-left: 6px;
+        font-size: 11px;
+        color: #71717a;
     }
 
-    .wishBadge {
-        position: absolute;
-        opacity: 1;
-        top: 2rem;
-        right: 2rem;
-        color: var(--accent);
-        font-size: 25px;
-        font-weight: var(--font-medium);
-        text-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-        transition: none;
-        cursor: pointer;
-        z-index: 15;
+    .stock {
+        font-size: 10px;
+        font-weight: 600;
     }
 
 }

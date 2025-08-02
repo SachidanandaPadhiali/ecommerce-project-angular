@@ -51,20 +51,30 @@
       "id": "40c9",
       "name": "Samsung Galaxy S23",
       "price": 45999,
-      "quantity": 1,
+      "quantity": 0,
       "category": "mobile",
       "description": "Phone",
       "sellerId": "e780",
       "isOnSale": false,
       "rating": 4.9,
       "imageUrl": "s23.jpg"
+    },
+    {
+      "id": "08d9",
+      "name": "One Plus Nord 2T",
+      "price": 30999,
+      "quantity": 10,
+      "category": "Mobile",
+      "description": "Phone",
+      "sellerId": "e780"
     }
   ],
   "wishList": [
     {
       "userId": "bc80",
       "productIds": [
-        "40c9"
+        "6a31",
+        "56e9"
       ],
       "id": "bc80"
     }
