@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { WishListEntry } from '../models/WishListEntry.model';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,8 @@ import { Observable } from 'rxjs';
 export class UserService {
 
   constructor(private http: HttpClient) { }
-  private apiUrl = 'http://localhost:3000';
+
+  private apiUrl = environment.apiUrl;
   private wishList: WishListEntry[] = [];
 
   userSignUp(data: any) {
@@ -46,6 +48,6 @@ export class UserService {
   }
 
   getWishList(userId: string): Observable<WishListEntry[]> {
-    return this.http.get<WishListEntry[]>(`http://localhost:3000/wishList?userId=${userId}`);
+    return this.http.get<WishListEntry[]>(`${this.apiUrl}/wishList?userId=${userId}`);
   }
 }

@@ -46,12 +46,17 @@ export class Header implements OnInit {
       if (val.url) {
         if (val.url.includes('log') || val.url.includes('auth')) {
           this.menuType = 'auth';
-        } else if (localStorage.getItem('seller') && val.url.includes('seller')) {
-          this.menuType = 'seller';
-          this.name = JSON.parse(localStorage.getItem('seller') || '{}')?.name;
+        } else if (localStorage.getItem('user') && (val.url === '/' || val.url === '')) {
+          // If user is logged in and accessing base URL, redirect to user-home
+          this.menuType = 'user';
+          this.name = JSON.parse(localStorage.getItem('user') || '{}')?.name;
+          this.router.navigate(['/user-home']);
         } else if (localStorage.getItem('user') && (val.url.includes('user') || val.url.includes('shop'))) {
           this.menuType = 'user';
           this.name = JSON.parse(localStorage.getItem('user') || '{}')?.name;
+        } else if (localStorage.getItem('seller') && val.url.includes('seller')) {
+          this.menuType = 'seller';
+          this.name = JSON.parse(localStorage.getItem('seller') || '{}')?.name;
         } else {
           this.menuType = 'default';
         }

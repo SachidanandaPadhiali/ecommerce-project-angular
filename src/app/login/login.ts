@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../services/auth-service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -22,15 +23,17 @@ export class Login {
 
   constructor(private http: HttpClient, private router: Router, private authService: AuthService) { }
 
+  private apiUrl = environment.apiUrl;
+
   handleSignIn(): void {
     const { email, password } = this.user;
 
-    this.http.get<any[]>(`http://localhost:3000/users?email=${email}&password=${password}`).subscribe(userRes => {
+    this.http.get<any[]>(`${this.apiUrl}/users?email=${email}&password=${password}`).subscribe(userRes => {
       if (userRes.length > 0) {
         localStorage.setItem('user', JSON.stringify(userRes[0]));
         this.router.navigate(['/user-home']);
       } else {
-        this.http.get<any[]>(`http://localhost:3000/seller?email=${email}&password=${password}`).subscribe(sellerRes => {
+        this.http.get<any[]>(`${this.apiUrl}/seller?email=${email}&password=${password}`).subscribe(sellerRes => {
           if (sellerRes.length > 0) {
             const seller = sellerRes[0];
             const sellerData = {

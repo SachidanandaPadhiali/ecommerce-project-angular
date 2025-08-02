@@ -22,6 +22,12 @@
               },
               "src/assets"
             ],
+            "fileReplacements": [
+              {
+                "replace": "src/environments/environment.ts",
+                "with": "src/environments/environment.prod.ts"
+              }
+            ],
             "styles": [
               "src/custom-theme.scss",
               "src/styles.css"
