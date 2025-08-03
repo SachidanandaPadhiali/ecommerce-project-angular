@@ -1,0 +1,115 @@
+{
+  "products": [
+    {
+      "id": "284f",
+      "sellerId": "e515",
+      "name": "Shirt",
+      "price": 499,
+      "category": "Clothing",
+      "description": "Cloth Shirt Smooth Cotton",
+      "quantity": 81,
+      "isOnSale": false,
+      "rating": 4.3
+    },
+    {
+      "id": "6a31",
+      "sellerId": "e780",
+      "name": "samsung galaxy s23 Ultra",
+      "price": 109999,
+      "category": "mobile",
+      "description": "Mobile Phone Premium",
+      "quantity": 81,
+      "isOnSale": true,
+      "rating": 4.6,
+      "imageUrl": "s23ultra.jpg"
+    },
+    {
+      "id": "b16d",
+      "sellerId": "e780",
+      "name": "Asus ZenBook 13 OLED",
+      "price": 78999,
+      "category": "laptop",
+      "description": "Asus Laptop",
+      "quantity": 51,
+      "isOnSale": false,
+      "rating": 4.5,
+      "imageUrl": "zenbookOled13.png"
+    },
+    {
+      "name": "Protronics Todd 7 Plus",
+      "price": 799,
+      "quantity": 115,
+      "category": "accessories",
+      "description": "Wireless Mouse Bluetooth Rechargable",
+      "sellerId": "e780",
+      "id": "56e9",
+      "isOnSale": false,
+      "rating": 3.9,
+      "imageUrl": "oad7.png"
+    },
+    {
+      "id": "40c9",
+      "name": "Samsung Galaxy S23",
+      "price": 45999,
+      "quantity": 0,
+      "category": "mobile",
+      "description": "Phone",
+      "sellerId": "e780",
+      "isOnSale": false,
+      "rating": 4.9,
+      "imageUrl": "s23.jpg"
+    },
+    {
+      "id": "08d9",
+      "name": "One Plus Nord 2T",
+      "price": 30999,
+      "quantity": 10,
+      "category": "Mobile",
+      "description": "Phone",
+      "sellerId": "e780"
+    }
+  ],
+  "wishList": [
+    {
+      "userId": "bc80",
+      "productIds": [
+        "6a31",
+        "56e9"
+      ],
+      "id": "bc80"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "email": "john@example.com",
+      "password": "123456"
+    },
+    {
+      "id": "bc80",
+      "name": "test User",
+      "email": "test@test.com",
+      "phno": "8129318329",
+      "password": "Pass@123",
+      "confirmPassword": "Pass@123"
+    }
+  ],
+  "seller": [
+    {
+      "id": "e780",
+      "name": "Sachidananda Padhiali",
+      "email": "sagarpadhiali99@gmail.com",
+      "phno": "07008878436",
+      "password": "Pass@123",
+      "confirmPassword": "Pass@123"
+    },
+    {
+      "id": "e515",
+      "name": "Laxman Padhiali",
+      "email": "laxmanpadhiali@gmail.com",
+      "phno": "9861284498",
+      "password": "Pass@123",
+      "confirmPassword": "Pass@123"
+    }
+  ]
+}

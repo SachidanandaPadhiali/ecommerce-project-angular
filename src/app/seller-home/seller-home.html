@@ -1,0 +1,40 @@
+<div class="main-content">
+    <br><br><br><br>
+    <h1 style="text-align: center; padding-bottom: 1%;">YOUR PRODUCTS</h1>
+    <div class="product-container">
+        <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+        <table class="table-fill">
+            <thead>
+                <tr>
+                    <th class="text-center">Product</th>
+                    <th class="text-center">Price</th>
+                    <th class="text-center">category</th>
+                    <th class="text-center">quantity</th>
+                </tr>
+            </thead>
+            <tbody class="table-hover">
+                <tr *ngFor="let product of products">
+                    <td class="text-left hoverable">{{ product.name }}</td>
+                    <td class="text-center hoverable">&#8377;{{ product.price }}</td>
+                    <td class="text-center hoverable">{{ product.category }}</td>
+                    <td class="text-center hoverable">{{ product.quantity }}</td>
+                    <td class="prod-action">
+                        <button class="btn action-btn edit-btn text-center" *ngIf="product.id" (click)="editProduct(product.id)">
+                            <span>Edit</span>
+                        </button>
+                        <!-- Button triggers the delete method -->
+                        <button class="btn action-btn delete-btn" *ngIf="product.id"
+                            (click)="removeProduct(product.id)">
+                            <span>Delete</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ng-template #noProducts>
+            <p>No products available.</p>
+        </ng-template>
+    </div>
+</div>

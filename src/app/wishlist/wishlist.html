@@ -1,0 +1,12 @@
+<div [ngClass]="{ 'product-list': true, loading: loading }">
+    <div class="product-grid" style="padding-top: 5px;">
+        <ng-container *ngFor="let product of products; let i = index">
+            <app-product-card [product]="product" [wishList]="wishList" (wishToggled)="toggleWish($event)">
+            </app-product-card>
+        </ng-container>
+    </div>
+    <div class="nowishlist" *ngIf="wishList.size === 0">
+        <h2 class="message error">There are no items in your wishlist.</h2>
+    </div>
+    <div *ngIf="error" class="error">{{ error }}</div>
+</div>
