@@ -1,0 +1,10 @@
+# Java/Spring Boot
+/backend/target/
+/backend/.mvn/
+**/*.log
+**/*.class
+
+# Node/Vue/React
+/frontend/node_modules/
+/frontend/dist/
+/frontend/.env

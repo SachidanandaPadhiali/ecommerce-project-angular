@@ -1,0 +1,66 @@
+<div class="main-content">
+    <img src="assets/image/Green And White Floral Summer Big Sale Outdoor Banner.png" alt="RAINY SALE"
+        style="width: 100%;">
+
+    <!-- ++++++++++ ADVANTAGES ++++++++++ -->
+    <div id="elements">
+        <ul>
+            @for (advantage of [
+            { title: 'Free Delivery', subtitle: 'From all orders over 499', src: 'assets/image/svg/delivery.svg' },
+            { title: 'Return & Refund', subtitle: 'Free return and Exchange', src: 'assets/image/svg/return.svg' },
+            { title: 'Secure payment', subtitle: '100% Protected', src: 'assets/image/svg/secure.svg' },
+            { title: 'Gift voucher', subtitle: 'Refer a friend', src: 'assets/image/svg/voucher.svg' },
+            { title: 'Support 24/7', subtitle: 'Shop with an expert', src: 'assets/image/svg/support.svg' },
+            ]; track advantage.title) {
+            <li>
+                <img class="image-left" src="{{ advantage.src }}" alt="delivery">
+                <div class="info-right">
+                    <h4>{{ advantage.title }}</h4>
+                    <p>{{ advantage.subtitle }}</p>
+                </div>
+            </li>
+            }
+        </ul>
+    </div>
+
+    <!-- ++++++++++ CATEGORIES ++++++++++ -->
+    <div id="categories">
+        <ul>
+            @for (categories of [
+            { title: 'mobile', src: 'assets/image/category/mobile.png' },
+            { title: 'computer', src: 'assets/image/category/computer.png' },
+            { title: 'laptop', src: 'assets/image/category/laptop.png' },
+            { title: 'accessories', src: 'assets/image/category/acc.png' },
+            { title: 'home', src: 'assets/image/category/home.png' },
+            { title: 'kitchen', src: 'assets/image/category/kitchen.png' },
+            { title: 'bathroom', src: 'assets/image/category/bathroom.png' },
+            { title: 'appliances', src: 'assets/image/category/appliances.png' },
+            { title: 'decor', src: 'assets/image/category/decor.png' },
+            { title: 'mens', src: 'assets/image/category/mens.png' },
+            { title: 'womens', src: 'assets/image/category/womens.png' },
+            { title: 'kids', src: 'assets/image/category/kids.png' },
+            { title: 'toys', src: 'assets/image/category/toys.png' },
+            { title: 'shoes', src: 'assets/image/category/shoes.png' },
+            { title: 'innerwear', src: 'assets/image/category/innerwear.png' },
+            { title: 'thermal', src: 'assets/image/category/thermal.png' },
+            ]; track categories.title) {
+            <div class="category-pill">
+                <div class="imgBox">
+                    <img src="{{ categories.src }}">
+                </div>
+
+                <div class="contentBox">
+                    <h3>{{ categories.title }}</h3>
+                    <a [routerLink]="['/shop/category', categories.title.toLowerCase()]" (click)="log()">SHOP</a>
+                </div>
+
+            </div>}
+        </ul>
+    </div>
+
+<!--    <div class="content">
+        <button class="main-btn cart">Add To Cart</button>
+        <div class="divider" role="separator" aria-label="Divider"></div>
+        <p class="count" style="max-width: 50px; margin: 2rem;">1</p>
+    </div>-->
+</div>
