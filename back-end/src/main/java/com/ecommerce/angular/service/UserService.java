@@ -14,7 +14,7 @@ import com.ecommerce.angular.entity.User;
  */
 public interface UserService {
 
-    EcommResponse createAccount(UserDTO userRequest);
+    EcommResponse createAccount(UserDTO userDTO);
     public User validateUser(String username, String password);
 
 }

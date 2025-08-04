@@ -10,11 +10,13 @@ import com.ecommerce.angular.entity.User;
 import com.ecommerce.angular.repo.UserRepo;
 import com.ecommerce.angular.utils.EcommUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author sagar
  */
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
