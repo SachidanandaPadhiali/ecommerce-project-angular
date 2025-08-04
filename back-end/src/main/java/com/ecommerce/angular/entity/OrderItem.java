@@ -26,7 +26,7 @@ public class OrderItem {
     private Long id;
 
     @ManyToOne
-    private Long orderId;
+    private Order order;
 
     @ManyToOne
     private Product product;
