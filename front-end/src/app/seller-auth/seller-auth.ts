@@ -12,13 +12,15 @@ import { Seller } from '../services/seller';
 })
 export class SellerAuth implements OnInit {
 
-  constructor(private newSeller: Seller, private router:Router) { }
+  constructor(private newSeller: Seller, private router: Router) { }
   ngOnInit(): void { }
 
   seller = {
     name: '',
     email: '',
-    phno: '',
+    phoneNo: '',
+    gender: 'male',
+    role: 'seller',
     password: '',
     confirmPassword: ''
   };
@@ -43,24 +45,20 @@ export class SellerAuth implements OnInit {
     if (!this.isPasswordValid(this.seller.password)) return;
     if (!this.isPasswordLong(this.seller.password)) return;
 
-    this.newSeller.checkDuplicateEmail(this.seller.email).subscribe((res) => {
-      if (res.length > 0) {
-        // Duplicate found
-        this.duplicateSeller = 'Email already registered... Please LogIn Instead';
-        return;
-      }
-
-      // No duplicate, proceed with sign-up
-      this.newSeller.sellerSignUp(data).subscribe({
-        next: () => {
+    this.newSeller.sellerSignUp(data).subscribe(
+      (response: { responseCode: string; responseMessage: string }) => {
+        // Now TypeScript knows response has responseCode and responseMessage
+        if (response.responseCode === '001') {
+          this.duplicateSeller = 'Email already registered... Please LogIn Instead';
+        } else {
           this.duplicateSeller = null;
           this.router.navigate(['/log-in']);
-        },
-        error: (err) => {
-          console.error('Sign-up failed:', err);
-          this.duplicateSeller = 'Registration failed';
         }
-      });
-    });
+      },
+      (err) => {
+        console.error('Sign-up failed:', err);
+        this.duplicateSeller = 'Registration failed';
+      }
+    );
   }
 }

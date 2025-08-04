@@ -4,7 +4,6 @@ import { ProductService } from '../services/product-service';
 import { CommonModule } from '@angular/common';
 import { switchMap } from 'rxjs/operators';
 import { Product } from '../models/product.model';
-import { HttpClient } from '@angular/common/http';
 import { UserService } from '../services/user-service';
 import { ProductCard } from '../product-card/product-card';
 

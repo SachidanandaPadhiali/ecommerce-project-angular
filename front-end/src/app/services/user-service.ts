@@ -14,12 +14,8 @@ export class UserService {
   private apiUrl = environment.apiUrl;
   private wishList: WishListEntry[] = [];
 
-  userSignUp(data: any) {
-    return this.http.post(`${this.apiUrl}/users`, data)
-  }
-
-  checkDuplicateEmail(email: string) {
-    return this.http.get<any[]>(`${this.apiUrl}/users?email=${email}`);
+  userSignUp(data: object): Observable<{ responseCode: string; responseMessage: string }> {
+    return this.http.post<{ responseCode: string; responseMessage: string }>(`${this.apiUrl}/api/user`, data)
   }
 
   wishProduct(userId: string, productId: string): void {

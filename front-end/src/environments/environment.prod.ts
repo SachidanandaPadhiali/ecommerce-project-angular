@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:8088'
+  apiUrl: 'http://192.168.1.4.nip.io:8088'
 };

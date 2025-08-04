@@ -14,7 +14,7 @@
         </div>
 
         <div class="input-group">
-          <input type="text" [(ngModel)]="seller.phno" name="phno" placeholder="Your Phone No." required>
+          <input type="text" [(ngModel)]="seller.phoneNo" name="phno" placeholder="Your Phone No." required>
         </div>
 
         <div class="input-group">
@@ -38,7 +38,7 @@
           Valid Password.
         </p>
 
-        <button type="submit" class="main-btn">CREATE AN ACCOUNT</button>
+        <button type="submit" class="main-btn" style="margin-bottom: 1rem;">CREATE AN ACCOUNT</button>
         <p *ngIf="duplicateSeller" class="message error">{{ duplicateSeller }}</p>
 
         <p class="login-link">

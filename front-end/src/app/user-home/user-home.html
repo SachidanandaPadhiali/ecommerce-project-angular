@@ -44,23 +44,18 @@
             { title: 'innerwear', src: 'assets/image/category/innerwear.png' },
             { title: 'thermal', src: 'assets/image/category/thermal.png' },
             ]; track categories.title) {
-            <div class="category-pill">
+            <div class="category-pill" [routerLink]="['/shop/category', categories.title.toLowerCase()]">
                 <div class="imgBox">
                     <img src="{{ categories.src }}">
                 </div>
 
                 <div class="contentBox">
                     <h3>{{ categories.title }}</h3>
-                    <a [routerLink]="['/shop/category', categories.title.toLowerCase()]" (click)="log()">SHOP</a>
+                    <a>SHOP</a>
                 </div>
 
             </div>}
         </ul>
     </div>
 
-<!--    <div class="content">
-        <button class="main-btn cart">Add To Cart</button>
-        <div class="divider" role="separator" aria-label="Divider"></div>
-        <p class="count" style="max-width: 50px; margin: 2rem;">1</p>
-    </div>-->
 </div>

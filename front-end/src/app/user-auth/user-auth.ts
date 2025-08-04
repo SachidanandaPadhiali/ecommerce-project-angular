@@ -6,19 +6,21 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-user-auth',
-  imports: [ CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './user-auth.html',
   styleUrl: './user-auth.css'
 })
-export class UserAuth  implements OnInit {
+export class UserAuth implements OnInit {
 
-  constructor(private newuser: UserService, private router:Router) { }
+  constructor(private newuser: UserService, private router: Router) { }
   ngOnInit(): void { }
 
   user = {
     name: '',
     email: '',
-    phno: '',
+    gender: 'male',
+    role: 'user',
+    phoneNo: '',
     password: '',
     confirmPassword: ''
   };
@@ -43,24 +45,20 @@ export class UserAuth  implements OnInit {
     if (!this.isPasswordValid(this.user.password)) return;
     if (!this.isPasswordLong(this.user.password)) return;
 
-    this.newuser.checkDuplicateEmail(this.user.email).subscribe((res) => {
-      if (res.length > 0) {
-        // Duplicate found
-        this.duplicateUser = 'Email already registered... Please LogIn Instead';
-        return;
-      }
-
-      // No duplicate, proceed with sign-up
-      this.newuser.userSignUp(data).subscribe({
-        next: () => {
+    this.newuser.userSignUp(data).subscribe(
+      (response: { responseCode: string; responseMessage: string }) => {
+        // Now TypeScript knows response has responseCode and responseMessage
+        if (response.responseCode === '001') {
+          this.duplicateUser = 'Email already registered... Please LogIn Instead';
+        } else {
           this.duplicateUser = null;
           this.router.navigate(['/log-in']);
-        },
-        error: (err) => {
-          console.error('Sign-up failed:', err);
-          this.duplicateUser = 'Registration failed';
         }
-      });
-    });
+      },
+      (err) => {
+        console.error('Sign-up failed:', err);
+        this.duplicateUser = 'Registration failed';
+      }
+    );
   }
 }

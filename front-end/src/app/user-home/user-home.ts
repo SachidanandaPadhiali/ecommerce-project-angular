@@ -10,8 +10,4 @@ import { RouterModule } from '@angular/router';
   styleUrl: './user-home.css'
 })
 export class UserHome {
-  log() {
-    console.log('Navigating...');
-  }
-
 }
