@@ -26,29 +26,35 @@ export class Login {
   private apiUrl = environment.apiUrl;
 
   handleSignIn(): void {
-    const { email, password } = this.user;
+    const loginPayload = {
+      email: this.user.email,
+      password: this.user.password
+    };
 
-    this.http.get<any[]>(`${this.apiUrl}/users?email=${email}&password=${password}`).subscribe(userRes => {
-      if (userRes.length > 0) {
-        localStorage.setItem('user', JSON.stringify(userRes[0]));
-        this.router.navigate(['/user-home']);
+    this.http.post<any>(`${this.apiUrl}/api/login`, loginPayload).subscribe(response => {
+      if (response && response.role) {
+        const role = response.role.toLowerCase();
+
+        if (role === 'user') {
+          localStorage.setItem('user', JSON.stringify(response));
+          this.router.navigate(['/user-home']);
+        } else if (role === 'seller') {
+          const sellerData = {
+            id: response.id,
+            name: response.name,
+            email: response.email,
+            phno: response.phno
+          };
+          localStorage.setItem('seller', JSON.stringify(sellerData));
+          this.router.navigate(['/seller-home']);
+        } else {
+          this.errorMessage = 'Unknown role';
+        }
       } else {
-        this.http.get<any[]>(`${this.apiUrl}/seller?email=${email}&password=${password}`).subscribe(sellerRes => {
-          if (sellerRes.length > 0) {
-            const seller = sellerRes[0];
-            const sellerData = {
-              id: seller.id,
-              name: seller.name,
-              email: seller.email,
-              phno: seller.phno
-            };
-            localStorage.setItem('seller', JSON.stringify(sellerData));
-            this.router.navigate(['/seller-home']);
-          } else {
-            this.errorMessage = 'Invalid email or password';
-          }
-        });
+        this.errorMessage = 'Invalid email or password';
       }
+    }, err => {
+      this.errorMessage = 'Login failed';
     });
   }
 
