@@ -8,8 +8,8 @@ import { authGuard } from './auth-guard';
 import { SellerAddProduct } from './seller-add-product/seller-add-product';
 import { UserAuth } from './user-auth/user-auth';
 import { Shop } from './shop/shop';
-import { DummyResolver } from './resolvers/dummy.resolver';
 import { Wishlist } from './wishlist/wishlist';
+import { UserProfile } from './user-profile/user-profile';
 
 export const routes: Routes = [
     { path: '', component: Home },
@@ -22,5 +22,6 @@ export const routes: Routes = [
     { path: 'seller-product/:id', component: SellerAddProduct },
     { path: 'shop', component: Shop },
     { path: 'user/wishlist', component: Wishlist, canActivate: [authGuard], data: { role: 'user' } },
+    { path: 'user/profile', component: UserProfile, canActivate: [authGuard], data: { role: 'user' } },
     { path: 'shop/category/:name', component: Shop, runGuardsAndResolvers: 'paramsChange' }
 ];

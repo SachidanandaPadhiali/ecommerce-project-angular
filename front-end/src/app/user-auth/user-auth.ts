@@ -18,7 +18,7 @@ export class UserAuth implements OnInit {
   user = {
     name: '',
     email: '',
-    gender: 'male',
+    gender: '',
     role: 'user',
     phoneNo: '',
     password: '',
@@ -26,7 +26,17 @@ export class UserAuth implements OnInit {
   };
 
   duplicateUser: string | null = null;
+  showDropdown: boolean = false;
 
+  // Method to toggle the dropdown visibility
+  toggleDropdown() {
+    this.showDropdown = !this.showDropdown;
+  }
+
+  selectGender(gender: string) {
+    this.user.gender = gender;
+    this.showDropdown = false;
+  }
   get passwordMismatch(): boolean {
     return this.user.password !== this.user.confirmPassword;
   }

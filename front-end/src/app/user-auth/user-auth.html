@@ -18,6 +18,16 @@
         </div>
 
         <div class="input-group">
+          <select [(ngModel)]="user.gender" name="gender" required class="custom-select">
+            <option disabled value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+          <span class="custom-arrow"></span>
+        </div>
+
+        <div class="input-group">
           <input type="password" [(ngModel)]="user.password" name="password" placeholder="Create Password" required>
         </div>
 
@@ -34,7 +44,8 @@
           Password is not long enough.
         </p>
 
-        <p *ngIf="user.password && isPasswordValid(user.password) && isPasswordLong(user.password) && !passwordMismatch" class="message success">
+        <p *ngIf="user.password && isPasswordValid(user.password) && isPasswordLong(user.password) && !passwordMismatch"
+          class="message success">
           Valid Password.
         </p>
 
