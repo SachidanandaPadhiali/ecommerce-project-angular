@@ -4,10 +4,44 @@
  */
 package com.ecommerce.angular.service;
 
+import com.ecommerce.angular.dto.EcommResponse;
+import com.ecommerce.angular.dto.ProductDTO;
+import com.ecommerce.angular.entity.Product;
+import java.util.List;
+
 /**
  *
  * @author sagar
  */
-public class SellerService {
-    
+public interface SellerService {
+
+    /**
+     * Adds a new product to the seller's inventory.
+     *
+     * @param product The product details to be added.
+     * @return EcommResponse containing the result of the operation.
+     */
+    EcommResponse addProduct(ProductDTO product);
+    /**
+     * Updates an existing product in the seller's inventory.
+     *
+     * @param product The updated product details.
+     * @return EcommResponse containing the result of the operation.
+     */
+    EcommResponse updateProduct(ProductDTO product);
+    /**
+     * Deletes a product from the seller's inventory.
+     *
+     * @param product The product to be deleted.
+     * @return EcommResponse containing the result of the operation.
+     */
+    EcommResponse deleteProduct(ProductDTO product);
+    /**
+     * Retrieves list of products added by the seller.
+     *
+     * @param sellerId The product to be retrieved.
+     * @return Product entity containing the product details.
+     */
+    public List<Product> getProducts(Long sellerId);
+
 }

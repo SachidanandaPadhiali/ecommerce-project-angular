@@ -9,19 +9,19 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Data;
 
 /**
  *
  * @author sachidananda
  */
-
 @Entity
 @Table(name = "Product")
 @Data
-
+@Builder
 public class Product {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,9 +32,11 @@ public class Product {
     private double discPrice;
 
     private String imageUrl;
-    
+
     private String category;
     private int quantity;
     private String brand;
     private String color;
+
+    private double rating;
 }
