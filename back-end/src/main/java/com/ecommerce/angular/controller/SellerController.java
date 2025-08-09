@@ -6,8 +6,8 @@ package com.ecommerce.angular.controller;
 
 import com.ecommerce.angular.dto.EcommResponse;
 import com.ecommerce.angular.dto.ProductDTO;
+import com.ecommerce.angular.dto.SellerRequest;
 import com.ecommerce.angular.entity.Product;
-import com.ecommerce.angular.entity.SellerRequest;
 import com.ecommerce.angular.service.SellerService;
 
 import java.util.Map;
@@ -57,15 +57,4 @@ public class SellerController {
         return new ResponseEntity<>(sellerService.getProducts(request.getSellerId()), HttpStatus.OK);
     }
 
-    /*
-     * @PostMapping("/getProductById")
-     * public ResponseEntity<?> getProductById(@RequestBody Long productId) {
-     * ProductDTO product = productService.getProductById(productId);
-     * if (product != null) {
-     * return new ResponseEntity<>(product, HttpStatus.OK);
-     * } else {
-     * return new ResponseEntity<>("Product not found", HttpStatus.NOT_FOUND);
-     * }
-     * }
-     */
 }

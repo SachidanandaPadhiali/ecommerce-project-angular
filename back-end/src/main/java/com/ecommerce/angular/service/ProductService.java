@@ -4,10 +4,13 @@
  */
 package com.ecommerce.angular.service;
 
+import com.ecommerce.angular.entity.Product;
+
 
 /**
  *
  * @author sagar
  */
 public interface ProductService {
+    Product getProductById(Long productId);
 }

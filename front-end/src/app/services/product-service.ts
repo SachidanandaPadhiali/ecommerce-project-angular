@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Product } from '../models/product.model';
 import { Observable } from 'rxjs';
@@ -15,7 +15,7 @@ export class ProductService {
 
   private apiUrl = environment.apiUrl;
   private sellerApiUrl = `${this.apiUrl}/api/seller`;
-  private productApiUrl = `${this.apiUrl}/api/seller`;
+  private productApiUrl = `${this.apiUrl}/api/product`;
 
   /**
    * Adds a new product to the seller's inventory.
@@ -66,8 +66,9 @@ export class ProductService {
    * @param {string} id - The unique identifier of the product.
    * @return {Observable<Product>} An observable containing the product data.
    * */
-  getProductById(id: string) {
-    return this.http.get<Product>(`${this.productApiUrl}/${id}`);
+  getProductById(productId: string): Observable<Product> {
+    const params = new HttpParams().set('productId', productId);
+    return this.http.get<Product>(`${this.productApiUrl}/getProductById`, { params });
   }
 
   /**
