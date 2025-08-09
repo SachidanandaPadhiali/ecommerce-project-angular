@@ -35,7 +35,7 @@ public interface SellerService {
      * @param product The product to be deleted.
      * @return EcommResponse containing the result of the operation.
      */
-    EcommResponse deleteProduct(ProductDTO product);
+    EcommResponse deleteProduct(Long produtId);
     /**
      * Retrieves list of products added by the seller.
      *

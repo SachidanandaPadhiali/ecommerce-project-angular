@@ -13,4 +13,5 @@ public interface SellerItemRepo extends JpaRepository<SellerItems, Long> {
      * @return The saved seller item entity.
      */
     SellerItems save(SellerItems sellerItem);
+    
 }

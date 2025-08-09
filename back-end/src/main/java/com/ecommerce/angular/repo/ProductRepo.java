@@ -3,7 +3,9 @@ package com.ecommerce.angular.repo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.ecommerce.angular.entity.Product;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ProductRepo extends JpaRepository<Product, Long> {
 
     /**
@@ -21,12 +23,5 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
      * @return the product if found, otherwise null
      */
     Product findProductById(Long productId);
-
-    /**
-     * Deletes a product by its ID.
-     *
-     * @param productId the ID of the product to be deleted
-     */
-    void deleteProductById(Long productId);
 
 }

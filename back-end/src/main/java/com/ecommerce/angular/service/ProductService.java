@@ -13,4 +13,5 @@ import com.ecommerce.angular.entity.Product;
  */
 public interface ProductService {
     Product getProductById(Long productId);
+    
 }

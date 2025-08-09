@@ -31,6 +31,12 @@ public class EcommUtils {
     /**
      * Custom message when seller adds product
      */
+    public static final String PRODUCT_DOES_NOT_EXISTS_CODE = "010";
+    public static final String PRODUCT_DOES_NOT_EXISTS_MESSAGE = "Product Don't Exist";
+
+    /**
+     * Custom message when seller adds product
+     */
     public static final String PRODUCT_ADDED_CODE = "011";
     public static final String PRODUCT_ADDED_MESSAGE = "Product Added";
 

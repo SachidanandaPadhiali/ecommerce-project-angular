@@ -87,10 +87,16 @@ public class SellerServiceImpl implements SellerService {
     }
 
     @Override
-    public EcommResponse deleteProduct(ProductDTO product) {
+    public EcommResponse deleteProduct(Long productId) {
+        Product existingProduct = productRepo.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        existingProduct.setQuantity(-1);
+        productRepo.save(existingProduct);
+
         return EcommResponse.builder()
-                .responseCode(EcommUtils.ACCOUNT_EXISTS_CODE)
-                .responseMessage(EcommUtils.ACCOUNT_EXISTS_MESSAGE)
+                .responseCode(EcommUtils.PRODUCT_DELETED_CODE)
+                .responseMessage(EcommUtils.PRODUCT_DELETED_MESSAGE)
                 .build();
     }
 
