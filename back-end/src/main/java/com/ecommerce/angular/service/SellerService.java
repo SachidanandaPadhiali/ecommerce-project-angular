@@ -28,7 +28,7 @@ public interface SellerService {
      * @param product The updated product details.
      * @return EcommResponse containing the result of the operation.
      */
-    EcommResponse updateProduct(ProductDTO product);
+    EcommResponse updateProduct(Long id, ProductDTO product);
     /**
      * Deletes a product from the seller's inventory.
      *

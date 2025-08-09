@@ -64,10 +64,25 @@ public class SellerServiceImpl implements SellerService {
     }
 
     @Override
-    public EcommResponse updateProduct(ProductDTO product) {
+    public EcommResponse updateProduct(Long id, ProductDTO updatedProduct) {
+        Product existingProduct = productRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        existingProduct.setName(updatedProduct.getName());
+        existingProduct.setDescription(updatedProduct.getDescription());
+        existingProduct.setPrice(updatedProduct.getPrice());
+        existingProduct.setDiscPrice(updatedProduct.getDiscPrice());
+        existingProduct.setImageUrl(updatedProduct.getImageUrl());
+        existingProduct.setCategory(updatedProduct.getCategory());
+        existingProduct.setQuantity(updatedProduct.getQuantity());
+        existingProduct.setBrand(updatedProduct.getBrand());
+        existingProduct.setColor(updatedProduct.getColor());
+
+        productRepo.save(existingProduct);
+
         return EcommResponse.builder()
-                .responseCode(EcommUtils.ACCOUNT_EXISTS_CODE)
-                .responseMessage(EcommUtils.ACCOUNT_EXISTS_MESSAGE)
+                .responseCode(EcommUtils.PRODUCT_UPDATED_CODE)
+                .responseMessage(EcommUtils.PRODUCT_UPDATED_MESSAGE)
                 .build();
     }
 

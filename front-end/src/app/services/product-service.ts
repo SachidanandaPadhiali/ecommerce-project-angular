@@ -14,35 +14,68 @@ export class ProductService {
   constructor(private http: HttpClient) { }
 
   private apiUrl = environment.apiUrl;
-  private sellerUrl = `${this.apiUrl}/api/seller`;
+  private sellerApiUrl = `${this.apiUrl}/api/seller`;
+  private productApiUrl = `${this.apiUrl}/api/seller`;
 
+  /**
+   * Adds a new product to the seller's inventory.
+   * @param {Product} data - The product data to be added.
+   * @return {Observable<any>} An observable containing the response from the server.
+   * */
   addProduct(data: Product) {
-    return this.http.post(`${this.sellerUrl}/addProduct`, data);
+    return this.http.post(`${this.sellerApiUrl}/addProduct`, data);
   }
 
-  viewProductBySeller(sellerId: String): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.apiUrl}/products?sellerId=${sellerId}`);
+  /**
+   * Retrieves all products added by a specific seller.
+   * @param {number} sellerId - The unique identifier of the seller.
+   * @return {Observable<Product[]>} An observable containing the list of products.
+   */
+  viewProductBySeller(sellerId: number): Observable<Product[]> {
+    return this.http.post<Product[]>(`${this.sellerApiUrl}/getProducts`, { sellerId });
   }
-
-  removeProduct(id: string) {
-    return this.http.delete(`${this.apiUrl}/products/${id}`);
-  }
-
-  getProductsByCategory(category: string): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.apiUrl}/products?category=${category}`);
-  }
-
-  getProductById(id: string) {
-    return this.http.get<Product>(`${this.apiUrl}/products/${id}`);
-  }
-
-  getProductsById(prodIds: string[]): Observable<Product[]> {
-    const queryParams = prodIds.map(id => `id=${id}`).join('&');
-    console.log("queryParams",queryParams);
-    return this.http.get<Product[]>(`${this.apiUrl}/products?${queryParams}`);
-  }
-
+  /**
+   * Updates an existing product in the seller's inventory.
+   * @param {Product} product - The product data to be updated.
+   * @return {Observable<any>} An observable containing the response from the server.
+   * */
   updateProduct(product: Product) {
-    return this.http.put(`${this.apiUrl}/products/${product.id}`, product);
+    return this.http.put(`${this.sellerApiUrl}/addProduct/${product.id}`, product);
+  }
+
+  /**
+   * Removes a product from the seller's inventory.
+   * @param {string} id - The unique identifier of the product to be removed.
+   * @return {Observable<any>} An observable containing the response from the server.
+   * */
+  removeProduct(id: string) {
+    return this.http.delete(`${this.sellerApiUrl}/products/${id}`);
+  }
+
+  /**
+   * Retrieves products by category.
+   * @param {string} category - The category to filter products by.
+   * @return {Observable<Product[]>} An observable containing the list of products in the specified category.
+   * */
+  getProductsByCategory(category: string): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.productApiUrl}?category=${category}`);
+  }
+
+  /**
+   * Retrieves a product by its unique identifier.
+   * @param {string} id - The unique identifier of the product.
+   * @return {Observable<Product>} An observable containing the product data.
+   * */
+  getProductById(id: string) {
+    return this.http.get<Product>(`${this.productApiUrl}/${id}`);
+  }
+
+  /**
+   * Retrieves a list of products by their unique identifiers.
+   * @param {string[]} prodIds - An array of product identifiers.
+   * @return {Observable<Product[]>} An observable containing the list of products.
+   */
+  getProductsById(prodIds: string[]): Observable<Product[]> {
+    return this.http.post<Product[]>(`${this.productApiUrl}/productsByIds`, { prodIds });
   }
 }

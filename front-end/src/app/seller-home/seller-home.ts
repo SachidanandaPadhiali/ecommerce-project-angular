@@ -14,7 +14,7 @@ export class SellerHome implements OnInit {
   errorMessage: string | undefined;
 
   products: Product[] = [];
-  sellerId: String = "";
+  sellerId: number = 0;
   constructor(private productService: ProductService, private cd: ChangeDetectorRef, private ngZone: NgZone, private router:Router) { }
 
   ngOnInit(): void {
@@ -25,6 +25,7 @@ export class SellerHome implements OnInit {
     const seller = JSON.parse(localStorage.getItem('seller') || '{}');
     this.sellerId = seller?.id;
     if (this.sellerId) {
+      console.log("sellerId", this.sellerId);
       this.productService.viewProductBySeller(this.sellerId).subscribe({
         next: (data) => {
           this.ngZone.run(() => {
