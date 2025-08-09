@@ -11,16 +11,28 @@
                     <input type="text" formControlName="name" placeholder="Product Name" />
                 </div>
                 <div class="input-group">
+                    <textarea formControlName="description" placeholder="Description"></textarea>
+                </div>
+                <div class="input-group">
                     <input type="number" formControlName="price" placeholder="Price" />
                 </div>
                 <div class="input-group">
-                    <input type="number" formControlName="quantity" placeholder="Quantity" />
+                    <input type="number" formControlName="discPrice" placeholder="Discounted Price" />
                 </div>
                 <div class="input-group">
                     <input type="text" formControlName="category" placeholder="Category" />
                 </div>
                 <div class="input-group">
-                    <textarea formControlName="description" placeholder="Description"></textarea>
+                    <input type="number" formControlName="imageUrl" placeholder="imageUrl" />
+                </div>
+                <div class="input-group">
+                    <input type="number" formControlName="quantity" placeholder="Quantity" />
+                </div>
+                <div class="input-group">
+                    <input type="number" formControlName="brand" placeholder="Brand" />
+                </div>
+                <div class="input-group">
+                    <input type="number" formControlName="color" placeholder="Color" />
                 </div>
                 <br />
                 <div *ngIf="successMessage" class="message success">{{ successMessage }}</div>

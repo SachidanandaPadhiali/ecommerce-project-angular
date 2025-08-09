@@ -23,12 +23,32 @@ export class SellerAddProduct implements OnInit {
   productForm!: FormGroup;
   productId: string | null = null;
 
+  /**
+   * Represents a product to be added by the seller.
+   *
+   * @property {string} sellerId - The unique identifier of the seller.
+   * @property {string} name - The name of the product.
+   * @property {number} price - The original price of the product.
+   * @property {number} discPrice - The discounted price of the product.
+   * @property {string} category - The category to which the product belongs.
+   * @property {string} description - A detailed description of the product.
+   * @property {string} imageUrl - The URL of the product's image.
+   * @property {string} brand - The brand of the product.
+   * @property {string} color - The color of the product.
+   * @property {number} rating - The average rating of the product.
+   * @property {number} quantity - The available quantity of the product.
+   */
   product: Product = {
-    sellerId: this.sellerId,
+    sellerId: '',
     name: '',
-    price: 0,
-    category: '',
     description: '',
+    price: 0,
+    discPrice: 0,
+    category: '',
+    imageUrl: '',
+    brand: '',
+    color: '',
+    rating: 0.0,
     quantity: 0
   };
 
@@ -36,10 +56,14 @@ export class SellerAddProduct implements OnInit {
   ngOnInit(): void {
     this.productForm = this.fb.group({
       name: ['', Validators.required],
+      description: [''],
       price: ['', Validators.required],
-      quantity: ['', Validators.required],
+      discPrice: ['', Validators.required],
       category: ['', Validators.required],
-      description: ['']
+      imageUrl: ['', Validators.required],
+      quantity: ['', Validators.required],
+      brand: ['', Validators.required],
+      color: ['', Validators.required],
     });
 
     this.route.paramMap.subscribe(params => {
@@ -51,10 +75,14 @@ export class SellerAddProduct implements OnInit {
         this.productService.getProductById(this.productId!).subscribe((prod: Product) => {
           this.productForm.patchValue({
             name: prod.name,
-            price: prod.price,
-            category: prod.category,
             description: prod.description,
-            quantity: prod.quantity
+            price: prod.price,
+            discPrice: prod.discPrice,
+            category: prod.category,
+            imageUrl: prod.imageUrl,
+            quantity: prod.quantity,
+            brand: prod.brand,
+            color: prod.color
           });
         });
       }
@@ -109,11 +137,16 @@ export class SellerAddProduct implements OnInit {
 
   resetForm() {
     this.product = {
-      sellerId: this.sellerId,
+      sellerId: '',
       name: '',
-      price: 0,
-      category: '',
       description: '',
+      price: 0,
+      discPrice: 0,
+      category: '',
+      imageUrl: '',
+      brand: '',
+      color: '',
+      rating: 0.0,
       quantity: 0
     };
   }

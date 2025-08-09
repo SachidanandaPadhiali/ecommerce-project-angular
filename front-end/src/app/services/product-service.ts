@@ -13,10 +13,10 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
-  private apiUrl = environment.apiUrl;
+  private apiUrl = `$(environment.apiUrl)/api/seller`;
 
   addProduct(data: Product) {
-    return this.http.post(`${this.apiUrl}/products`, data);
+    return this.http.post(`${this.apiUrl}/addProduct`, data);
   }
 
   viewProductBySeller(sellerId: String): Observable<Product[]> {
