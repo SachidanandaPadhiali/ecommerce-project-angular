@@ -36,7 +36,7 @@ public interface SellerRepo extends JpaRepository<User, Long> {
      * @param sellerId the ID of the seller
      * @return a list of products associated with the seller
      */
-    @Query("SELECT si.product FROM SellerItems si WHERE si.seller.id = :sellerId")
+    @Query("SELECT si.product FROM SellerItems si JOIN si.product p WHERE si.seller.id = :sellerId AND p.quantity >= 0")
     List<Product> findProductsBySellerId(@Param("sellerId") Long sellerId);
 
 }

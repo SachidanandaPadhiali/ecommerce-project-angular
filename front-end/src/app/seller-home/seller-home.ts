@@ -3,6 +3,8 @@ import { Product } from '../models/product.model';
 import { ProductService } from '../services/product-service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-seller-home',
@@ -15,7 +17,7 @@ export class SellerHome implements OnInit {
 
   products: Product[] = [];
   sellerId: number = 0;
-  constructor(private productService: ProductService, private cd: ChangeDetectorRef, private ngZone: NgZone, private router:Router) { }
+  constructor(private productService: ProductService, private cd: ChangeDetectorRef, private ngZone: NgZone, private router: Router, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.loadProducts();
@@ -47,10 +49,18 @@ export class SellerHome implements OnInit {
   editProduct(productId: string): void {
     this.router.navigate(['/seller-product', productId]);
   }
-  removeProduct(id: string) {
-    this.productService.removeProduct(id).subscribe(() => {
-      this.loadProducts();
+  removeProduct(id: string, productName: string) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '350px',
+      data: { productName }
+    });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (result) {
+        this.productService.removeProduct(id).subscribe(() => {
+          this.loadProducts();
+        });
+      }
     });
   }
-
 }
