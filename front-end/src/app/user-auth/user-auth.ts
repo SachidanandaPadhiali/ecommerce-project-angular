@@ -28,6 +28,34 @@ export class UserAuth implements OnInit {
   duplicateUser: string | null = null;
   showDropdown: boolean = false;
 
+  showError(nameRef: any, emailRef: any, phNoRef: any, genderRef: any): boolean {
+    return (
+      (nameRef.invalid && nameRef.touched) ||
+      (emailRef.invalid && emailRef.touched) ||
+      (phNoRef.invalid && phNoRef.touched) ||
+      (genderRef.invalid && genderRef.touched)
+    );
+  }
+
+  getErrorMessage(nameRef: any, emailRef: any, phNoRef: any, genderRef: any): string {
+    if (nameRef.errors?.['required'] && nameRef.touched) {
+      return 'Name is required.';
+    }
+    if (emailRef.errors?.['required'] && emailRef.touched) {
+      return 'Email is required.';
+    }
+    if (emailRef.errors?.['email'] && emailRef.touched) {
+      return 'Enter a valid email address.';
+    }
+    if (phNoRef.errors?.['required'] && phNoRef.touched) {
+      return 'Phone Number is required.';
+    }
+    if (genderRef.errors?.['required'] && genderRef.touched) {
+      return 'Gender is required.';
+    }
+    return '';
+  }
+
   // Method to toggle the dropdown visibility
   toggleDropdown() {
     this.showDropdown = !this.showDropdown;

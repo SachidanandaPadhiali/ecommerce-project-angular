@@ -26,6 +26,7 @@ export class SellerAuth implements OnInit {
   };
 
   duplicateSeller: string | null = null;
+  
   showError(nameRef: any, emailRef: any, phNoRef: any): boolean {
     return (
       (nameRef.invalid && nameRef.touched) ||

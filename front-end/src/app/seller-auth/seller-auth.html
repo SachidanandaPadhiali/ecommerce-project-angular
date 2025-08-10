@@ -10,30 +10,26 @@
         </div>
 
         <div class="input-group">
-          <input type="email" [(ngModel)]="seller.email" name="email" placeholder="Your Email" required
-            #emailRef="ngModel">
+          <input type="email" [(ngModel)]="seller.email" name="email" placeholder="Your Email" required #emailRef="ngModel">
         </div>
 
         <div class="input-group">
-          <input type="text" [(ngModel)]="seller.phoneNo" name="phno" placeholder="Your Phone No." required
-            #phNoRef="ngModel">
+          <input type="text" [(ngModel)]="seller.phoneNo" name="phno" placeholder="Your Phone No." required #phNoRef="ngModel">
         </div>
 
         <div class="input-group">
-          <input type="password" [(ngModel)]="seller.password" name="password" placeholder="Create Password" required
-            #passwordRef="ngModel">
+          <input type="password" [(ngModel)]="seller.password" name="password" placeholder="Create Password" required #passwordRef="ngModel">
         </div>
 
         <div class="input-group">
-          <input type="password" [(ngModel)]="seller.confirmPassword" name="confirmPassword"
-            placeholder="Confirm Password" required #confirmPasswordRef="ngModel">
+          <input type="password" [(ngModel)]="seller.confirmPassword" name="confirmPassword" placeholder="Confirm Password" required #confirmPasswordRef="ngModel">
         </div>
 
         <!-- Single error handler -->
         @if (showError(nameRef, emailRef, phNoRef)) {
-          <p class="message error">
-            {{ getErrorMessage(nameRef, emailRef, phNoRef) }}
-          </p>
+        <p class="message error">
+          {{ getErrorMessage(nameRef, emailRef, phNoRef) }}
+        </p>
         }
 
         <p *ngIf="passwordMismatch" class="message error">Passwords do not match!</p>

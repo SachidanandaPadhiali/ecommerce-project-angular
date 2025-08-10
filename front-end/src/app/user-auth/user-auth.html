@@ -4,21 +4,23 @@
       <h1>User Sign Up</h1>
       <p class="subtitle">Sign up to get started</p>
 
-      <form (ngSubmit)="signUp(user)">
+      <form #userForm="ngForm" (ngSubmit)="signUp(user)">
         <div class="input-group">
-          <input type="text" [(ngModel)]="user.name" name="name" placeholder="User Name" required>
+          <input type="text" [(ngModel)]="user.name" name="name" placeholder="User Name" required #nameRef="ngModel">
         </div>
 
         <div class="input-group">
-          <input type="email" [(ngModel)]="user.email" name="email" placeholder="Your Email" required>
+          <input type="email" [(ngModel)]="user.email" name="email" placeholder="Your Email" required
+            #emailRef="ngModel">
         </div>
 
         <div class="input-group">
-          <input type="text" [(ngModel)]="user.phoneNo" name="phno" placeholder="Your Phone No." required>
+          <input type="text" [(ngModel)]="user.phoneNo" name="phno" placeholder="Your Phone No." required
+            #phNoRef="ngModel">
         </div>
 
         <div class="input-group">
-          <select [(ngModel)]="user.gender" name="gender" required class="custom-select">
+          <select [(ngModel)]="user.gender" name="gender" required class="custom-select" #genderRef="ngModel">
             <option disabled value="">Select Gender</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
@@ -28,14 +30,21 @@
         </div>
 
         <div class="input-group">
-          <input type="password" [(ngModel)]="user.password" name="password" placeholder="Create Password" required>
+          <input type="password" [(ngModel)]="user.password" name="password" placeholder="Create Password" required
+            #passwordRef="ngModel">
         </div>
 
         <div class="input-group">
           <input type="password" [(ngModel)]="user.confirmPassword" name="confirmPassword"
-            placeholder="Confirm Password" required>
+            placeholder="Confirm Password" required #confirmPasswordRef="ngModel">
         </div>
 
+        <!-- Single error handler -->
+        @if (showError(nameRef, emailRef, phNoRef, genderRef)) {
+        <p class="message error">
+          {{ getErrorMessage(nameRef, emailRef, phNoRef, genderRef) }}
+        </p>
+        }
         <p *ngIf="passwordMismatch" class="message error">Passwords do not match!</p>
         <p *ngIf="user.password && !isPasswordValid(user.password)" class="message error">
           Password must contain uppercase, lowercase, number, and special character.
@@ -49,7 +58,7 @@
           Valid Password.
         </p>
 
-        <button type="submit" class="main-btn" style="margin-bottom: 1rem;">CREATE AN ACCOUNT</button>
+        <button type="submit" [disabled]="userForm.invalid" class="main-btn" style="margin-bottom: 1rem;">CREATE AN ACCOUNT</button>
         <p *ngIf="duplicateUser" class="message error">{{ duplicateUser }}</p>
 
         <p class="login-link">
