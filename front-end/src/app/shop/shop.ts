@@ -33,10 +33,10 @@ export class Shop implements OnInit {
 
   ngOnInit(): void {
     this.userId = JSON.parse(localStorage.getItem('user') || '{}')?.id;
-    this.userService.getWishList(this.userId).subscribe({
+    /*this.userService.getWishList(this.userId).subscribe({
       next: (data) => {
         const prodIds = data.map(entry => entry.productIds).flat();
-        this.wishList = new Set(prodIds.map(id => String(id)));  // ✅ store as strings
+        this.wishList = new Set(prodIds.map(id => String(id)));  // ✅ store as strings*/
         this.route.paramMap.pipe(
           switchMap((params: ParamMap) => {
             this.loading = true;
@@ -58,13 +58,13 @@ export class Shop implements OnInit {
             this.cdr.detectChanges(); // ✅ Even on error
           }
         });
-
+/*
       },
       error: (err) => {
         console.error('Error fetching wishlist:', err);
         this.wishList = new Set(); // Fallback
       }
-    });
+    });*/
   }
 
   viewProduct(productId: string | undefined): void {

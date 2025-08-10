@@ -35,6 +35,10 @@ export class ProductCard {
     return name.length > 25 ? name.substring(0, 22) + '...' : name;
   }
 
+  truncateDesc(name: string): string {
+    return name.length > 90 ? name.substring(0, 87) + '...' : name;
+  }
+
   getFill(n: number, rating: number | undefined): string {
     const safeRating = rating ?? 0;  // fallback to 0 if undefined
     // your logic here

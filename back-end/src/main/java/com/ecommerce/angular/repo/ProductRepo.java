@@ -1,8 +1,10 @@
 package com.ecommerce.angular.repo;
 
+import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.ecommerce.angular.entity.Product;
+import java.util.List;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -24,4 +26,6 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
      */
     Product findProductById(Long productId);
 
+    @Query("SELECT p FROM Product p WHERE p.category = :category")
+    List<Product> findProductByCategory(String category);
 }

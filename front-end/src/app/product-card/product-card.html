@@ -5,26 +5,28 @@
     <div class="prod-img"> <img [src]="'assets/image/products/' + product.imageUrl" alt="{{product.imageUrl}}" />
     </div>
     <div class="prod-info">
-        <div class="prod-category">{{ product.category }}</div>
+        <div class="prod-category">{{ product.brand }}</div>
         <h2 class="prod-title">{{ truncateName(product.name) }}</h2>
-        <p class="prod-desc">{{ product.description }}</p>
+        <p class="prod-desc">{{ truncateDesc(product.description) }}</p>
         <div class="prod-features">
-            <span class="prod-feature">Amoled Display</span>
+            <span class="prod-feature">{{ product.color}}</span>
             <span class="prod-feature">30-Hour Battery</span>
             <span class="prod-feature">200mp camera</span>
         </div>
         <div class="bottom-section">
             <div class="prod-price">
-                <span class="base-price" style="text-decoration: none;" *ngIf="product.quantity === 0"> ₹{{ product.price }}</span>
+                <span class="base-price" style="text-decoration: none;" *ngIf="product.quantity === 0"> ₹{{
+                    product.price }}</span>
                 <span class="base-price" *ngIf="product.quantity > 0"> ₹{{ product.price }}</span>
-                <span class="disc-price" *ngIf="product.quantity > 0"> ₹{{ product.price }}</span>
+                <span class="disc-price" *ngIf="product.quantity > 0"> ₹{{ product.discPrice }}</span>
             </div>
             <button class="addToCart" *ngIf="product.quantity > 0">
                 <span>Add to Cart</span><fa-icon class="cartIcon" [icon]="cart"></fa-icon>
             </button>
         </div>
-            <div class="stock outOfStock" *ngIf="product.quantity === 0">Out Of Stock</div>
+        <div class="stock outOfStock" *ngIf="product.quantity === 0">Out Of Stock</div>
         <div class="meta" *ngIf="product.quantity > 0">
+            <div class="prod-feature" *ngIf="product.rating === 0.0">Be the First One To purchase</div>
             <div class="prod-rating" *ngIf="product.rating !== undefined && product.rating > 0.5">
                 <svg *ngFor="let n of maxStars" class="star" viewBox="0 0 24 24">
                     <defs>

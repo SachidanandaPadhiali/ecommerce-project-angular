@@ -5,6 +5,7 @@
 package com.ecommerce.angular.service;
 
 import com.ecommerce.angular.entity.Product;
+import java.util.List;
 
 
 /**
@@ -13,5 +14,6 @@ import com.ecommerce.angular.entity.Product;
  */
 public interface ProductService {
     Product getProductById(Long productId);
+    List<Product> getProductByCategory(String categoryName);
     
 }

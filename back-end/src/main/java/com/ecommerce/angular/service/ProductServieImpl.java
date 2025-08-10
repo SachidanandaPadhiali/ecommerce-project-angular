@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.ecommerce.angular.entity.Product;
 import com.ecommerce.angular.repo.ProductRepo;
+import java.util.List;
 
 /**
  *
@@ -30,6 +31,11 @@ public class ProductServieImpl implements ProductService {
          * @return The product entity if found, otherwise null.
          */
         return productRepo.findProductById(id);
+    }
+
+    @Override
+    public List<Product> getProductByCategory(String categoryName) {
+        return productRepo.findProductByCategory(categoryName);
     }
 
 }
