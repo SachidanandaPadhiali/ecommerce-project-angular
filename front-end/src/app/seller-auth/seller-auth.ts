@@ -26,6 +26,29 @@ export class SellerAuth implements OnInit {
   };
 
   duplicateSeller: string | null = null;
+  showError(nameRef: any, emailRef: any, phNoRef: any): boolean {
+    return (
+      (nameRef.invalid && nameRef.touched) ||
+      (emailRef.invalid && emailRef.touched) ||
+      (phNoRef.invalid && phNoRef.touched)
+    );
+  }
+
+  getErrorMessage(nameRef: any, emailRef: any, phNoRef: any): string {
+    if (nameRef.errors?.['required'] && nameRef.touched) {
+      return 'Name is required.';
+    }
+    if (emailRef.errors?.['required'] && emailRef.touched) {
+      return 'Email is required.';
+    }
+    if (emailRef.errors?.['email'] && emailRef.touched) {
+      return 'Enter a valid email address.';
+    }
+    if (phNoRef.errors?.['required'] && phNoRef.touched) {
+      return 'Phone Number is required.';
+    }
+    return '';
+  }
 
   get passwordMismatch(): boolean {
     return this.seller.password !== this.seller.confirmPassword;
