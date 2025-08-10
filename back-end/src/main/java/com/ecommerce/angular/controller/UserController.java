@@ -6,6 +6,7 @@ package com.ecommerce.angular.controller;
 
 import com.ecommerce.angular.dto.EcommResponse;
 import com.ecommerce.angular.dto.UserDTO;
+import com.ecommerce.angular.dto.UserRequest;
 import com.ecommerce.angular.entity.User;
 import com.ecommerce.angular.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,4 +45,18 @@ public class UserController {
         return userService.createAccount(userDTO);
     }
 
+    @PostMapping("/getWishList")
+    public ResponseEntity<?> getProducts(@RequestBody UserRequest userRequest) {
+        return new ResponseEntity<>(userService.getWishList(userRequest.getUserId()), HttpStatus.OK);
+    }
+
+    @PostMapping("/addProductWishList")
+    public EcommResponse addProductWishList(@RequestBody UserRequest userRequest) {
+        return userService.addProductWishList(userRequest);
+    }
+
+    @PostMapping("/deleteProductWishList")
+    public EcommResponse deleteProductWishList(@RequestBody UserRequest userRequest) {
+        return userService.deleteProductWishList(userRequest);
+    }
 }

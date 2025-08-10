@@ -39,7 +39,7 @@ export class SellerAddProduct implements OnInit {
    * @property {number} quantity - The available quantity of the product.
    */
   product: Product = {
-    sellerId: '',
+    sellerId: 0,
     name: '',
     description: '',
     price: 0,
@@ -137,7 +137,7 @@ export class SellerAddProduct implements OnInit {
 
   resetForm() {
     this.product = {
-      sellerId: '',
+      sellerId: 0,
       name: '',
       description: '',
       price: 0,

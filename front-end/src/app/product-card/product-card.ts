@@ -20,11 +20,11 @@ export class ProductCard {
   maxStars = [1, 2, 3, 4, 5];
 
   @Input() product!: Product;
-  @Input() wishList!: Set<string>;
-  @Output() wishToggled = new EventEmitter<string>();
+  @Input() wishList!: Set<number>;
+  @Output() wishToggled = new EventEmitter<number>();
 
   get isWished(): boolean {
-    return this.wishList.has(String(this.product.id));
+    return this.wishList.has(Number(this.product.id));
   }
 
   onHeartClick() {

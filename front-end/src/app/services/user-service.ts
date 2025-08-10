@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { WishListEntry } from '../models/WishListEntry.model';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { Product } from '../models/product.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,32 +19,15 @@ export class UserService {
     return this.http.post<{ responseCode: string; responseMessage: string }>(`${this.apiUrl}/api/user`, data)
   }
 
-  wishProduct(userId: string, productId: string): void {
-    const entry = this.wishList.find(w => w.userId === userId);
-    console.log("wishlist called");
-    if (entry) {
-      if (!entry.productIds.includes(productId)) {
-    console.log("wishlist called again");
-        entry.productIds.push(productId); // Update
-      }
-    } else {
-      this.wishList.push({ userId, productIds: [productId] }); // Create new
-    }
+  wishProduct(userId: number, productId: number) {
+    return this.http.post(`${this.apiUrl}/api/addProductWishList`, { userId, productId });
   }
 
-  updateWishList(userId: string, newList: string[]) {
-    const body = { userId, productIds: newList };
-    return this.http.put(`${this.apiUrl}/wishList/${userId}`, body);
+  removeFromWishList(userId: number, productId: number) {
+    return this.http.post(`${this.apiUrl}/api/removeProductWishList`, { userId, productId });
   }
 
-  removeFromWishList(userId: string, productId: string): void {
-    const entry = this.wishList.find(w => w.userId === userId);
-    if (entry) {
-      entry.productIds = entry.productIds.filter(id => id !== productId);
-    }
-  }
-
-  getWishList(userId: string): Observable<WishListEntry[]> {
-    return this.http.get<WishListEntry[]>(`${this.apiUrl}/wishList?userId=${userId}`);
+  getWishList(userId: number): Observable<Product[]> {
+    return this.http.post<Product[]>(`${this.apiUrl}/api/getWishList`, { userId });
   }
 }

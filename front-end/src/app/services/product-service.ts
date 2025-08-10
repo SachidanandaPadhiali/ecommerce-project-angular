@@ -48,7 +48,7 @@ export class ProductService {
    * @param {string} id - The unique identifier of the product to be removed.
    * @return {Observable<any>} An observable containing the response from the server.
    * */
-  removeProduct(productId: string) {
+  removeProduct(productId: number) {
     return this.http.delete(`${this.sellerApiUrl}/deleteProduct/${productId}`);
   }
 

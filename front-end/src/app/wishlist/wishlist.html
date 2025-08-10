@@ -1,13 +1,17 @@
 <div [ngClass]="{ 'product-list': true, loading: loading }">
     <div>
-        <ul *ngIf="!loading" class="product-grid">
+        @if (!loading) {
+        <ul class="product-grid">
             <app-product-card *ngFor="let product of products" [product]="product" [wishList]="wishList"
                 (wishToggled)="toggleWish($event)">
             </app-product-card>
         </ul>
+        }
     </div>
-    <div class="nowishlist" *ngIf="wishList.size === 0">
+    @if (products.length === 0 && !loading) {
+    <div class="nowishlist">
         <h2 class="message error">There are no items in your wishlist.</h2>
     </div>
-    <div *ngIf="error" class="error">{{ error }}</div>
+    }@if (error) {
+    <div class="error">{{ error }}</div>}
 </div>

@@ -19,8 +19,8 @@ export class Shop implements OnInit {
   category: string = '';
   loading: boolean = true;
   wished: boolean = false;
-  wishList: Set<string> = new Set();
-  userId: string = '';
+  wishList: Set<number> = new Set();
+  userId: number = 0;
   error = '';
 
   constructor(
@@ -37,34 +37,34 @@ export class Shop implements OnInit {
       next: (data) => {
         const prodIds = data.map(entry => entry.productIds).flat();
         this.wishList = new Set(prodIds.map(id => String(id)));  // ✅ store as strings*/
-        this.route.paramMap.pipe(
-          switchMap((params: ParamMap) => {
-            this.loading = true;
-            this.category = params.get('name') || '';
+    this.route.paramMap.pipe(
+      switchMap((params: ParamMap) => {
+        this.loading = true;
+        this.category = params.get('name') || '';
 
-            return this.productService.getProductsByCategory(this.category);
-          })
-        ).subscribe({
-          next: (data: Product[]) => {
+        return this.productService.getProductsByCategory(this.category);
+      })
+    ).subscribe({
+      next: (data: Product[]) => {
 
-            this.products = data;
-            this.loading = false;
-            this.cdr.detectChanges(); // ✅ Force view update
-          },
-          error: (err) => {
-            console.error('Error fetching products:', err);
-            this.products = [];
-            this.loading = false;
-            this.cdr.detectChanges(); // ✅ Even on error
-          }
-        });
-/*
+        this.products = data;
+        this.loading = false;
+        this.cdr.detectChanges(); // ✅ Force view update
       },
       error: (err) => {
-        console.error('Error fetching wishlist:', err);
-        this.wishList = new Set(); // Fallback
+        console.error('Error fetching products:', err);
+        this.products = [];
+        this.loading = false;
+        this.cdr.detectChanges(); // ✅ Even on error
       }
-    });*/
+    });
+    /*
+          },
+          error: (err) => {
+            console.error('Error fetching wishlist:', err);
+            this.wishList = new Set(); // Fallback
+          }
+        });*/
   }
 
   viewProduct(productId: string | undefined): void {
@@ -75,20 +75,28 @@ export class Shop implements OnInit {
     this.router.navigate(['/product', productId]);
   }
 
-  toggleWish(prodId: string) {
-    if (!prodId) return;
+  toggleWish(productId: number) {
+    if (!productId) return;
 
-    this.wished = !this.wished;
-    this.userId = JSON.parse(localStorage.getItem('user') || '{}')?.id;
+    this.userId = Number(JSON.parse(localStorage.getItem('user') || '{}')?.id);
 
-    if (this.wishList.has(prodId)) {
-      this.wishList.delete(prodId);
+    const isCurrentlyWished = this.wishList.has(productId);
+
+    console.log(`Toggling wish for product ID: ${productId}, currently wished: ${isCurrentlyWished}`);
+
+    if (this.wishList.has(productId)) {
+      this.wishList.delete(productId);
+      console.log(`Removed from wishlist: ${productId}`);
     } else {
-      this.wishList.add(prodId);
+      this.wishList.add(productId);
+      console.log(`Added to wishlist: ${productId}`);
+      this.userService.wishProduct(this.userId, productId).subscribe({
+        next: () => console.log(`Added to wishlist: ${productId}`),
+        error: (err) => console.error('Error adding to wishlist', err)
+      });
     }
-    this.userService.updateWishList(this.userId, Array.from(this.wishList)).subscribe();
-    this.cdr.detectChanges(); // ✅ Force view update
 
+    this.cdr.detectChanges();
   }
 
 }

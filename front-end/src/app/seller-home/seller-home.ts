@@ -46,10 +46,10 @@ export class SellerHome implements OnInit {
     }
   }
 
-  editProduct(productId: string): void {
+  editProduct(productId: number): void {
     this.router.navigate(['/seller-product', productId]);
   }
-  removeProduct(id: string, productName: string) {
+  removeProduct(id: number, productName: string) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '350px',
       data: { productName }

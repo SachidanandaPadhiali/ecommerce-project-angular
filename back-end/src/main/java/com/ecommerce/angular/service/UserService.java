@@ -6,7 +6,10 @@ package com.ecommerce.angular.service;
 
 import com.ecommerce.angular.dto.EcommResponse;
 import com.ecommerce.angular.dto.UserDTO;
+import com.ecommerce.angular.dto.UserRequest;
+import com.ecommerce.angular.entity.Product;
 import com.ecommerce.angular.entity.User;
+import java.util.List;
 
 /**
  *
@@ -16,5 +19,8 @@ public interface UserService {
 
     EcommResponse createAccount(UserDTO userDTO);
     public User validateUser(String username, String password);
+    public List<Product> getWishList(Long userId);
+    EcommResponse addProductWishList(UserRequest userRequest);
+    EcommResponse deleteProductWishList(UserRequest userRequest);
 
 }

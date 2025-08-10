@@ -7,12 +7,6 @@ export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const requiredRole = route.data?.['role'];
 
-  console.log('AuthGuard Check', {
-    seller: authService.getSeller(),
-    user: authService.getUser(),
-    requiredRole
-  });
-
   if (!authService.isAuthenticated(requiredRole)) {
     if(requiredRole === 'seller'){
           return router.createUrlTree(['/seller-auth']);      

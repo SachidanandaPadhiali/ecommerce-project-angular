@@ -6,9 +6,16 @@ package com.ecommerce.angular.service;
 
 import com.ecommerce.angular.dto.EcommResponse;
 import com.ecommerce.angular.dto.UserDTO;
+import com.ecommerce.angular.dto.UserRequest;
+import com.ecommerce.angular.entity.Product;
 import com.ecommerce.angular.entity.User;
+import com.ecommerce.angular.entity.WishList;
+import com.ecommerce.angular.repo.ProductRepo;
 import com.ecommerce.angular.repo.UserRepo;
+import com.ecommerce.angular.repo.WishListRepo;
 import com.ecommerce.angular.utils.EcommUtils;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +28,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserRepo userRepo;
+
+    @Autowired
+    ProductRepo productRepo;
+
+    @Autowired
+    WishListRepo wishListRepo;
 
     @Override
     public EcommResponse createAccount(UserDTO userDTO) {
@@ -45,7 +58,7 @@ public class UserServiceImpl implements UserService {
                 .phoneNo(String.valueOf(userDTO.getPhoneNo()))
                 .role(userDTO.getRole())
                 .build();
-        
+
         /**
          * Save the created User
          */
@@ -64,4 +77,38 @@ public class UserServiceImpl implements UserService {
         return (user != null && user.getPassword().equals(password)) ? user : null;
     }
 
+    @Override
+    public List<Product> getWishList(Long userId) {
+        return userRepo.getWishList(userId);
+    }
+
+    @Override
+    public EcommResponse addProductWishList(UserRequest userRequest) {
+        User user = userRepo.findById(userRequest.getUserId())
+                .orElseThrow(() -> new RuntimeException("User not found with id " + userRequest.getUserId()));
+        Product product = productRepo.findById(userRequest.getProductId())
+                .orElseThrow(() -> new RuntimeException("User not found with id " + userRequest.getUserId()));
+
+        WishList newProduct = WishList.builder()
+                .user(user)
+                .product(product)
+                .build();
+
+        wishListRepo.save(newProduct);
+
+        return EcommResponse.builder()
+                .responseCode(EcommUtils.WISHLIST_UPDATED_CODE)
+                .responseMessage(EcommUtils.WISHLIST_UPDATED_MESSAGE)
+                .build();
+    }
+
+    @Override
+    public EcommResponse deleteProductWishList(UserRequest userRequest) {
+        wishListRepo.deleteByUserIdAndProductId(userRequest.getUserId(), userRequest.getProductId());
+
+        return EcommResponse.builder()
+                .responseCode(EcommUtils.WISHLIST_UPDATED_CODE)
+                .responseMessage(EcommUtils.WISHLIST_UPDATED_MESSAGE)
+                .build();
+    }
 }
