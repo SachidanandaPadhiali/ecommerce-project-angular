@@ -24,7 +24,7 @@ export class UserService {
   }
 
   removeFromWishList(userId: number, productId: number) {
-    return this.http.post(`${this.apiUrl}/api/removeProductWishList`, { userId, productId });
+    return this.http.post(`${this.apiUrl}/api/deleteProductWishList`, { userId, productId });
   }
 
   getWishList(userId: number): Observable<Product[]> {

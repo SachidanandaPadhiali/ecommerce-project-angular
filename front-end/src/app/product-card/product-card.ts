@@ -24,6 +24,8 @@ export class ProductCard {
   @Output() wishToggled = new EventEmitter<number>();
 
   get isWished(): boolean {
+    console.log(this.wishList);
+    console.log(`Checking if product ID ${this.product.id} is wished: ${this.wishList.has(Number(this.product.id))}`);
     return this.wishList.has(Number(this.product.id));
   }
 

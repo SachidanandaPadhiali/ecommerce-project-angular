@@ -33,38 +33,37 @@ export class Shop implements OnInit {
 
   ngOnInit(): void {
     this.userId = JSON.parse(localStorage.getItem('user') || '{}')?.id;
-    /*this.userService.getWishList(this.userId).subscribe({
+    this.userService.getWishList(this.userId).subscribe({
       next: (data) => {
-        const prodIds = data.map(entry => entry.productIds).flat();
-        this.wishList = new Set(prodIds.map(id => String(id)));  // ✅ store as strings*/
-    this.route.paramMap.pipe(
-      switchMap((params: ParamMap) => {
-        this.loading = true;
-        this.category = params.get('name') || '';
+        const prodIds = data.map(entry => entry.id).flat();
+        this.wishList = new Set(prodIds.map(id => Number(id)));  // ✅ store as strings*/
+        this.route.paramMap.pipe(
+          switchMap((params: ParamMap) => {
+            this.loading = true;
+            this.category = params.get('name') || '';
 
-        return this.productService.getProductsByCategory(this.category);
-      })
-    ).subscribe({
-      next: (data: Product[]) => {
+            return this.productService.getProductsByCategory(this.category);
+          })
+        ).subscribe({
+          next: (data: Product[]) => {
 
-        this.products = data;
-        this.loading = false;
-        this.cdr.detectChanges(); // ✅ Force view update
-      },
-      error: (err) => {
-        console.error('Error fetching products:', err);
-        this.products = [];
-        this.loading = false;
-        this.cdr.detectChanges(); // ✅ Even on error
-      }
-    });
-    /*
+            this.products = data;
+            this.loading = false;
+            this.cdr.detectChanges(); // ✅ Force view update
           },
           error: (err) => {
-            console.error('Error fetching wishlist:', err);
-            this.wishList = new Set(); // Fallback
+            console.error('Error fetching products:', err);
+            this.products = [];
+            this.loading = false;
+            this.cdr.detectChanges(); // ✅ Even on error
           }
-        });*/
+        });
+      },
+      error: (err) => {
+        console.error('Error fetching wishlist:', err);
+        this.wishList = new Set(); // Fallback
+      }
+    });
   }
 
   viewProduct(productId: string | undefined): void {
@@ -86,6 +85,10 @@ export class Shop implements OnInit {
 
     if (this.wishList.has(productId)) {
       this.wishList.delete(productId);
+      this.userService.removeFromWishList(this.userId, productId).subscribe({
+        next: () => console.log(`Added to wishlist: ${productId}`),
+        error: (err) => console.error('Error adding to wishlist', err)
+      });
       console.log(`Removed from wishlist: ${productId}`);
     } else {
       this.wishList.add(productId);

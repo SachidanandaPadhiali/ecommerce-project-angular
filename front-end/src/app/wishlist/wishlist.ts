@@ -54,14 +54,15 @@ export class Wishlist implements OnInit {
     if (isCurrentlyWished) {
       // Remove from UI
       this.wishList.delete(prodId);
-      this.products = this.products.filter(p => Number(p.id) !== prodId);
       this.userService.removeFromWishList(this.userId, prodId).subscribe({
         next: () => console.log('Removed from wishlist'),
         error: (err) => console.error('Error removing:', err)
       });
     } else {
       // Add to UI
-      this.wishList.add(prodId);
+      const updated = new Set(this.wishList);
+      updated.add(prodId);
+      this.wishList = updated;
       this.userService.wishProduct(this.userId, prodId).subscribe({
         next: () => console.log('Added to wishlist'),
         error: (err) => console.error('Error adding:', err)
@@ -70,5 +71,4 @@ export class Wishlist implements OnInit {
 
     this.cdr.detectChanges();
   }
-
 }
