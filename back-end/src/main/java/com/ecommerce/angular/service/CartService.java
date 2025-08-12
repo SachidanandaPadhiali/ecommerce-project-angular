@@ -4,6 +4,7 @@
  */
 package com.ecommerce.angular.service;
 
+import com.ecommerce.angular.dto.CartResponse;
 import com.ecommerce.angular.entity.Cart;
 
 /**
@@ -12,7 +13,7 @@ import com.ecommerce.angular.entity.Cart;
  */
 public interface CartService {
 
-    Cart addOrUpdateCart(Long userId, Long productId, int quantity);
+    CartResponse addOrUpdateCart(Long userId, Long productId, int quantity);
 
     void removeItemFromCart(Long userId, Long productId);
 

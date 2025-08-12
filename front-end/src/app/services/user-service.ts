@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Product } from '../models/product.model';
 import { CartEntry } from '../models/CartEntry.model';
+import { Cart } from '../models/Cart.model';
 
 @Injectable({
   providedIn: 'root'
@@ -31,15 +32,11 @@ export class UserService {
     return this.http.post<Product[]>(`${this.apiUrl}/getWishList`, { userId });
   }
 
-  addToCart(userId: number, productId: number): Observable<CartEntry> {
-    const mockResponse: CartEntry = {
-      userId: userId,
-      productId: productId,
-      quantity: 1
-    };
-
-    console.log(`Adding product ID ${productId} to cart for user ID ${userId}`);
-    return this.http.post<CartEntry>(`${this.apiUrl}/addToCart`, { productId });
+  addToCart(userId: number, productId: number): Observable<Cart> {
+    return this.http.post<Cart>(
+      `${this.apiUrl}/addToCart?userId=${userId}&productId=${productId}`,
+      {}
+    );
   }
 
   getUserCart(): Observable<CartEntry[]> {

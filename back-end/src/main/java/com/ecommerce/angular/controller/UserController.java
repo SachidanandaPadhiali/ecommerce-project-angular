@@ -4,6 +4,7 @@
  */
 package com.ecommerce.angular.controller;
 
+import com.ecommerce.angular.dto.CartResponse;
 import com.ecommerce.angular.dto.EcommResponse;
 import com.ecommerce.angular.dto.UserDTO;
 import com.ecommerce.angular.dto.UserRequest;
@@ -68,11 +69,11 @@ public class UserController {
     }
 
     @PostMapping("/addToCart")
-    public ResponseEntity<Cart> addToCart(
+    public ResponseEntity<CartResponse> addToCart(
             @RequestParam Long userId,
             @RequestParam Long productId,
             @RequestParam(defaultValue = "1") int quantity) {
-        Cart updatedCart = cartService.addOrUpdateCart(userId, productId, quantity);
+        CartResponse updatedCart = cartService.addOrUpdateCart(userId, productId, quantity);
         return ResponseEntity.ok(updatedCart);
     }
 

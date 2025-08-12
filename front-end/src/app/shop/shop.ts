@@ -6,7 +6,7 @@ import { switchMap } from 'rxjs/operators';
 import { Product } from '../models/product.model';
 import { UserService } from '../services/user-service';
 import { ProductCard } from '../product-card/product-card';
-import { CartEntry } from '../models/CartEntry.model';
+import { Cart } from '../models/Cart.model';
 
 @Component({
   selector: 'app-shop',
@@ -108,12 +108,14 @@ export class Shop implements OnInit {
     console.log(`shop.ts Adding product ID ${productId} to cart`);
 
     this.userService.addToCart(this.userId, productId).subscribe({
-      next: (response: CartEntry) => {
+      next: (response: Cart) => {
+        console.log(response);
         const product = this.products.find(p => p.id === response.productId);
         if (product) {
           product.cartCount = response.quantity;
         }
-      },
+         console.log(product);
+     },
       error: (err) => {
         console.error('Error adding to cart', err);
       }

@@ -4,6 +4,7 @@
  */
 package com.ecommerce.angular.service;
 
+import com.ecommerce.angular.dto.CartResponse;
 import com.ecommerce.angular.dto.EcommResponse;
 import com.ecommerce.angular.entity.*;
 import com.ecommerce.angular.repo.CartItemRepo;
@@ -38,7 +39,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional
-    public Cart addOrUpdateCart(Long userId, Long productId, int quantity) {
+    public CartResponse addOrUpdateCart(Long userId, Long productId, int quantity) {
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         Product product = productRepo.findById(productId)
@@ -75,7 +76,15 @@ public class CartServiceImpl implements CartService {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         cart.setTotal(total);
 
-        return cartRepo.save(cart); // cascade saves items
+        cartRepo.save(cart);
+        CartResponse cartResponse = CartResponse.builder()
+                .userId(userId)
+                .productId(productId)
+                .quantity(existingItemOpt.get().getQuantity())
+                .productTotal(existingItemOpt.get().getPrice())
+                .cartTotal(total)
+                .build();
+        return cartResponse; // cascade saves items
     }
 
     @Override
