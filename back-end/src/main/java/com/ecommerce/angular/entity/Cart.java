@@ -15,7 +15,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  *
@@ -24,6 +27,8 @@ import lombok.Data;
 @Entity
 @Table(name = "Product_Cart")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Cart {
 
     @Id
@@ -33,11 +38,11 @@ public class Cart {
     @OneToOne
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<CartItem> items;
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartItem> items = new ArrayList<>();
 
     @OneToOne
-    private Order order;
+    private UserOrders userOrder;
 
     private BigDecimal total;
 

@@ -10,12 +10,12 @@ import com.ecommerce.angular.dto.UserRequest;
 import com.ecommerce.angular.entity.Product;
 import com.ecommerce.angular.entity.User;
 import com.ecommerce.angular.entity.WishList;
+import com.ecommerce.angular.repo.CartRepo;
 import com.ecommerce.angular.repo.ProductRepo;
 import com.ecommerce.angular.repo.UserRepo;
 import com.ecommerce.angular.repo.WishListRepo;
 import com.ecommerce.angular.utils.EcommUtils;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

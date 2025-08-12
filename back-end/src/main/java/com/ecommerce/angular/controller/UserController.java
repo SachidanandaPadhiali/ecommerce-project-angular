@@ -7,7 +7,9 @@ package com.ecommerce.angular.controller;
 import com.ecommerce.angular.dto.EcommResponse;
 import com.ecommerce.angular.dto.UserDTO;
 import com.ecommerce.angular.dto.UserRequest;
+import com.ecommerce.angular.entity.Cart;
 import com.ecommerce.angular.entity.User;
+import com.ecommerce.angular.service.CartService;
 import com.ecommerce.angular.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -29,6 +32,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+    
+    @Autowired
+    CartService cartService;
     
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserDTO userRequests) {
@@ -58,5 +64,14 @@ public class UserController {
     @PostMapping("/deleteProductWishList")
     public EcommResponse deleteProductWishList(@RequestBody UserRequest userRequest) {
         return userService.deleteProductWishList(userRequest);
+    }
+
+    @PostMapping("/addToCart")
+    public ResponseEntity<Cart> addToCart(
+            @RequestParam Long userId,
+            @RequestParam Long productId,
+            @RequestParam(defaultValue = "1") int quantity) {
+        Cart updatedCart = cartService.addOrUpdateCart(userId, productId, quantity);
+        return ResponseEntity.ok(updatedCart);
     }
 }

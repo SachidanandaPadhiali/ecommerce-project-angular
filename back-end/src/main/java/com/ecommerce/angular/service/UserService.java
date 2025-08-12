@@ -22,5 +22,4 @@ public interface UserService {
     public List<Product> getWishList(Long userId);
     EcommResponse addProductWishList(UserRequest userRequest);
     EcommResponse deleteProductWishList(UserRequest userRequest);
-
 }

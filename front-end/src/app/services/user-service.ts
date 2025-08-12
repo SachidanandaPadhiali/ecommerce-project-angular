@@ -38,8 +38,8 @@ export class UserService {
       quantity: 1
     };
 
-    return of(mockResponse);
-    //    return this.http.post<CartEntry>(`${this.apiUrl}/add`, { productId });
+    console.log(`Adding product ID ${productId} to cart for user ID ${userId}`);
+    return this.http.post<CartEntry>(`${this.apiUrl}/addToCart`, { productId });
   }
 
   getUserCart(): Observable<CartEntry[]> {
