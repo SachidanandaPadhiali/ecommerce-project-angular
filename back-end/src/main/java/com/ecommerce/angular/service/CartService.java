@@ -11,5 +11,9 @@ import com.ecommerce.angular.entity.Cart;
  * @author sagar
  */
 public interface CartService {
+
     Cart addOrUpdateCart(Long userId, Long productId, int quantity);
+
+    void removeItemFromCart(Long userId, Long productId);
+
 }
