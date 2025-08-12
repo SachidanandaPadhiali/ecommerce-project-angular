@@ -14,8 +14,8 @@ export class ProductService {
   constructor(private http: HttpClient) { }
 
   private apiUrl = environment.apiUrl;
-  private sellerApiUrl = `${this.apiUrl}/api/seller`;
-  private productApiUrl = `${this.apiUrl}/api/product`;
+  private sellerApiUrl = `${this.apiUrl}/seller`;
+  private productApiUrl = `${this.apiUrl}/product`;
 
   /**
    * Adds a new product to the seller's inventory.

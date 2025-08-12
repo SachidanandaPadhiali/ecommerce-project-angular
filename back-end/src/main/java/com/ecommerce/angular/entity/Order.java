@@ -23,10 +23,12 @@ import lombok.Data;
  * @author sachidananda
  */
 @Entity
-@Table(name="Order")
+@Table(name = "Order")
 @Data
 public class Order {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne

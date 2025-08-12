@@ -12,4 +12,5 @@ export interface Product {
     color: '';
     isOnSale?: boolean;
     rating?: number;
+    cartCount?: number;
 }

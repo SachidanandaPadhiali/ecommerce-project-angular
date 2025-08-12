@@ -6,6 +6,7 @@ import { switchMap } from 'rxjs/operators';
 import { Product } from '../models/product.model';
 import { UserService } from '../services/user-service';
 import { ProductCard } from '../product-card/product-card';
+import { CartEntry } from '../models/CartEntry.model';
 
 @Component({
   selector: 'app-shop',
@@ -22,6 +23,7 @@ export class Shop implements OnInit {
   wishList: Set<number> = new Set();
   userId: number = 0;
   error = '';
+  cartMap = new Map<number, number>();
 
   constructor(
     private route: ActivatedRoute,
@@ -36,7 +38,7 @@ export class Shop implements OnInit {
     this.userService.getWishList(this.userId).subscribe({
       next: (data) => {
         const prodIds = data.map(entry => entry.id).flat();
-        this.wishList = new Set(prodIds.map(id => Number(id)));  // ✅ store as strings*/
+        this.wishList = new Set(prodIds.map(id => Number(id))); // ✅ store as strings*/
         this.route.paramMap.pipe(
           switchMap((params: ParamMap) => {
             this.loading = true;
@@ -47,7 +49,7 @@ export class Shop implements OnInit {
         ).subscribe({
           next: (data: Product[]) => {
 
-            this.products = data;
+            this.products = data.map(p => ({ ...p, cartCount: 0 }));
             this.loading = false;
             this.cdr.detectChanges(); // ✅ Force view update
           },
@@ -102,4 +104,19 @@ export class Shop implements OnInit {
     this.cdr.detectChanges();
   }
 
+  addProductToCart(productId: number): void {
+    console.log(`shop.ts Adding product ID ${productId} to cart`);
+
+    this.userService.addToCart(this.userId, productId).subscribe({
+      next: (response: CartEntry) => {
+        const product = this.products.find(p => p.id === response.productId);
+        if (product) {
+          product.cartCount = response.quantity;
+        }
+      },
+      error: (err) => {
+        console.error('Error adding to cart', err);
+      }
+    });
+  }
 }

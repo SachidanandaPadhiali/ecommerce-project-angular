@@ -31,7 +31,7 @@ export class Login {
       password: this.user.password
     };
 
-    this.http.post<any>(`${this.apiUrl}/api/login`, loginPayload).subscribe(response => {
+    this.http.post<any>(`${this.apiUrl}/login`, loginPayload).subscribe(response => {
       if (response && response.role) {
         const role = response.role.toLowerCase();
 

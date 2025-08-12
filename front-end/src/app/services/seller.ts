@@ -12,7 +12,7 @@ export class Seller {
   private apiUrl = environment.apiUrl;
 
   sellerSignUp(data: object): Observable<{ responseCode: string; responseMessage: string }> {
-    return this.http.post<{ responseCode: string; responseMessage: string }>(`${this.apiUrl}/api/user`, data)
+    return this.http.post<{ responseCode: string; responseMessage: string }>(`${this.apiUrl}/user`, data)
   }
 
 }

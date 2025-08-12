@@ -4,6 +4,7 @@ import { faHeart as fasHeart, faCartShopping } from '@fortawesome/free-solid-svg
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'; // regular (outline)
 import { CommonModule } from '@angular/common';
 import { Product } from '../models/product.model';
+import { CartEntry } from '../models/CartEntry.model';
 
 @Component({
   selector: 'app-product-card',
@@ -20,13 +21,28 @@ export class ProductCard {
   maxStars = [1, 2, 3, 4, 5];
 
   @Input() product!: Product;
+  @Input() cartItems!: Set<number>;
   @Input() wishList!: Set<number>;
   @Output() wishToggled = new EventEmitter<number>();
+  @Output() cartAdded = new EventEmitter<number>();
+  @Output() cartRemoved = new EventEmitter<number>();
 
   get isWished(): boolean {
-    console.log(this.wishList);
-    console.log(`Checking if product ID ${this.product.id} is wished: ${this.wishList.has(Number(this.product.id))}`);
     return this.wishList.has(Number(this.product.id));
+  }
+
+  get isInCart(): boolean {
+    return (this.product?.cartCount ?? 0) > 0;
+  }
+
+  onCartAdded() {
+    console.log(`product-card.ts Adding product ID ${this.product.id} to cart`);
+    this.cartAdded.emit(this.product.id);
+  }
+
+  onCartRemoved() {
+    console.log(`Removing product ID ${this.product.id} to cart`);
+    this.cartRemoved.emit(this.product.id);
   }
 
   onHeartClick() {

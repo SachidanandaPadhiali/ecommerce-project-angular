@@ -22,7 +22,7 @@ import lombok.Data;
  * @author sachidananda
  */
 @Entity
-@Table(name="Product_Cart")
+@Table(name = "Product_Cart")
 @Data
 public class Cart {
 
@@ -35,6 +35,9 @@ public class Cart {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<CartItem> items;
+
+    @OneToOne
+    private Order order;
 
     private BigDecimal total;
 
