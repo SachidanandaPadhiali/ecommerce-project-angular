@@ -28,7 +28,11 @@
             </div>
             @if(product.quantity > 0) {
             @if(isInCart){
-            <div class="prod-feature"> Added to Cart</div>
+            <div class="addedToCart">
+                <button>-</button>
+                <span class="cartItemCount"> {{ product.cartCount }}</span>
+                <button>+</button>
+            </div>
             }
             @else{
             <button class="addToCart" (click)="onCartAdded()">

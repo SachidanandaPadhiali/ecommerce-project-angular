@@ -746,6 +746,18 @@ td.text-right {
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
+.addedToCart {
+    background: #f4f4f5;
+    color: var(--primary);
+    border: none;
+    border-radius: 10px;
+    padding: 4px 8px;
+    font-size: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
 .addToCart:hover {
     background: linear-gradient(45deg, #27272a, #3f3f46);
     transform: translateY(-2px);
@@ -932,6 +944,11 @@ td.text-right {
     }
 
     .addToCart {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .addedToCart {
         width: 100%;
         justify-content: center;
     }

@@ -4,7 +4,6 @@ import { faHeart as fasHeart, faCartShopping } from '@fortawesome/free-solid-svg
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'; // regular (outline)
 import { CommonModule } from '@angular/common';
 import { Product } from '../models/product.model';
-import { CartEntry } from '../models/CartEntry.model';
 
 @Component({
   selector: 'app-product-card',

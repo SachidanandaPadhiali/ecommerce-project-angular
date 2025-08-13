@@ -38,41 +38,24 @@ export class Shop implements OnInit {
 
   ngOnInit(): void {
     this.userId = JSON.parse(localStorage.getItem('user') || '{}')?.id;
-    this.userService.getWishList(this.userId).subscribe({
-      next: (data) => {
-        const prodIds = data.map(entry => entry.id).flat();
-        this.wishList = new Set(prodIds.map(id => Number(id))); // ✅ store as strings*/
-        this.route.paramMap.pipe(
-          switchMap((params: ParamMap) => {
-            this.loading = true;
-            this.category = params.get('name') || '';
 
-            return this.productService.getProductsByCategory(this.category);
-          })
-        ).subscribe({
-          next: (data: Product[]) => {
+    this.userService.getWishList(this.userId).pipe(
+      switchMap((wishlistData) => {
+        const prodIds = wishlistData.map(entry => entry.id).flat();
+        this.wishList = new Set(prodIds.map(id => Number(id)));
 
-            this.products = data.map(p => ({ ...p, cartCount: 0 }));
-            this.loading = false;
-            this.cdr.detectChanges(); // ✅ Force view update
-          },
-          error: (err) => {
-            console.error('Error fetching products:', err);
-            this.products = [];
-            this.loading = false;
-            this.cdr.detectChanges(); // ✅ Even on error
-          }
+        return this.route.paramMap;
+      }),
+      switchMap((params: ParamMap) => {
+        this.category = params.get('name') || '';
+        this.loading = true;
+
+        return forkJoin({
+          products: this.productService.getProductsByCategory(this.category),
+          cart: this.userService.getUserCart(this.userId)
         });
-      },
-      error: (err) => {
-        console.error('Error fetching wishlist:', err);
-        this.wishList = new Set(); // Fallback
-      }
-    });
-    forkJoin({
-      products: this.productService.getProductsByCategory(this.category),
-      cart: this.userService.getUserCart(this.userId)
-    }).subscribe(({ products, cart }) => {
+      })
+    ).subscribe(({ products, cart }) => {
       const cartMap = new Map<number, number>();
       this.cartProductIds = new Set(cart.items.map(i => i.product?.id ?? 0));
 
@@ -85,7 +68,11 @@ export class Shop implements OnInit {
         cartCount: cartMap.get(prod.id ?? 0) ?? 0
       }));
 
+      this.loading = false;
       this.cdr.detectChanges();
+    }, err => {
+      console.error(err);
+      this.loading = false;
     });
   }
 
