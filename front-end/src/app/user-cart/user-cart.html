@@ -1,1 +1,11 @@
-<p>user-cart works!</p>
+<div class="main-content">
+  <p>user-cart works!</p>
+
+  <p *ngIf="!curUserCart">Cart not loaded</p>
+  <p *ngIf="curUserCart?.items?.length === 0">Cart is empty</p>
+
+  <div *ngFor="let item of curUserCart?.items">
+    <p>Product: {{ item.product.name }}</p>
+    <p>Quantity: {{ item.quantity }}</p>
+  </div>
+</div>

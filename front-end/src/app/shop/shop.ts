@@ -7,6 +7,7 @@ import { Product } from '../models/product.model';
 import { UserService } from '../services/user-service';
 import { ProductCard } from '../product-card/product-card';
 import { Cart } from '../models/Cart.model';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-shop',
@@ -23,7 +24,9 @@ export class Shop implements OnInit {
   wishList: Set<number> = new Set();
   userId: number = 0;
   error = '';
+  curUserCart: Cart | null = null;
   cartMap = new Map<number, number>();
+  cartProductIds: Set<number> = new Set();
 
   constructor(
     private route: ActivatedRoute,
@@ -65,6 +68,24 @@ export class Shop implements OnInit {
         console.error('Error fetching wishlist:', err);
         this.wishList = new Set(); // Fallback
       }
+    });
+    forkJoin({
+      products: this.productService.getProductsByCategory(this.category),
+      cart: this.userService.getUserCart(this.userId)
+    }).subscribe(({ products, cart }) => {
+      const cartMap = new Map<number, number>();
+      this.cartProductIds = new Set(cart.items.map(i => i.product?.id ?? 0));
+
+      cart.items.forEach(item => {
+        cartMap.set(item.product?.id ?? 0, item.quantity ?? 0);
+      });
+
+      this.products = products.map(prod => ({
+        ...prod,
+        cartCount: cartMap.get(prod.id ?? 0) ?? 0
+      }));
+
+      this.cdr.detectChanges();
     });
   }
 
@@ -109,16 +130,14 @@ export class Shop implements OnInit {
 
     this.userService.addToCart(this.userId, productId).subscribe({
       next: (response: Cart) => {
-        console.log(response);
-        const product = this.products.find(p => p.id === response.productId);
-        if (product) {
-          product.cartCount = response.quantity;
-        }
-         console.log(product);
-     },
+        console.log(`Added product ID ${productId} to cart successfully`, response);
+        this.cartProductIds.add(productId);
+        this.cdr.detectChanges();
+      },
       error: (err) => {
         console.error('Error adding to cart', err);
       }
     });
+    this.cdr.detectChanges();
   }
 }

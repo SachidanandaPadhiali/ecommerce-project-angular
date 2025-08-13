@@ -32,11 +32,10 @@ export class ProductCard {
   }
 
   get isInCart(): boolean {
-    return (this.product?.cartCount ?? 0) > 0;
+    return this.cartItems.has(this.product?.id ?? 0);
   }
 
   onCartAdded() {
-    console.log(`product-card.ts Adding product ID ${this.product.id} to cart`);
     this.cartAdded.emit(this.product.id);
   }
 

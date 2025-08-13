@@ -13,6 +13,7 @@ import com.ecommerce.angular.entity.User;
 import com.ecommerce.angular.service.CartService;
 import com.ecommerce.angular.service.UserService;
 import com.ecommerce.angular.utils.EcommUtils;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -86,5 +87,10 @@ public class UserController {
                 .responseCode(EcommUtils.CART_UPDATED_CODE)
                 .responseMessage(EcommUtils.CART_UPDATED_MESSAGE)
                 .build());
+    }
+
+    @PostMapping("/getCart")
+    public Optional<Cart> getCart(@RequestBody UserRequest userRequest) {
+        return cartService.getCart(userRequest.getUserId());
     }
 }

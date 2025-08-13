@@ -39,6 +39,12 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional
+    public Optional<Cart> getCart(Long userId) {
+        return cartRepo.findByUserId(userId);
+    }
+
+    @Override
+    @Transactional
     public CartResponse addOrUpdateCart(Long userId, Long productId, int quantity) {
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -57,10 +63,15 @@ public class CartServiceImpl implements CartService {
                 .filter(item -> item.getProduct().getId().equals(productId))
                 .findFirst();
 
+        CartResponse cartResponse = new CartResponse();
         if (existingItemOpt.isPresent()) {
             CartItem existingItem = existingItemOpt.get();
             existingItem.setQuantity(existingItem.getQuantity() + quantity);
             existingItem.setPrice(product.getDiscPrice() * existingItem.getQuantity());
+
+            cartResponse.setQuantity(existingItem.getQuantity());
+            cartResponse.setProductTotal(existingItem.getPrice());
+
         } else {
             CartItem newItem = CartItem.builder()
                     .cart(cart)
@@ -69,6 +80,9 @@ public class CartServiceImpl implements CartService {
                     .price(product.getDiscPrice() * quantity)
                     .build();
             cart.getItems().add(newItem);
+
+            cartResponse.setQuantity(newItem.getQuantity());
+            cartResponse.setProductTotal(newItem.getPrice());
         }
 
         BigDecimal total = cart.getItems().stream()
@@ -76,14 +90,11 @@ public class CartServiceImpl implements CartService {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         cart.setTotal(total);
 
+        cartResponse.setUserId(userId);
+        cartResponse.setProductId(productId);
+        cartResponse.setCartTotal(total);
+
         cartRepo.save(cart);
-        CartResponse cartResponse = CartResponse.builder()
-                .userId(userId)
-                .productId(productId)
-                .quantity(existingItemOpt.get().getQuantity())
-                .productTotal(existingItemOpt.get().getPrice())
-                .cartTotal(total)
-                .build();
         return cartResponse; // cascade saves items
     }
 

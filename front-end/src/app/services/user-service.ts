@@ -39,8 +39,8 @@ export class UserService {
     );
   }
 
-  getUserCart(): Observable<CartEntry[]> {
-    return this.http.get<CartEntry[]>(`/user/cart`);
+  getUserCart(userId: number): Observable<Cart> {
+    return this.http.post<Cart>(`${this.apiUrl}/getCart`, { userId });
   }
 
   clearCart(): void {

@@ -1,7 +1,10 @@
+import { CartEntry } from "./CartEntry.model";
+import { EcommUser } from "./EcommUser.model";
+
 export interface Cart {
-    userId: number;
-    productId: number;
-    quantity: number;
-    productTotal: number;
-    cartTotal: number;
+    id: number;
+    user: EcommUser;
+    items: CartEntry[];
+    userOrder: any;
+    total: number;
 }
