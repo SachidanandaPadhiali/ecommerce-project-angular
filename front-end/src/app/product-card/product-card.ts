@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faHeart as fasHeart, faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as fasHeart, faCartShopping, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'; // regular (outline)
 import { CommonModule } from '@angular/common';
 import { Product } from '../models/product.model';
@@ -16,6 +16,7 @@ export class ProductCard {
   prodWish = farHeart;
   prodWished = fasHeart;
   cart = faCartShopping;
+  delete = faTrash;
 
   maxStars = [1, 2, 3, 4, 5];
 
@@ -38,8 +39,13 @@ export class ProductCard {
     this.cartAdded.emit(this.product.id);
   }
 
-  onCartRemoved() {
-    console.log(`Removing product ID ${this.product.id} to cart`);
+  onProdInc() {
+    console.log(`+++ ${this.product.id} to cart`);
+    this.cartAdded.emit(this.product.id);
+  }
+
+  onProdDec() {
+    console.log(`--- ${this.product.id} from cart`);
     this.cartRemoved.emit(this.product.id);
   }
 

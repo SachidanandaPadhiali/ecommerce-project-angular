@@ -56,16 +56,17 @@ export class Shop implements OnInit {
         });
       })
     ).subscribe(({ products, cart }) => {
-      const cartMap = new Map<number, number>();
+      // Clear and repopulate the shared cartMap
+      this.cartMap.clear();
       this.cartProductIds = new Set(cart.items.map(i => i.product?.id ?? 0));
 
       cart.items.forEach(item => {
-        cartMap.set(item.product?.id ?? 0, item.quantity ?? 0);
+        this.cartMap.set(item.product?.id ?? 0, item.quantity ?? 0);
       });
 
       this.products = products.map(prod => ({
         ...prod,
-        cartCount: cartMap.get(prod.id ?? 0) ?? 0
+        cartCount: this.cartMap.get(prod.id ?? 0) ?? 0
       }));
 
       this.loading = false;
@@ -112,13 +113,65 @@ export class Shop implements OnInit {
     this.cdr.detectChanges();
   }
 
+  onPlusClick(product: Product) {
+    console.log(`Clicked + for ${product.id}`);
+    //this.cartAdded.emit(this.product.id);
+  }
+
+  onMinusClick(product: Product) {
+    console.log(`Clicked - for ${product.id}`);
+    //this.cartAdded.emit(this.product.id);
+  }
+
   addProductToCart(productId: number): void {
-    console.log(`shop.ts Adding product ID ${productId} to cart`);
+    const currentCount = this.cartMap.get(productId) ?? 0;
+    console.log(currentCount);
+    this.cartMap.set(productId, currentCount + 1);
+
+    // Update products array so UI changes
+    const prod = this.products.find(p => p.id === productId);
+    if (prod) prod.cartCount = currentCount + 1;
+    this.cdr.markForCheck();
+    console.log(currentCount);
 
     this.userService.addToCart(this.userId, productId).subscribe({
       next: (response: Cart) => {
-        console.log(`Added product ID ${productId} to cart successfully`, response);
         this.cartProductIds.add(productId);
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error adding to cart', err);
+      }
+    });
+    this.cdr.detectChanges();
+  }
+
+  removeProductFromCart(productId: number): void {
+    const currentCount = this.cartMap.get(productId) ?? 0;
+    console.log(this.cartMap);
+    this.cartMap.set(productId, currentCount - 1);
+
+    // Update products array so UI changes
+    const prod = this.products.find(p => p.id === productId);
+    if (prod) {
+      const newCount = Math.max((prod.cartCount ?? 0) - 1, 0);
+      prod.cartCount = newCount;
+
+      if (newCount === 0) {
+        this.cartMap.delete(productId);        // remove from cart map
+        this.cartProductIds.delete(productId); // remove from "in cart" set
+      } else {
+        this.cartMap.set(productId, newCount);
+      }
+
+      this.cdr.detectChanges();
+    }
+    this.cdr.markForCheck();
+    this.cartMap.set(productId, currentCount - 1);
+
+    this.userService.removeFromCart(this.userId, productId).subscribe({
+      next: (response: Cart) => {
+        console.log(`Removed product ID ${productId} from cart successfully`, response);
         this.cdr.detectChanges();
       },
       error: (err) => {

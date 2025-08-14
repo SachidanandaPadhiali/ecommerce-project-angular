@@ -39,6 +39,13 @@ export class UserService {
     );
   }
 
+  removeFromCart(userId: number, productId: number): Observable<Cart> {
+    return this.http.post<Cart>(
+      `${this.apiUrl}/removeFromCart?userId=${userId}&productId=${productId}`,
+      {}
+    );
+  }
+
   getUserCart(userId: number): Observable<Cart> {
     return this.http.post<Cart>(`${this.apiUrl}/getCart`, { userId });
   }
