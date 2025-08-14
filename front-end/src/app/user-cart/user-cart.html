@@ -4,28 +4,46 @@
     <p *ngIf="!curUserCart">Cart not loaded</p>
     <p *ngIf="curUserCart?.items?.length === 0" class="message error">Cart is empty</p>
 
-    <div class="cart-card">
-        <div *ngFor="let item of curUserCart?.items" class="cart-item">
-            <img [src]="'assets/image/products/' + item.product.imageUrl" alt="{{item.product.imageUrl}}"
-                class="image-store" />
-            <div class="cart-item-details">
-                <p>Product: {{ item.product.name }}</p>
-            </div>
-            <div class="cart-item-actions">
-                <div class="cartCount">
-                    <div class="num-in">
-                        <span role="button" (click)="removeProductFromCart(item.product.id ?? 0)">
-                            <ng-container *ngIf="(item.quantity ?? 0) > 1; else deleteIcon">-</ng-container>
-                            <ng-template #deleteIcon>
-                                <fa-icon class="cartDelete" [icon]="delete"></fa-icon>
-                            </ng-template>
-                        </span>
-                        <input type="text" class="in-num" [value]="item.quantity ?? 0" readonly>
-                        <span role="button" (click)="addProductToCart(item.product.id ?? 0)">+</span>
+    <div class="cart-container">
+        <div class="cart-card">
+            <div *ngFor="let item of curUserCart?.items" class="cart-item">
+                <img [src]="'assets/image/products/' + item.product.imageUrl" alt="{{item.product.imageUrl}}"
+                    class="image-store" />
+                <div class="cart-item-details">
+                    <h3>{{ item.product.name }}</h3>
+                    <p><b>color : </b>{{ item.product.color }}</p>
+                </div>
+                <div class="cart-item-actions">
+                    <div class="cartCount">
+                        <div class="num-in">
+                            <span role="button" (click)="removeProductFromCart(item.product.id ?? 0)">
+                                <ng-container *ngIf="(item.quantity ?? 0) > 1; else deleteIcon">-</ng-container>
+                                <ng-template #deleteIcon>
+                                    <fa-icon class="cartDelete" [icon]="delete"></fa-icon>
+                                </ng-template>
+                            </span>
+                            <input type="text" class="in-num" [value]="item.quantity ?? 0" readonly>
+                            <span role="button" (click)="addProductToCart(item.product.id ?? 0)">+</span>
+                        </div>
                     </div>
-
+                    <h3>{{ item.price | currency:'INR':'symbol' }}</h3>
                 </div>
             </div>
+        </div>
+        <div class="cart-total">
+            <h3>Summary</h3>
+            <hr>
+            <div class="value">
+                <b>Cart Total : </b>{{ curUserCart?.total| currency:'INR':'symbol' }}
+            </div>
+            <div class="value">
+                <b>Delivery charge : </b>FREE
+            </div>
+            <hr>
+            <div class="value">
+                <b>Sub Total : </b>{{ curUserCart?.total| currency:'INR':'symbol' }}
+            </div>
+            <button class="main-btn checkout">Checkout</button>
         </div>
     </div>
 </div>
