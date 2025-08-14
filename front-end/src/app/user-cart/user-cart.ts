@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ProductService } from '../services/product-service';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { UserService } from '../services/user-service';
 import { Product } from '../models/product.model';
 import { CartEntry } from '../models/CartEntry.model';
@@ -8,7 +9,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-user-cart',
-  imports: [CommonModule],
+  imports: [CommonModule, FontAwesomeModule],
   templateUrl: './user-cart.html',
   styleUrl: './user-cart.css'
 })
@@ -22,8 +23,12 @@ export class UserCart implements OnInit {
   userId: number = 0;
   error: string = '';
   curUserCart: Cart | null = null;
+  cartMap = new Map<number, number>();
+  cartProductIds: Set<number> = new Set();
 
-  constructor(private productService: ProductService, private userService: UserService, private cdr: ChangeDetectorRef, private commonModule : CommonModule) { }
+  delete = faTrash;
+
+  constructor(private userService: UserService, private cdr: ChangeDetectorRef, private commonModule: CommonModule) { }
 
   ngOnInit(): void {
     this.userId = Number(JSON.parse(localStorage.getItem('user') || '{}')?.id);
@@ -31,10 +36,13 @@ export class UserCart implements OnInit {
     this.userService.getUserCart(this.userId).subscribe({
       next: (data: Cart) => {
         this.curUserCart = data;
-        console.log('user-cart.ts Cart data:', this.curUserCart);/*
-        this.userCart = new Set(data);
-        this.cartItems = new Set(data.map((entry: CartEntry) => Number(entry.productId)));
-        this.loading = false;*/
+        this.cartProductIds = new Set(data.items.map(i => i.product?.id ?? 0));
+        console.log('user-cart.ts Cart data:', this.curUserCart);
+
+        this.cartMap.clear();
+        this.curUserCart.items.forEach(item => {
+          this.cartMap.set(item.product?.id ?? 0, item.quantity ?? 0);
+        });
         this.cdr.detectChanges();
       },
       error: (err) => {
@@ -46,24 +54,69 @@ export class UserCart implements OnInit {
     });
   }
 
-  addProductToCart(prodId: number) {
-    if (!prodId) return;
+  addProductToCart(productId: number): void {
+    // Instant local UI update
+    const cartItem = this.curUserCart?.items.find(item => item.product.id === productId);
+    if (cartItem) {
+      cartItem.quantity = (cartItem.quantity ?? 0) + 1;
+      console.log(cartItem);
+    }
 
-    this.userId = JSON.parse(localStorage.getItem('user') || '{}')?.id;
+    // Update products array so product cards update
+    const prod = this.products.find(p => p.id === productId);
+    if (prod) {
+      prod.cartCount = (prod.cartCount ?? 0) + 1;
+    }
 
-    const isCurrentlyWished = this.cartItems.has(prodId);
+    // Update cartMap for quick lookup
+    this.cartMap.set(productId, (this.cartMap.get(productId) ?? 0) + 1);
 
-    console.log(`usercart.ts adding product ${prodId}, currently added: ${isCurrentlyWished}`);
+    this.cdr.detectChanges();
 
-    const updated = new Set(this.cartItems);
-
-    updated.add(prodId);
-    this.cartItems = updated;
-    this.userService.addToCart(this.userId, prodId).subscribe({
-      next: () => console.log('user-cart.ts Added to wishlist'),
-      error: (err) => console.error('Error adding:', err)
+    this.userService.addToCart(this.userId, productId).subscribe({
+      next: (response: Cart) => {
+        this.cartProductIds.add(productId);
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error adding to cart', err);
+      }
     });
+    this.cdr.detectChanges();
+  }
 
+  removeProductFromCart(productId: number): void {
+    const currentCount = this.cartMap.get(productId) ?? 0;
+    console.log(this.cartMap);
+    this.cartMap.set(productId, currentCount - 1);
+
+    // Update products array so UI changes
+    const prod = this.products.find(p => p.id === productId);
+    if (prod) {
+      const newCount = Math.max((prod.cartCount ?? 0) - 1, 0);
+      prod.cartCount = newCount;
+
+      if (newCount === 0) {
+        this.cartMap.delete(productId);        // remove from cart map
+        this.cartProductIds.delete(productId); // remove from "in cart" set
+      } else {
+        this.cartMap.set(productId, newCount);
+      }
+
+      this.cdr.detectChanges();
+    }
+    this.cdr.markForCheck();
+    this.cartMap.set(productId, currentCount - 1);
+
+    this.userService.removeFromCart(this.userId, productId).subscribe({
+      next: (response: Cart) => {
+        console.log(`Removed product ID ${productId} from cart successfully`, response);
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error adding to cart', err);
+      }
+    });
     this.cdr.detectChanges();
   }
 }

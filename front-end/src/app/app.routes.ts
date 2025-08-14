@@ -23,7 +23,7 @@ export const routes: Routes = [
     { path: 'seller-product/:id', component: SellerAddProduct },
     { path: 'shop', component: Shop },
     { path: 'user/wishlist', component: Wishlist, canActivate: [authGuard], data: { role: 'user' } },
-    { path: 'cart', component: UserCart, canActivate: [authGuard], data: { role: 'user' } },
+    { path: 'user/cart', component: UserCart, canActivate: [authGuard], data: { role: 'user' } },
     { path: 'user/profile', component: UserProfile, canActivate: [authGuard], data: { role: 'user' } },
     { path: 'shop/category/:name', component: Shop, runGuardsAndResolvers: 'paramsChange' }
 ];
