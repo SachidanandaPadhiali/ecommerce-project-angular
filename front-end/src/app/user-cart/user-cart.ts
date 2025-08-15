@@ -59,6 +59,7 @@ export class UserCart implements OnInit {
     const cartItem = this.curUserCart?.items.find(item => item.product.id === productId);
     if (cartItem) {
       cartItem.quantity = (cartItem.quantity ?? 0) + 1;
+      cartItem.price = cartItem.product.discPrice * cartItem.quantity;
       console.log(cartItem);
     }
 
@@ -86,11 +87,15 @@ export class UserCart implements OnInit {
   }
 
   removeProductFromCart(productId: number): void {
-    const currentCount = this.cartMap.get(productId) ?? 0;
-    console.log(this.cartMap);
-    this.cartMap.set(productId, currentCount - 1);
+    // Instant local UI update
+    const cartItem = this.curUserCart?.items.find(item => item.product.id === productId);
+    if (cartItem) {
+      cartItem.quantity = Math.max((cartItem.quantity ?? 0) - 1, 0);
+      cartItem.price = cartItem.product.discPrice * cartItem.quantity;
+      console.log(cartItem);
+    }
 
-    // Update products array so UI changes
+    // Update products array so product cards update
     const prod = this.products.find(p => p.id === productId);
     if (prod) {
       const newCount = Math.max((prod.cartCount ?? 0) - 1, 0);
@@ -106,7 +111,6 @@ export class UserCart implements OnInit {
       this.cdr.detectChanges();
     }
     this.cdr.markForCheck();
-    this.cartMap.set(productId, currentCount - 1);
 
     this.userService.removeFromCart(this.userId, productId).subscribe({
       next: (response: Cart) => {
