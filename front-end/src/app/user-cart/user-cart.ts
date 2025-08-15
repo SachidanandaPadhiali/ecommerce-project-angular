@@ -55,13 +55,28 @@ export class UserCart implements OnInit {
   }
 
   addProductToCart(productId: number): void {
-    // Instant local UI update
-    const cartItem = this.curUserCart?.items.find(item => item.product.id === productId);
-    if (cartItem) {
-      cartItem.quantity = (cartItem.quantity ?? 0) + 1;
-      cartItem.price = cartItem.product.discPrice * cartItem.quantity;
-      console.log(cartItem);
-    }
+
+    if (!this.curUserCart || !this.curUserCart.items) return;
+
+    const updatedItems = (this.curUserCart.items ?? []).map(item => {
+      if (item.product.id === productId) {
+        const newQuantity = (item.quantity ?? 0) + 1;
+        return {
+          ...item,
+          quantity: newQuantity,
+          price: item.product.discPrice * newQuantity
+        };
+      }
+      return item;
+    });
+
+    const newTotal = updatedItems.reduce((sum, item) => sum + (item.price ?? 0), 0);
+
+    this.curUserCart = {
+      ...this.curUserCart,
+      items: updatedItems,
+      total: newTotal
+    };
 
     // Update products array so product cards update
     const prod = this.products.find(p => p.id === productId);
@@ -87,13 +102,27 @@ export class UserCart implements OnInit {
   }
 
   removeProductFromCart(productId: number): void {
-    // Instant local UI update
-    const cartItem = this.curUserCart?.items.find(item => item.product.id === productId);
-    if (cartItem) {
-      cartItem.quantity = Math.max((cartItem.quantity ?? 0) - 1, 0);
-      cartItem.price = cartItem.product.discPrice * cartItem.quantity;
-      console.log(cartItem);
-    }
+    if (!this.curUserCart || !this.curUserCart.items) return;
+
+    const updatedItems = (this.curUserCart.items ?? []).map(item => {
+      if (item.product.id === productId) {
+        const newQuantity = Math.max((item.quantity ?? 0) - 1, 0);
+        return {
+          ...item,
+          quantity: newQuantity,
+          price: item.product.discPrice * newQuantity
+        };
+      }
+      return item;
+    });
+
+    const newTotal = updatedItems.reduce((sum, item) => sum + (item.price ?? 0), 0);
+
+    this.curUserCart = {
+      ...this.curUserCart,
+      items: updatedItems,
+      total: newTotal
+    };
 
     // Update products array so product cards update
     const prod = this.products.find(p => p.id === productId);
