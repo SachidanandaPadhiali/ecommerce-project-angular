@@ -25,6 +25,7 @@ export class UserCart implements OnInit {
   curUserCart: Cart | null = null;
   cartMap = new Map<number, number>();
   cartProductIds: Set<number> = new Set();
+  cartCount: number = 0;
 
   delete = faTrash;
 
@@ -37,12 +38,13 @@ export class UserCart implements OnInit {
       next: (data: Cart) => {
         this.curUserCart = data;
         this.cartProductIds = new Set(data.items.map(i => i.product?.id ?? 0));
-        console.log('user-cart.ts Cart data:', this.curUserCart);
 
         this.cartMap.clear();
         this.curUserCart.items.forEach(item => {
           this.cartMap.set(item.product?.id ?? 0, item.quantity ?? 0);
+          this.cartCount += item.quantity ?? 0;
         });
+        this.curUserCart.totalCartCount = this.cartCount;
         this.cdr.detectChanges();
       },
       error: (err) => {
@@ -64,7 +66,8 @@ export class UserCart implements OnInit {
         return {
           ...item,
           quantity: newQuantity,
-          price: item.product.discPrice * newQuantity
+          price: item.product.discPrice * newQuantity,
+          originalPrice: item.product.price * newQuantity
         };
       }
       return item;
@@ -75,7 +78,8 @@ export class UserCart implements OnInit {
     this.curUserCart = {
       ...this.curUserCart,
       items: updatedItems,
-      total: newTotal
+      total: newTotal,
+      totalCartCount: (this.curUserCart.totalCartCount ?? 0) + 1
     };
 
     // Update products array so product cards update
@@ -110,7 +114,8 @@ export class UserCart implements OnInit {
         return {
           ...item,
           quantity: newQuantity,
-          price: item.product.discPrice * newQuantity
+          price: item.product.discPrice * newQuantity,
+          originalPrice: item.product.price * newQuantity
         };
       }
       return item;
@@ -121,7 +126,8 @@ export class UserCart implements OnInit {
     this.curUserCart = {
       ...this.curUserCart,
       items: updatedItems,
-      total: newTotal
+      total: newTotal,
+      totalCartCount: (this.curUserCart.totalCartCount ?? 0) - 1
     };
 
     // Update products array so product cards update
@@ -143,7 +149,6 @@ export class UserCart implements OnInit {
 
     this.userService.removeFromCart(this.userId, productId).subscribe({
       next: (response: Cart) => {
-        console.log(`Removed product ID ${productId} from cart successfully`, response);
         this.cdr.detectChanges();
       },
       error: (err) => {

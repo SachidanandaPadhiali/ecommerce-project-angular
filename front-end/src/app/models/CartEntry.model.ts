@@ -6,4 +6,5 @@ export interface CartEntry {
   productId: number;
   quantity?: number;
   price: number;
+  originalPrice: number;
 }

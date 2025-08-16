@@ -1,5 +1,5 @@
 <div class="main-content">
-    <h1>YOUR CART</h1>
+    <h1 class="heading-page">YOUR CART</h1>
 
     <p *ngIf="!curUserCart">Cart not loaded</p>
     <p *ngIf="curUserCart?.items?.length === 0" class="message error">Cart is empty</p>
@@ -15,7 +15,7 @@
                 </div>
                 <div class="cart-item-actions">
                     <div class="cartCount">
-                        <div class="num-in">
+                        <div class="num-in" style="margin-bottom: 1rem;">
                             <span role="button" (click)="removeProductFromCart(item.product.id ?? 0)">
                                 <ng-container *ngIf="(item.quantity ?? 0) > 1; else deleteIcon">-</ng-container>
                                 <ng-template #deleteIcon>
@@ -26,12 +26,14 @@
                             <span role="button" (click)="addProductToCart(item.product.id ?? 0)">+</span>
                         </div>
                     </div>
+                    <p style="text-decoration: line-through;color: #a1a1aa;">{{ item.originalPrice | currency:'INR':'symbol' }}</p>
                     <h3>{{ item.price | currency:'INR':'symbol' }}</h3>
                 </div>
             </div>
         </div>
         <div class="cart-total">
             <h3>Summary</h3>
+            <p><b>Total Number of Items : </b>{{ curUserCart?.totalCartCount }}</p>
             <hr>
             <div class="value">
                 <b>Cart Total : </b>{{ curUserCart?.total| currency:'INR':'symbol' }}

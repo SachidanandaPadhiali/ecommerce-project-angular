@@ -20,6 +20,7 @@ body::-webkit-scrollbar {
 }
 
 h1 {
+    padding: 1rem 0 0 1rem;
     font-size: 3.125rem;
     font-weight: 500;
     line-height: 100%;

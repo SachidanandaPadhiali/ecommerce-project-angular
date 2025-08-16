@@ -7,4 +7,5 @@ export interface Cart {
     items: CartEntry[];
     userOrder: any;
     total: number;
+    totalCartCount: number;
 }
