@@ -26,6 +26,7 @@ export class UserCart implements OnInit {
   cartMap = new Map<number, number>();
   cartProductIds: Set<number> = new Set();
   cartCount: number = 0;
+  deliveryCharges: number = 100;
 
   delete = faTrash;
 
@@ -45,6 +46,9 @@ export class UserCart implements OnInit {
           this.cartCount += item.quantity ?? 0;
         });
         this.curUserCart.totalCartCount = this.cartCount;
+        if(this.curUserCart.total > 500){
+          this.deliveryCharges = 0;
+        }
         this.cdr.detectChanges();
       },
       error: (err) => {

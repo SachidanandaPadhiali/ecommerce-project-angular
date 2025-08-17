@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import { Product } from '../models/product.model';
 import { CartEntry } from '../models/CartEntry.model';
 import { Cart } from '../models/Cart.model';
+import { UserAddress } from '../models/UserAddress.model';
 
 @Injectable({
   providedIn: 'root'
@@ -53,5 +54,16 @@ export class UserService {
   clearCart(): void {
     this.cart = [];
     console.log('Cart cleared');
+  }
+
+  getUserAddresses(userId: number): Observable<UserAddress[]> {
+    return this.http.post<UserAddress[]>(`${this.apiUrl}/getUserAddresses`, { userId });
+  }
+
+  removeAddress(userId: number, addressId: number): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/removeUserAddres?userId=${userId}&addressId=${addressId}`,
+      {}
+    );
   }
 }

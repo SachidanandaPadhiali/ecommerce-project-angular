@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   template: `
     <h2 mat-dialog-title>Confirm Deletion</h2>
     <mat-dialog-content>
-      Are you sure you want to delete "{{ data.productName }}"?
+      Are you sure you want to delete "{{ data.name }}"?
     </mat-dialog-content>
     <mat-dialog-actions align="end">
       <button mat-button (click)="onCancel()">Cancel</button>

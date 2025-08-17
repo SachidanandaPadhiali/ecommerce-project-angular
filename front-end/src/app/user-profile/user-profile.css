@@ -1,0 +1,51 @@
+
+/*========== USER PROFILE ==========*/
+/*===== Addresses =====*/
+
+.add_address_button {
+    background: var(--accent);
+    border: 1px solid var(--border);
+    margin: 10px 0 0 20px;
+    padding: 8px 15px;
+    color: var(--bg);
+    border-radius: 22px;
+}
+
+.address-list-container {
+    padding: 20px;
+}
+
+.address-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.address-card {
+    background: var(--bg);
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 300px;
+}
+
+.action-buttons {
+    margin-top: 12px;
+}
+
+.action-buttons button {
+    margin-right: 8px;
+    padding: 6px 12px;
+    border: none;
+    background-color: #4f46e5;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.action-buttons button:last-child {
+    background-color: #ef4444;
+}
+

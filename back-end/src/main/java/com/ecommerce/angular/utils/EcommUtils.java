@@ -29,6 +29,12 @@ public class EcommUtils {
     public static final String ACCOUNT_DOES_NOT_EXIST_MESSAGE = "Account Number does not exists";
 
     /**
+     * Custom message when a user deletes an address
+     */
+    public static final String ADDRESS_DELETED_CODE = "004";
+    public static final String ADDRESS_DELETED_MESSAGE = "Address Deleted";
+
+    /**
      * Custom message when seller adds product
      */
     public static final String PRODUCT_DOES_NOT_EXISTS_CODE = "010";

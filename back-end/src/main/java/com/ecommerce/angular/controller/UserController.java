@@ -10,9 +10,12 @@ import com.ecommerce.angular.dto.UserDTO;
 import com.ecommerce.angular.dto.UserRequest;
 import com.ecommerce.angular.entity.Cart;
 import com.ecommerce.angular.entity.User;
+import com.ecommerce.angular.entity.UserAddress;
+import com.ecommerce.angular.service.AddressService;
 import com.ecommerce.angular.service.CartService;
 import com.ecommerce.angular.service.UserService;
 import com.ecommerce.angular.utils.EcommUtils;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,6 +39,9 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    AddressService addressService;
+    
     @Autowired
     CartService cartService;
 
@@ -92,5 +98,22 @@ public class UserController {
     @PostMapping("/getCart")
     public Optional<Cart> getCart(@RequestBody UserRequest userRequest) {
         return cartService.getCart(userRequest.getUserId());
+    }
+
+    @PostMapping("/getUserAddresses")
+    public List<UserAddress> getUserAddresses(@RequestBody UserRequest userRequest) {
+        return addressService.getUserAddresses(userRequest.getUserId());
+    }
+
+    @PostMapping("/removeUserAddres")
+    public ResponseEntity<EcommResponse> removeUserAddres(
+            @RequestParam Long userId,
+            @RequestParam Long addressId) {
+        
+        addressService.removeUserAddress(userId, addressId);
+        return ResponseEntity.ok(EcommResponse.builder()
+                .responseCode(EcommUtils.ADDRESS_DELETED_CODE)
+                .responseMessage(EcommUtils.ADDRESS_DELETED_MESSAGE)
+                .build());
     }
 }

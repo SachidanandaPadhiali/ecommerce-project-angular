@@ -6,6 +6,6 @@ export interface Cart {
     user: EcommUser;
     items: CartEntry[];
     userOrder: any;
-    total: number;
+    total: number|0;
     totalCartCount: number;
 }
