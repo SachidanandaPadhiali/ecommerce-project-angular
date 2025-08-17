@@ -1,31 +1,30 @@
 <div class="main-content">
-    <h1>Address Book</h1>
-    <button class="add_address_button">Add New Address</button>
+  <h1>Address Book</h1>
+  <button class="add_address_button">Add New Address</button>
 
-    <div id="addressList" class="address-list-container">
-        <p>Address count: {{ userAddresses.length }}</p>
-        <pre>{{ userAddresses | json }}</pre>
-        <h2>Your Saved Addresses</h2>
-        @if(userAddresses.length === 0){
-        <div class="no-address">
-            No addresses saved yet.
-        </div>
-        }
-        @if(userAddresses.length > 0){
-        <div class="address-cards">
-            <!-- Loop through addresses and display each one -->
-            <div class="address-card" *ngFor="let address of userAddresses; trackBy: trackById">
-                <h3>{{ address.userName }}</h3>
-                <p>{{ address.addressLine1 }}@if(address?.addressLine2){, {{ address.addressLine2 }}}</p>
-                <p>{{ address.state }}, {{ address.country }} - {{ address.zipCode }}</p>
-                <p>Mobile: {{ address.mobileNumber }}</p>
+  <div id="addressList" class="address-list-container">
+    <h2>Your Saved Addresses</h2>
 
-                <div class="action-buttons">
-                    <button>Edit</button>
-                    <button (click)="removeAddress(address?.id ?? 0, address.userName)">Delete</button>
-                </div>
-            </div>
-        </div>
-        }
+    <div *ngIf="userAddresses.length === 0" class="no-address">
+      No addresses saved yet.
     </div>
+
+    <div class="address-cards" *ngIf="userAddresses.length > 0">
+      <!-- Loop through addresses and display each one -->
+      <div class="address-card" *ngFor="let address of userAddresses; trackBy: trackById">
+        <h3>{{ address.userName }}</h3>
+        <p>
+          {{ address.addressLine1 }}
+          <span *ngIf="address?.addressLine2">, {{ address.addressLine2 }}</span>
+        </p>
+        <p>{{ address.state }}, {{ address.country }} - {{ address.zipCode }}</p>
+        <p>Mobile: {{ address.mobileNumber }}</p>
+
+        <div class="action-buttons">
+          <button>Edit</button>
+          <button (click)="removeAddress(address?.id ?? 0, address.userName)">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -16,7 +16,7 @@ export class UserProfile {
   userId: number = 0;
   userAddresses: UserAddress[] = [];
 
-  constructor(private userService: UserService, private dialog: MatDialog, private ngZone: NgZone) { }
+  constructor(private userService: UserService, private dialog: MatDialog, private ngZone: NgZone, private cdRef: ChangeDetectorRef) { }
   ngOnInit() {
     this.loadAddresses();
   }
@@ -25,39 +25,45 @@ export class UserProfile {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     this.userId = user?.id;
     this.userService.getUserAddresses(this.userId).subscribe(
-      (addresses: UserAddress[]) => {
-        console.log(addresses);
-        this.userAddresses = [...addresses];
-
-        if (!addresses || this.userAddresses.length === 0) {
-          console.log('No addresses found for the user.');
-        }
+      (addresses) => {
+        console.log('Received addresses:', addresses);
+        this.ngZone.run(() => {
+          this.userAddresses = [...addresses]; // triggers view update
+        });
       },
-      (error) => {
-        console.error('Error fetching addresses:', error);
-      }
+      (error) => console.error('Error loading addresses:', error)
     );
   }
+
 
   trackById(index: number, item: any): number {
     return item.id;
   }
 
   removeAddress(addressId: number, addressName: string) {
-    const name = addressName;
-
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '350px',
-      data: { name }
+      data: { name: addressName }
     });
 
-    dialogRef.afterClosed().subscribe((result: any) => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.userService.removeAddress(this.userId, addressId).subscribe((responseCode: any) => {
-          this.ngZone.run(() => {
-            console.log(responseCode);
-            this.loadAddresses();
-          });
+        const oldAddresses = [...this.userAddresses];
+
+        // Force new array reference
+        this.userAddresses = this.userAddresses.filter(addr => addr.id !== addressId);
+        this.cdRef.detectChanges();
+
+
+        this.userService.removeAddress(this.userId, addressId).subscribe({
+          next: () => {
+            // success – UI already updated
+          },
+          error: (err) => {
+            console.error('Delete failed:', err);
+            // rollback
+            this.userAddresses = oldAddresses;
+          }
         });
       }
     });
