@@ -1,3 +1,52 @@
+/* profile.component.css */
+.tabs {
+    width: 100%;
+    margin: 1rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.tab {
+    cursor: pointer;
+    user-select: none;
+    outline: none;
+    padding: .5rem 2rem;
+    border-radius: 8px;
+    font-size: .9rem;
+    text-align: center;
+    animation: fadeIn .3s ease-out;
+    background: var(--bg);
+    color: #2b069a;
+    border: 1px solid #b2b1b3;
+    font-weight: var(--font-semi-bold);
+}
+
+.tab:hover {
+    background: color-mix(in srgb, var(--electric-violet) 5%, transparent);
+    color: #2b069a;
+    border: 1px solid #a686ef;
+}
+
+.tab.active {
+    background: color-mix(in srgb, var(--electric-violet) 30%, transparent);
+    color: #2b069a;
+    border: 1px solid #a686ef;
+    font-weight: var(--font-bold);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+}
+
+.panel {
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-top: none;
+    background: var(--bg);
+}
+
+.info-right{
+    text-align: center;
+    font-size: var(--h3-font-size);
+}
 
 /*========== USER PROFILE ==========*/
 /*===== Addresses =====*/
@@ -48,4 +97,3 @@
 .action-buttons button:last-child {
     background-color: #ef4444;
 }
-

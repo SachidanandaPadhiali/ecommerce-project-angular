@@ -49,7 +49,6 @@ main {
     align-items: center;
 }
 
-
 .main-content {
     padding-top: 50px;
 }
@@ -537,7 +536,7 @@ td.text-right {
     color: red;
 }
 
-/* =+=+=+= PRODUCT CARD ==++==++==++== */
+/* =+=+=+= PRODUCT PAGE ==++==++==++== */
 .product-list {
     margin: 4rem 1rem;
 }

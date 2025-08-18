@@ -1,30 +1,56 @@
 <div class="main-content">
-  <h1>Address Book</h1>
-  <button class="add_address_button">Add New Address</button>
+    <!-- profile.component.html -->
+        <nav class="tabs" role="tablist" aria-label="Profile sections">
+            <div *ngFor="let s of sections" class="tab" role="tab" tabindex="0" [attr.aria-selected]="isActive(s.id)"
+                [class.active]="isActive(s.id)" (click)="select(s.id)" (keydown.enter)="select(s.id)"
+                (keydown.space)="select(s.id)">
+                <div class="info-right"></div>{{ s.label }}
+            </div>
+        </nav>
 
-  <div id="addressList" class="address-list-container">
-    <h2>Your Saved Addresses</h2>
+    <section class="panel" role="tabpanel" [hidden]="!isActive('basic')">
+        <h2>Basic account info</h2>
+        <!-- name, email, phone, password, 2FA toggles -->
+    </section>
 
-    <div *ngIf="userAddresses.length === 0" class="no-address">
-      No addresses saved yet.
-    </div>
+    <section class="panel" role="tabpanel" [hidden]="!isActive('shipping')">
+        <h1>Address Book</h1>
+        <button class="add_address_button">Add New Address</button>
 
-    <div class="address-cards" *ngIf="userAddresses.length > 0">
-      <!-- Loop through addresses and display each one -->
-      <div class="address-card" *ngFor="let address of userAddresses; trackBy: trackById">
-        <h3>{{ address.userName }}</h3>
-        <p>
-          {{ address.addressLine1 }}
-          <span *ngIf="address?.addressLine2">, {{ address.addressLine2 }}</span>
-        </p>
-        <p>{{ address.state }}, {{ address.country }} - {{ address.zipCode }}</p>
-        <p>Mobile: {{ address.mobileNumber }}</p>
+        <div id="addressList" class="address-list-container">
+            <h2>Your Saved Addresses</h2>
 
-        <div class="action-buttons">
-          <button>Edit</button>
-          <button (click)="removeAddress(address?.id ?? 0, address.userName)">Delete</button>
+            <div *ngIf="userAddresses.length === 0" class="no-address">
+                No addresses saved yet.
+            </div>
+
+            <div class="address-cards" *ngIf="userAddresses.length > 0">
+                <!-- Loop through addresses and display each one -->
+                <div class="address-card" *ngFor="let address of userAddresses; trackBy: trackById">
+                    <h3>{{ address.userName }}</h3>
+                    <p>
+                        {{ address.addressLine1 }}
+                        <span *ngIf="address?.addressLine2">, {{ address.addressLine2 }}</span>
+                    </p>
+                    <p>{{ address.state }}, {{ address.country }} - {{ address.zipCode }}</p>
+                    <p>Mobile: {{ address.mobileNumber }}</p>
+
+                    <div class="action-buttons">
+                        <button>Edit</button>
+                        <button (click)="removeAddress(address?.id ?? 0, address.userName)">Delete</button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
+    </section>
+
+    <section class="panel" role="tabpanel" [hidden]="!isActive('orders')">
+        <h2>Order management</h2>
+        <!-- recent orders, track, returns, invoices, re-order -->
+    </section>
+
+    <section class="panel" role="tabpanel" [hidden]="!isActive('personalization')">
+        <h2>Personalization</h2>
+        <!-- wishlist, sizes, preferred brands/categories, recommendations -->
+    </section>
 </div>

@@ -5,6 +5,8 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { UserService } from '../services/user-service';
 
+type Section = 'basic' | 'shipping' | 'orders' | 'personalization';
+
 @Component({
   selector: 'app-user-profile',
   imports: [CommonModule],
@@ -15,26 +17,48 @@ export class UserProfile {
 
   userId: number = 0;
   userAddresses: UserAddress[] = [];
+  active: Section = 'basic';
+
+  sections: { id: Section; label: string }[] = [
+    { id: 'basic', label: 'Basic account info' },
+    { id: 'shipping', label: 'Shipping & billing' },
+    { id: 'orders', label: 'Order management' },
+    { id: 'personalization', label: 'Personalization' },
+  ];
 
   constructor(private userService: UserService, private dialog: MatDialog, private ngZone: NgZone, private cdRef: ChangeDetectorRef) { }
   ngOnInit() {
     this.loadAddresses();
   }
 
+  select(section: Section) {
+    this.active = section;
+  }
+
+  isActive(id: Section) {
+    return this.active === id;
+  }
+
   loadAddresses() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     this.userId = user?.id;
+
+    if (!this.userId) {
+      console.warn('No userId found in localStorage.');
+      return;
+    }
+    console.log('userId', this.userId);
     this.userService.getUserAddresses(this.userId).subscribe(
       (addresses) => {
         console.log('Received addresses:', addresses);
         this.ngZone.run(() => {
           this.userAddresses = [...addresses]; // triggers view update
+          this.cdRef.detectChanges();
         });
       },
       (error) => console.error('Error loading addresses:', error)
     );
   }
-
 
   trackById(index: number, item: any): number {
     return item.id;
@@ -56,9 +80,7 @@ export class UserProfile {
 
 
         this.userService.removeAddress(this.userId, addressId).subscribe({
-          next: () => {
-            // success – UI already updated
-          },
+          next: () => { },
           error: (err) => {
             console.error('Delete failed:', err);
             // rollback
