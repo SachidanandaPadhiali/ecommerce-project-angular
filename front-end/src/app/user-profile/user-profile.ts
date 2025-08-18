@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { UserService } from '../services/user-service';
+import { AddressForm } from '../address-form/address-form';
 
 type Section = 'basic' | 'shipping' | 'orders' | 'personalization';
 
@@ -18,6 +19,7 @@ export class UserProfile {
   userId: number = 0;
   userAddresses: UserAddress[] = [];
   active: Section = 'basic';
+  showForm: boolean = false;
 
   sections: { id: Section; label: string }[] = [
     { id: 'basic', label: 'Basic account info' },
@@ -91,4 +93,31 @@ export class UserProfile {
     });
   }
 
+  showAddressForm() {
+    const dialogRef = this.dialog.open(AddressForm, {
+      width: '1300px',
+      maxWidth: '90vw',
+      panelClass: 'address-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadAddresses();
+      }
+    });
+  }
+
+  showAddressUpdateForm() {
+    const dialogRef = this.dialog.open(AddressForm, {
+      width: '1300px',
+      maxWidth: '90vw',
+      panelClass: 'address-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadAddresses();
+      }
+    });
+  }
 }

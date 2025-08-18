@@ -37,9 +37,7 @@
 }
 
 .panel {
-    padding: 16px;
-    border: 1px solid var(--border);
-    border-top: none;
+    padding: 1rem;
     background: var(--bg);
 }
 
@@ -57,7 +55,8 @@
     margin: 10px 0 0 20px;
     padding: 8px 15px;
     color: var(--bg);
-    border-radius: 22px;
+    border-radius: 8px;
+    cursor: pointer;
 }
 
 .address-list-container {
@@ -72,6 +71,8 @@
 
 .address-card {
     background: var(--bg);
+    color: #2b069a;
+    border: 1px solid #b2b1b3;
     padding: 16px;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
@@ -79,6 +80,11 @@
     max-width: 300px;
 }
 
+.address-card:hover {
+    background: color-mix(in srgb, var(--electric-violet) 5%, transparent);
+    color: #2b069a;
+    border: 1px solid #a686ef;
+}
 .action-buttons {
     margin-top: 12px;
 }

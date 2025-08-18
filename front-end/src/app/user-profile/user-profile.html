@@ -1,12 +1,12 @@
 <div class="main-content">
     <!-- profile.component.html -->
-        <nav class="tabs" role="tablist" aria-label="Profile sections">
-            <div *ngFor="let s of sections" class="tab" role="tab" tabindex="0" [attr.aria-selected]="isActive(s.id)"
-                [class.active]="isActive(s.id)" (click)="select(s.id)" (keydown.enter)="select(s.id)"
-                (keydown.space)="select(s.id)">
-                <div class="info-right"></div>{{ s.label }}
-            </div>
-        </nav>
+    <nav class="tabs" role="tablist" aria-label="Profile sections">
+        <div *ngFor="let s of sections" class="tab" role="tab" tabindex="0" [attr.aria-selected]="isActive(s.id)"
+            [class.active]="isActive(s.id)" (click)="select(s.id)" (keydown.enter)="select(s.id)"
+            (keydown.space)="select(s.id)">
+            <div class="info-right"></div>{{ s.label }}
+        </div>
+    </nav>
 
     <section class="panel" role="tabpanel" [hidden]="!isActive('basic')">
         <h2>Basic account info</h2>
@@ -15,10 +15,9 @@
 
     <section class="panel" role="tabpanel" [hidden]="!isActive('shipping')">
         <h1>Address Book</h1>
-        <button class="add_address_button">Add New Address</button>
-
+        <button class="add_address_button" (click)="showAddressForm()">Add New Address</button>
         <div id="addressList" class="address-list-container">
-            <h2>Your Saved Addresses</h2>
+            <h2 style="padding-bottom: 1rem;">Your Saved Addresses</h2>
 
             <div *ngIf="userAddresses.length === 0" class="no-address">
                 No addresses saved yet.
@@ -33,7 +32,7 @@
                         <span *ngIf="address?.addressLine2">, {{ address.addressLine2 }}</span>
                     </p>
                     <p>{{ address.state }}, {{ address.country }} - {{ address.zipCode }}</p>
-                    <p>Mobile: {{ address.mobileNumber }}</p>
+                    <p>Mobile: {{ address.phoneNumber }}</p>
 
                     <div class="action-buttons">
                         <button>Edit</button>

@@ -763,7 +763,7 @@ td.text-right {
 .cartCount .num-in {
     float: left;
     width: 77px;
-    padding:0;
+    padding: 0;
     border: 1px solid var(--border);
     border-radius: 5px;
     z-index: 9999;
@@ -774,7 +774,7 @@ td.text-right {
     float: left;
     height: 32px;
     width: 70px;
-    padding:0;
+    padding: 0;
     border-left: 1px solid var(--border);
     border-right: 1px solid var(--border);
     background-color: #fff;
@@ -788,7 +788,7 @@ td.text-right {
     width: 25px;
     float: left;
     height: 32px;
-    padding:0;
+    padding: 0;
     padding-top: 5px;
     background-color: #f4f4f6;
     border-radius: 5px;
@@ -806,7 +806,7 @@ td.text-right {
     border: none;
     float: left;
     width: 25px;
-    padding:0;
+    padding: 0;
     padding: 0;
     text-align: center;
 }
@@ -974,4 +974,49 @@ body {
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.address-dialog .mat-mdc-dialog-title.mdc-dialog__title {
+    margin: 0 0 12px 0;
+    color: var(--primary, #431370);
+    font-weight: 700;
+}
+
+.address-dialog .mat-mdc-dialog-container .mat-mdc-dialog-title+.mat-mdc-dialog-content {
+    padding-top: 10px;
+}
+
+.address-dialog .mat-mdc-dialog-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.address-dialog .mat-mdc-text-field-wrapper .mdc-text-field{
+    border-radius: 20px;
+}
+
+.address-dialog .mat-mdc-form-field {
+    text-align: center;
+    border-radius: 20px;
+}
+
+.address-dialog .mat-mdc-dialog-container .mat-form-field-appearance-outline .mat-form-field-outline {
+    border-radius: 30px;
+}
+
+.address-dialog .mat-mdc-dialog-container .mat-mdc-form-field {
+    width: 100%;
+    border-radius: 20px;
+}
+
+.address-dialog .mat-mdc-dialog-container .dialog-actions {
+    display: flex;
+    justify-content: flex-start;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.address-dialog .mat-mdc-dialog-container .dialog-actions button {
+    min-width: 100px;
 }

@@ -10,6 +10,6 @@ export interface UserAddress {
     state: string;
     zipCode: string;
     country: string;
-    mobileNumber: string;
+    phoneNumber: string;
     isDefault: boolean;
 }

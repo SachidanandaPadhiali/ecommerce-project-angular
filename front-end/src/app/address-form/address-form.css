@@ -1,0 +1,129 @@
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 24px;
+}
+
+.form-row .form-group {
+    flex: 1;
+    min-width: 120px;
+}
+
+.form-group {
+    margin-bottom: 24px;
+    position: relative;
+}
+
+.form-group-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #111827;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 16px;
+    transition: all 0.3s;
+    box-sizing: border-box;
+    background: #f9fafb;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #431370;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+}
+
+.form-group select:focus {
+    outline: none;
+    border-color: #431370;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.form-group {
+    animation: slideUp 0.5s ease-out forwards;
+    opacity: 0;
+}
+
+.form-group:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+.form-group:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.ok-btn {
+    padding: .9rem;
+    background: #431370 !important;
+    color: white !important;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 550;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.ok-btn:hover {
+    background: #a72785 !important;
+}
+
+.cancel-btn {
+    padding: .9rem;
+    background: #a0a0a0 !important;
+    color: white !important;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 550;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.cancel-btn:hover {
+    background: #505050 !important;
+}
+
+@media (max-width: 640px) {
+    .popup {
+        height: auto;
+        padding: 20px;
+    }
+
+
+    .popup-content h2 {
+        font-size: 24px;
+    }
+}

@@ -1,0 +1,70 @@
+<h2 mat-dialog-title>Add New Address</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="addressForm" class="address-form">
+        <!-- Row 1: Name, Email, Mobile -->
+        <div class="form-row">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" [(ngModel)]="addressData.name" required placeholder="Enter your name" />
+            </div>
+            <div class="form-group">
+                <label for="mobile">Mobile Number</label>
+                <input type="tel" id="mobile" [(ngModel)]="addressData.phoneNumber" required
+                    placeholder="Enter your mobile" />
+            </div>
+        </div>
+
+        <!-- Row 2: City, State, Country, Pincode -->
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-group-label">Country</label>
+                <select formControlName="country">
+                    <option *ngFor="let c of countries" [value]="c.code" style="color: #431370 !important;">
+                        {{ c.name }}
+                    </option>
+                </select>
+            </div>
+
+            <div appearance="outline" class="form-group" *ngIf="states.length > 0">
+                <label>State</label>
+                <select formControlName="state">
+                    <option *ngFor="let s of states" [value]="s">
+                        {{ s }}
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" id="city" [(ngModel)]="addressData.city" required placeholder="Enter your city" />
+            </div>
+
+            <div class="form-group">
+                <label for="pincode">Pincode</label>
+                <input type="text" id="pincode" [(ngModel)]="addressData.pin" required
+                    placeholder="Enter your pincode" />
+            </div>
+        </div>
+
+        <!-- Row 3: Addressline 1, Addressline 2 -->
+        <div class="form-row">
+            <div class="form-group">
+                <label for="addressLine1">Address Line 1</label>
+                <input type="text" id="addressLine1" [(ngModel)]="addressData.addressLine1" required />
+            </div>
+
+            <div class="form-group">
+                <label for="addressLine2">Address Line 2</label>
+                <input type="text" id="addressLine2" [(ngModel)]="addressData.addressLine2" />
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()" class="cancel-btn">Cancel</button>
+    <button mat-flat-button (click)="onSave()" class="ok-btn" [disabled]="addressForm.invalid">
+        Save
+    </button>
+</mat-dialog-actions>

@@ -17,10 +17,11 @@ import lombok.Data;
  * @author sachidananda
  */
 @Entity
-@Table(name="User_Address")
+@Table(name = "User_Address")
 @Data
 
 public class UserAddress {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,11 +29,15 @@ public class UserAddress {
     @ManyToOne
     private User user;
 
+    private String userName;
+    private String phoneNumber;
+    
     private String addressLine1;
     private String addressLine2;
+    
     private String city;
     private String state;
     private String ZipCode;
     private String country;
-    private boolean isDefault; 
+    private boolean isDefault;
 }
