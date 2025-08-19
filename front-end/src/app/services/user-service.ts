@@ -70,4 +70,8 @@ export class UserService {
   saveUserAddress(savedAddress: UserAddress): Observable<any> {
     return this.http.post(`${this.apiUrl}/addUserAddress`, savedAddress);
   }
+
+  updateUserAddress(updatedAddress: UserAddress): Observable<any> {
+    return this.http.put(`${this.apiUrl}/updateUserAddress`, updatedAddress);
+  }
 }

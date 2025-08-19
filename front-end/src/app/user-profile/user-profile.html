@@ -38,7 +38,7 @@
                     <p>Mobile: {{ address.phoneNumber }}</p>
 
                     <div class="action-buttons">
-                        <button>Edit</button>
+                        <button (click)="showAddressUpdateForm(address?.id ?? 0)">Edit</button>
                         <button (click)="removeAddress(address?.id ?? 0, address.userName)">Delete</button>
                     </div>
                 </div>

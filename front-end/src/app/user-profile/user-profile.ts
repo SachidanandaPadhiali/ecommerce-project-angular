@@ -120,16 +120,33 @@ export class UserProfile {
       }
     });
   }
-  showAddressUpdateForm() {
+
+  showAddressUpdateForm(addressId: number) {
+    const updateAddress = this.userAddresses.find(addr => addr.id === addressId);
+    console.log(updateAddress);
     const dialogRef = this.dialog.open(AddressForm, {
       width: '1300px',
       maxWidth: '90vw',
-      panelClass: 'address-dialog'
+      panelClass: 'address-dialog',
+      data: updateAddress
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.loadAddresses();
+        const updatedAddress: UserAddress = result;
+        updatedAddress.userId = this.userId;
+        console.log(updatedAddress);
+
+        this.userService.updateUserAddress(updatedAddress).subscribe({
+          next: (res) => {
+            console.log("✅ Address saved successfully:", res);
+            this.loadAddresses();
+            this.cdRef.detectChanges();
+          },
+          error: (err) => {
+            console.error("❌ Error saving address:", err);
+          }
+        });
       }
     });
   }

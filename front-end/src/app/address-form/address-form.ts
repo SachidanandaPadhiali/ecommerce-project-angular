@@ -8,7 +8,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { UserAddress } from '../models/UserAddress.model';
-import { faLessThanEqual } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-address-form',
@@ -46,16 +45,16 @@ export class AddressForm implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.addressForm = this.fb.group({
-      userName: ['', Validators.required],
-      phoneNumber: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
-      flatNo: ['', Validators.required],
-      addressLine1: ['', Validators.required],
-      addressLine2: [''],
-      city: ['', Validators.required],
-      state: ['', Validators.required],
-      zipCode: ['', [Validators.required, Validators.pattern(/^[0-9]{6}$/)]],
-      country: ['', Validators.required],
-      isDefault: [false]
+      userName: [this.data?.userName || '', Validators.required],
+      phoneNumber: [this.data?.phoneNumber || '', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
+      flatNo: [this.data?.flatNo || '', Validators.required],
+      addressLine1: [this.data?.addressLine1 || '', Validators.required],
+      addressLine2: [this.data?.addressLine2 || ''],
+      city: [this.data?.city || '', Validators.required],
+      state: [this.data?.state || '', Validators.required],
+      zipCode: [this.data?.zipCode || '', [Validators.required, Validators.pattern(/^[0-9]{6}$/)]],
+      country: [this.data?.country || '', Validators.required],
+      isDefault: [this.data?.isDefault || false]
     });
   }
 
