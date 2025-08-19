@@ -19,11 +19,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserAddressDTO {
 
+    private Long userId;
+    
+    private String userName;
+    private String phoneNumber;
+    
+    private String flatNo;
     private String addressLine1;
     private String addressLine2;
+    
     private String city;
     private String state;
     private String ZipCode;
     private String country;
-    private boolean isDefault;
 }

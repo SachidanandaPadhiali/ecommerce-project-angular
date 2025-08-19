@@ -1,22 +1,26 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
+import { UserAddress } from '../models/UserAddress.model';
+import { faLessThanEqual } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-address-form',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, FormsModule, MatButtonModule, MatSelectModule, MatOptionModule],
+  imports: [CommonModule, MatDialogModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatButtonModule, MatSelectModule, MatOptionModule],
   templateUrl: './address-form.html',
   styleUrl: './address-form.css'
 })
 export class AddressForm implements OnInit {
   addressForm: FormGroup;
+  @Output() formSubmit = new EventEmitter<FormGroup>();
+
   countries = [
     { code: 'IN', name: 'India' },
     { code: 'US', name: 'United States' },
@@ -31,9 +35,9 @@ export class AddressForm implements OnInit {
 
   states: string[] = [];
 
-  addressData = {
-    name: '', phoneNumber: '', country: '', state: '',
-    addressLine1: '', addressLine2: '', city: '', pin: '',
+  addressFormData: UserAddress = {
+    userId: 0, userName: '', phoneNumber: '', country: '', state: '',
+    flatNo: '', addressLine1: '', addressLine2: '', city: '', zipCode: '', isDefault: false
   };
 
   constructor(
@@ -42,23 +46,19 @@ export class AddressForm implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.addressForm = this.fb.group({
-      fullName: ['', Validators.required],
-      phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
+      userName: ['', Validators.required],
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
+      flatNo: ['', Validators.required],
       addressLine1: ['', Validators.required],
       addressLine2: [''],
       city: ['', Validators.required],
       state: ['', Validators.required],
-      zip: ['', [Validators.required, Validators.pattern(/^[0-9]{6}$/)]],
+      zipCode: ['', [Validators.required, Validators.pattern(/^[0-9]{6}$/)]],
       country: ['', Validators.required]
     });
   }
 
   ngOnInit() {
-    this.addressForm = this.fb.group({
-      country: [''],
-      state: ['']
-    });
-
     // When country changes → update states
     this.addressForm.get('country')?.valueChanges.subscribe(countryCode => {
       this.states = this.statesByCountry[countryCode] || [];
@@ -67,7 +67,12 @@ export class AddressForm implements OnInit {
   }
 
   onSave(): void {
-    this.dialogRef.close(true);
+    if (this.addressForm.invalid) {
+      this.addressForm.markAllAsTouched();
+      return;
+    }
+    this.addressFormData = this.addressForm.value;
+    this.dialogRef.close(this.addressFormData);
   }
 
   onCancel(): void {

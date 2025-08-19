@@ -10,7 +10,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  *
@@ -19,7 +22,9 @@ import lombok.Data;
 @Entity
 @Table(name = "User_Address")
 @Data
-
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserAddress {
 
     @Id
@@ -32,6 +37,7 @@ public class UserAddress {
     private String userName;
     private String phoneNumber;
     
+    private String flatNo;
     private String addressLine1;
     private String addressLine2;
     

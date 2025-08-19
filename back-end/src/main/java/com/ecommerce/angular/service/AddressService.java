@@ -4,6 +4,7 @@
  */
 package com.ecommerce.angular.service;
 
+import com.ecommerce.angular.dto.UserAddressDTO;
 import com.ecommerce.angular.entity.UserAddress;
 import java.util.List;
 
@@ -13,5 +14,6 @@ import java.util.List;
  */
 public interface AddressService {
     void removeUserAddress(Long userId, Long addressId);
-    List<UserAddress> getUserAddresses(Long userId); 
+    List<UserAddress> getUserAddresses(Long userId);
+    UserAddress addUserAddress(UserAddressDTO userAddress);
 }

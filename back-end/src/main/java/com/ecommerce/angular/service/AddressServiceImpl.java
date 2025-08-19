@@ -4,6 +4,7 @@
  */
 package com.ecommerce.angular.service;
 
+import com.ecommerce.angular.dto.UserAddressDTO;
 import com.ecommerce.angular.entity.User;
 import com.ecommerce.angular.entity.UserAddress;
 import com.ecommerce.angular.repo.UserAddressRepo;
@@ -22,17 +23,16 @@ public class AddressServiceImpl implements AddressService {
 
     @Autowired
     UserRepo userRepo;
-    
+
     @Autowired
     UserAddressRepo userAddressRepo;
-    
 
     @Override
     @Transactional
     public List<UserAddress> getUserAddresses(Long userId) {
         return userAddressRepo.findByUserId(userId);
     }
-    
+
     @Override
     @Transactional
     public void removeUserAddress(Long userId, Long addressId) {
@@ -42,5 +42,28 @@ public class AddressServiceImpl implements AddressService {
         UserAddress userAddress = userAddressRepo.findById(addressId)
                 .orElseThrow(() -> new RuntimeException("Address Not Found"));
         userAddressRepo.delete(userAddress);
+    }
+
+    @Override
+    @Transactional
+    public UserAddress addUserAddress(UserAddressDTO userAddress) {
+        User user = userRepo.findById(userAddress.getUserId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        UserAddress newUserAddress = UserAddress.builder()
+                .user(user)
+                .userName(userAddress.getUserName())
+                .phoneNumber(userAddress.getPhoneNumber())
+                .flatNo(userAddress.getFlatNo())
+                .addressLine1(userAddress.getAddressLine1())
+                .addressLine2(userAddress.getAddressLine2())
+                .city(userAddress.getCity())
+                .state(userAddress.getState())
+                .ZipCode(userAddress.getZipCode())
+                .country(userAddress.getCountry())
+                .isDefault(false)
+                .build();
+
+        return userAddressRepo.save(newUserAddress);
     }
 }

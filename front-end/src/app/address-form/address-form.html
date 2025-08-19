@@ -2,62 +2,67 @@
 
 <mat-dialog-content>
     <form [formGroup]="addressForm" class="address-form">
-        <!-- Row 1: Name, Email, Mobile -->
-        <div class="form-row">
-            <div class="form-group">
-                <label for="name">Full Name</label>
-                <input type="text" id="name" [(ngModel)]="addressData.name" required placeholder="Enter your name" />
+
+        <div class="address-form-row">
+            <div class="address-form-group">
+                <label for="userName">Full Name</label>
+                <input type="text" id="userName" formControlName="userName" placeholder="Enter your name" />
             </div>
-            <div class="form-group">
-                <label for="mobile">Mobile Number</label>
-                <input type="tel" id="mobile" [(ngModel)]="addressData.phoneNumber" required
-                    placeholder="Enter your mobile" />
+
+            <div class="address-form-group">
+                <label for="phoneNumber">Mobile Number</label>
+                <input type="tel" id="phoneNumber" formControlName="phoneNumber" placeholder="Enter your mobile" />
             </div>
         </div>
 
-        <!-- Row 2: City, State, Country, Pincode -->
-        <div class="form-row">
-            <div class="form-group">
-                <label class="form-group-label">Country</label>
+        <div class="address-form-row">
+            <div class="address-form-group">
+                <label>Country</label>
                 <select formControlName="country">
-                    <option *ngFor="let c of countries" [value]="c.code" style="color: #431370 !important;">
-                        {{ c.name }}
-                    </option>
+                    <option value="">-- Select a Country --</option>
+                    <option *ngFor="let c of countries" [value]="c.code">{{ c.name }}</option>
                 </select>
             </div>
 
-            <div appearance="outline" class="form-group" *ngIf="states.length > 0">
-                <label>State</label>
-                <select formControlName="state">
-                    <option *ngFor="let s of states" [value]="s">
-                        {{ s }}
-                    </option>
+            <div class="address-form-group">
+                <label for="state">State</label>
+                <select id="state" formControlName="state" [disabled]="!states || states.length === 0">
+                    <option value="">-- Select a state --</option>
+                    <option *ngFor="let s of states" [value]="s">{{ s }}</option>
                 </select>
             </div>
 
-            <div class="form-group">
+            <div class="address-form-group">
                 <label for="city">City</label>
-                <input type="text" id="city" [(ngModel)]="addressData.city" required placeholder="Enter your city" />
+                <input type="text" id="city" formControlName="city" placeholder="Enter your city" />
             </div>
 
-            <div class="form-group">
-                <label for="pincode">Pincode</label>
-                <input type="text" id="pincode" [(ngModel)]="addressData.pin" required
-                    placeholder="Enter your pincode" />
+            <div class="address-form-group">
+                <label for="zipCode">Pincode</label>
+                <input type="text" id="pincode" formControlName="zipCode" placeholder="Enter your pincode" />
             </div>
         </div>
 
-        <!-- Row 3: Addressline 1, Addressline 2 -->
-        <div class="form-row">
-            <div class="form-group">
-                <label for="addressLine1">Address Line 1</label>
-                <input type="text" id="addressLine1" [(ngModel)]="addressData.addressLine1" required />
+        <div class="address-form-row">
+            <div class="address-form-group">
+                <label for="flatNo">Flat/ House No.</label>
+                <input type="text" id="flatNo" formControlName="flatNo" />
             </div>
 
-            <div class="form-group">
-                <label for="addressLine2">Address Line 2</label>
-                <input type="text" id="addressLine2" [(ngModel)]="addressData.addressLine2" />
+            <div class="address-form-group">
+                <label for="addressLine1">Address Line 1</label>
+                <input type="text" id="addressLine1" formControlName="addressLine1" />
             </div>
+
+            <div class="address-form-group">
+                <label for="addressLine2">Address Line 2</label>
+                <input type="text" id="addressLine2" formControlName="addressLine2" />
+            </div>
+        </div>
+
+        <!-- Global error -->
+        <div class="message error" *ngIf="addressForm.invalid && addressForm.touched">
+            Please fill in all required fields correctly.
         </div>
     </form>
 </mat-dialog-content>

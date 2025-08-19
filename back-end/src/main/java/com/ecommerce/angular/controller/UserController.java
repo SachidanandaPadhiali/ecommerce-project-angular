@@ -6,6 +6,7 @@ package com.ecommerce.angular.controller;
 
 import com.ecommerce.angular.dto.CartResponse;
 import com.ecommerce.angular.dto.EcommResponse;
+import com.ecommerce.angular.dto.UserAddressDTO;
 import com.ecommerce.angular.dto.UserDTO;
 import com.ecommerce.angular.dto.UserRequest;
 import com.ecommerce.angular.entity.Cart;
@@ -41,7 +42,7 @@ public class UserController {
 
     @Autowired
     AddressService addressService;
-    
+
     @Autowired
     CartService cartService;
 
@@ -105,12 +106,23 @@ public class UserController {
         return addressService.getUserAddresses(userRequest.getUserId());
     }
 
-    @PostMapping("/removeUserAddres")
+    @PostMapping("/removeUserAddress")
     public ResponseEntity<EcommResponse> removeUserAddres(
             @RequestParam Long userId,
             @RequestParam Long addressId) {
-        
+
         addressService.removeUserAddress(userId, addressId);
+        return ResponseEntity.ok(EcommResponse.builder()
+                .responseCode(EcommUtils.ADDRESS_DELETED_CODE)
+                .responseMessage(EcommUtils.ADDRESS_DELETED_MESSAGE)
+                .build());
+    }
+
+    @PostMapping("/addUserAddress")
+    public ResponseEntity<EcommResponse> addUserAddres(@RequestBody UserAddressDTO userAddress) {
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!ADDING NEW USER ADDRESS"+userAddress);
+        
+        addressService.addUserAddress(userAddress);
         return ResponseEntity.ok(EcommResponse.builder()
                 .responseCode(EcommUtils.ADDRESS_DELETED_CODE)
                 .responseMessage(EcommUtils.ADDRESS_DELETED_MESSAGE)

@@ -5,6 +5,7 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { UserService } from '../services/user-service';
 import { AddressForm } from '../address-form/address-form';
+import { FormGroup } from '@angular/forms';
 
 type Section = 'basic' | 'shipping' | 'orders' | 'personalization';
 
@@ -49,10 +50,9 @@ export class UserProfile {
       console.warn('No userId found in localStorage.');
       return;
     }
-    console.log('userId', this.userId);
+
     this.userService.getUserAddresses(this.userId).subscribe(
       (addresses) => {
-        console.log('Received addresses:', addresses);
         this.ngZone.run(() => {
           this.userAddresses = [...addresses]; // triggers view update
           this.cdRef.detectChanges();
@@ -102,11 +102,21 @@ export class UserProfile {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.loadAddresses();
+        const savedAddress: UserAddress = result;
+        savedAddress.userId = this.userId;
+
+        this.userService.saveUserAddress(savedAddress).subscribe({
+          next: (res) => {
+            console.log("✅ Address saved successfully:", res);
+            this.loadAddresses();
+          },
+          error: (err) => {
+            console.error("❌ Error saving address:", err);
+          }
+        });
       }
     });
   }
-
   showAddressUpdateForm() {
     const dialogRef = this.dialog.open(AddressForm, {
       width: '1300px',

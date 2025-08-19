@@ -62,8 +62,12 @@ export class UserService {
 
   removeAddress(userId: number, addressId: number): Observable<any> {
     return this.http.post(
-      `${this.apiUrl}/removeUserAddres?userId=${userId}&addressId=${addressId}`,
+      `${this.apiUrl}/removeUserAddress?userId=${userId}&addressId=${addressId}`,
       {}
     );
+  }
+
+  saveUserAddress(savedAddress: UserAddress): Observable<any> {
+    return this.http.post(`${this.apiUrl}/addUserAddress`, savedAddress);
   }
 }

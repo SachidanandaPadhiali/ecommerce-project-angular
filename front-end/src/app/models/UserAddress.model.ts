@@ -2,8 +2,9 @@ import { User } from "./User.model";
 
 export interface UserAddress {
     id?: number;
-    flatNo?: string;
+    userId: number;
     userName: string;
+    flatNo?: string;
     addressLine1: string;
     addressLine2?: string;
     city: string;
