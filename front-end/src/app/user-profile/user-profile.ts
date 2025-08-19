@@ -55,6 +55,7 @@ export class UserProfile {
       (addresses) => {
         this.ngZone.run(() => {
           this.userAddresses = [...addresses]; // triggers view update
+          console.warn(this.userAddresses);
           this.cdRef.detectChanges();
         });
       },
@@ -104,11 +105,13 @@ export class UserProfile {
       if (result) {
         const savedAddress: UserAddress = result;
         savedAddress.userId = this.userId;
+        console.log(savedAddress);
 
         this.userService.saveUserAddress(savedAddress).subscribe({
           next: (res) => {
             console.log("✅ Address saved successfully:", res);
             this.loadAddresses();
+            this.cdRef.detectChanges();
           },
           error: (err) => {
             console.error("❌ Error saving address:", err);

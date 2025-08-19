@@ -26,6 +26,9 @@
             <div class="address-cards" *ngIf="userAddresses.length > 0">
                 <!-- Loop through addresses and display each one -->
                 <div class="address-card" *ngFor="let address of userAddresses; trackBy: trackById">
+                    @if (address.default) {
+                    <div class="defaultBadge">Default</div>
+                    }
                     <h3>{{ address.userName }}</h3>
                     <p>
                         {{ address.addressLine1 }}

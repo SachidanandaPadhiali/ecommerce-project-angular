@@ -31,7 +31,13 @@ public class EcommUtils {
     /**
      * Custom message when a user deletes an address
      */
-    public static final String ADDRESS_DELETED_CODE = "004";
+    public static final String ADDRESS_ADDED_CODE = "004";
+    public static final String ADDRESS_ADDED_MESSAGE = "Address Added";
+
+    /**
+     * Custom message when a user deletes an address
+     */
+    public static final String ADDRESS_DELETED_CODE = "005";
     public static final String ADDRESS_DELETED_MESSAGE = "Address Deleted";
 
     /**

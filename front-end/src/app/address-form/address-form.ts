@@ -37,7 +37,7 @@ export class AddressForm implements OnInit {
 
   addressFormData: UserAddress = {
     userId: 0, userName: '', phoneNumber: '', country: '', state: '',
-    flatNo: '', addressLine1: '', addressLine2: '', city: '', zipCode: '', isDefault: false
+    flatNo: '', addressLine1: '', addressLine2: '', city: '', zipCode: '', default: false
   };
 
   constructor(
@@ -54,7 +54,8 @@ export class AddressForm implements OnInit {
       city: ['', Validators.required],
       state: ['', Validators.required],
       zipCode: ['', [Validators.required, Validators.pattern(/^[0-9]{6}$/)]],
-      country: ['', Validators.required]
+      country: ['', Validators.required],
+      isDefault: [false]
     });
   }
 

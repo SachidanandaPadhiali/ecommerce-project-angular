@@ -32,4 +32,6 @@ public class UserAddressDTO {
     private String state;
     private String ZipCode;
     private String country;
+    
+    private Boolean isDefault;
 }

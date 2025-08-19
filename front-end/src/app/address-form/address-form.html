@@ -60,6 +60,13 @@
             </div>
         </div>
 
+        <div class="address-form-row">
+            <label class="checkbox-label">
+                <input type="checkbox" formControlName="isDefault" />
+                <span>Set as my default address</span>
+            </label>
+        </div>
+
         <!-- Global error -->
         <div class="message error" *ngIf="addressForm.invalid && addressForm.touched">
             Please fill in all required fields correctly.

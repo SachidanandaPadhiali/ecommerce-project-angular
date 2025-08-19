@@ -15,7 +15,7 @@
     position: relative;
 }
 
-.address-form-group-label {
+.address-form-group label {
     display: block;
     margin-bottom: 8px;
     color: #111827;
@@ -47,6 +47,17 @@
     border-color: #431370;
     background: white;
     box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+}
+
+.checkbox-label span {
+    min-width: 150px;
 }
 
 @keyframes fadeIn {

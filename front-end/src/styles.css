@@ -621,6 +621,18 @@ td.text-right {
     z-index: 10;
 }
 
+.defaultBadge {
+    float: right;
+    background: var(--bg-dark);
+    color: #fff;
+    padding: 3px 8px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
 .wishBadge {
     position: absolute;
     opacity: 0;
@@ -992,7 +1004,7 @@ body {
     gap: 10px;
 }
 
-.address-dialog .mat-mdc-text-field-wrapper .mdc-text-field{
+.address-dialog .mat-mdc-text-field-wrapper .mdc-text-field {
     border-radius: 20px;
 }
 

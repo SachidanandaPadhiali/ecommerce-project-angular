@@ -119,12 +119,10 @@ public class UserController {
     }
 
     @PostMapping("/addUserAddress")
-    public ResponseEntity<EcommResponse> addUserAddres(@RequestBody UserAddressDTO userAddress) {
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!ADDING NEW USER ADDRESS"+userAddress);
-        
+    public ResponseEntity<EcommResponse> addUserAddres(@RequestBody UserAddressDTO userAddress) {        
         addressService.addUserAddress(userAddress);
         return ResponseEntity.ok(EcommResponse.builder()
-                .responseCode(EcommUtils.ADDRESS_DELETED_CODE)
+                .responseCode(EcommUtils.ADDRESS_ADDED_CODE)
                 .responseMessage(EcommUtils.ADDRESS_DELETED_MESSAGE)
                 .build());
     }

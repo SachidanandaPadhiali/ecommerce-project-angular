@@ -61,9 +61,15 @@ public class AddressServiceImpl implements AddressService {
                 .state(userAddress.getState())
                 .ZipCode(userAddress.getZipCode())
                 .country(userAddress.getCountry())
-                .isDefault(false)
+                .isDefault(userAddress.getIsDefault())
                 .build();
 
-        return userAddressRepo.save(newUserAddress);
+        UserAddress savedAddress = userAddressRepo.save(newUserAddress);
+
+        if (userAddress.getIsDefault()) {
+            userAddressRepo.setDefaultForUser(userAddress.getUserId(), savedAddress.getId());
+        }
+
+        return savedAddress;
     }
 }

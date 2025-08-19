@@ -12,5 +12,5 @@ export interface UserAddress {
     zipCode: string;
     country: string;
     phoneNumber: string;
-    isDefault: boolean;
+    default: boolean;
 }
