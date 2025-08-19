@@ -29,7 +29,7 @@ public class EcommUtils {
     public static final String ACCOUNT_DOES_NOT_EXIST_MESSAGE = "Account Number does not exists";
 
     /**
-     * Custom message when a user deletes an address
+     * Custom message when a user adds a new address
      */
     public static final String ADDRESS_ADDED_CODE = "004";
     public static final String ADDRESS_ADDED_MESSAGE = "Address Added";
@@ -39,6 +39,12 @@ public class EcommUtils {
      */
     public static final String ADDRESS_DELETED_CODE = "005";
     public static final String ADDRESS_DELETED_MESSAGE = "Address Deleted";
+
+    /**
+     * Custom message when a user updates a address
+     */
+    public static final String ADDRESS_UPDATED_CODE = "006";
+    public static final String ADDRESS_UPDATED_MESSAGE = "Address Updated";
 
     /**
      * Custom message when seller adds product

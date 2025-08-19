@@ -55,7 +55,6 @@ export class UserProfile {
       (addresses) => {
         this.ngZone.run(() => {
           this.userAddresses = [...addresses]; // triggers view update
-          console.warn(this.userAddresses);
           this.cdRef.detectChanges();
         });
       },
@@ -134,6 +133,7 @@ export class UserProfile {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         const updatedAddress: UserAddress = result;
+        updatedAddress.id = addressId;
         updatedAddress.userId = this.userId;
         console.log(updatedAddress);
 

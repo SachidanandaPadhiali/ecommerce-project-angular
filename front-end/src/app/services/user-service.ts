@@ -72,6 +72,7 @@ export class UserService {
   }
 
   updateUserAddress(updatedAddress: UserAddress): Observable<any> {
-    return this.http.put(`${this.apiUrl}/updateUserAddress`, updatedAddress);
+    console.log("addressId",updatedAddress.id);
+    return this.http.put(`${this.apiUrl}/addUserAddress?addressId=${updatedAddress.id}`, updatedAddress);
   }
 }

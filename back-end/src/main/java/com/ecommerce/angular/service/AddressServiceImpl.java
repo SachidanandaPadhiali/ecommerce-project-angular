@@ -72,4 +72,31 @@ public class AddressServiceImpl implements AddressService {
 
         return savedAddress;
     }
+
+    @Override
+    @Transactional
+    public UserAddress updateUserAddress(Long addressId, UserAddressDTO userAddress) {
+        User user = userRepo.findById(userAddress.getUserId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        UserAddress updateAddress = userAddressRepo.findById(addressId).orElseThrow(() -> new RuntimeException("User not found"));
+
+        updateAddress.setUserName(userAddress.getUserName());
+        updateAddress.setPhoneNumber(userAddress.getPhoneNumber());
+        updateAddress.setFlatNo(userAddress.getFlatNo());
+        updateAddress.setAddressLine1(userAddress.getAddressLine1());
+        updateAddress.setAddressLine2(userAddress.getAddressLine2());
+        updateAddress.setCity(userAddress.getCity());
+        updateAddress.setState(userAddress.getState());
+        updateAddress.setZipCode(userAddress.getZipCode());
+        updateAddress.setCountry(userAddress.getCountry());
+
+        UserAddress savedAddress = userAddressRepo.save(updateAddress);
+
+        if (userAddress.getIsDefault()) {
+            userAddressRepo.setDefaultForUser(userAddress.getUserId(), savedAddress.getId());
+        }
+
+        return savedAddress;
+    }
 }

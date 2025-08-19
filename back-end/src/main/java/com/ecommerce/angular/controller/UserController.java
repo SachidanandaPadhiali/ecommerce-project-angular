@@ -23,6 +23,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -123,7 +124,16 @@ public class UserController {
         addressService.addUserAddress(userAddress);
         return ResponseEntity.ok(EcommResponse.builder()
                 .responseCode(EcommUtils.ADDRESS_ADDED_CODE)
-                .responseMessage(EcommUtils.ADDRESS_DELETED_MESSAGE)
+                .responseMessage(EcommUtils.ADDRESS_ADDED_MESSAGE)
+                .build());
+    }
+
+    @PutMapping("/addUserAddress")
+    public ResponseEntity<EcommResponse> updateUserAddres(@RequestParam Long addressId,@RequestBody UserAddressDTO userAddress) {        
+        addressService.updateUserAddress(addressId,userAddress);
+        return ResponseEntity.ok(EcommResponse.builder()
+                .responseCode(EcommUtils.ADDRESS_UPDATED_CODE)
+                .responseMessage(EcommUtils.ADDRESS_UPDATED_MESSAGE)
                 .build());
     }
 }

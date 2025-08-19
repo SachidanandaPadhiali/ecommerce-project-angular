@@ -16,4 +16,5 @@ public interface AddressService {
     void removeUserAddress(Long userId, Long addressId);
     List<UserAddress> getUserAddresses(Long userId);
     UserAddress addUserAddress(UserAddressDTO userAddress);
+    UserAddress updateUserAddress(Long addressId, UserAddressDTO userAddress);
 }
