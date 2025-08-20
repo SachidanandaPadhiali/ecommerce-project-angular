@@ -23,9 +23,9 @@ export class UserProfile {
   showForm: boolean = false;
 
   sections: { id: Section; label: string }[] = [
-    { id: 'basic', label: 'Basic account info' },
+    { id: 'basic', label: 'Basic info' },
     { id: 'shipping', label: 'Shipping & billing' },
-    { id: 'orders', label: 'Order management' },
+    { id: 'orders', label: 'Orders' },
     { id: 'personalization', label: 'Personalization' },
   ];
 

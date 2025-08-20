@@ -30,8 +30,7 @@
                     <div class="defaultBadge">Default</div>
                     }
                     <h3>{{ address.userName }}</h3>
-                    <p>
-                        {{ address.addressLine1 }}
+                    <p> {{ address.flatNo }} <br> {{ address.addressLine1 }}
                         <span *ngIf="address?.addressLine2">, {{ address.addressLine2 }}</span>
                     </p>
                     <p>{{ address.state }}, {{ address.country }} - {{ address.zipCode }}</p>

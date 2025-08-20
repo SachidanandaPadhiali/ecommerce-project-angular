@@ -138,3 +138,37 @@
         font-size: 24px;
     }
 }
+
+@media screen and (max-width: 550px) {
+    .address-form-row {
+        gap: 1rem;
+        margin-bottom: 0;
+    }
+
+    .address-form-row .address-form-group {
+        flex: none;
+        width: 100%;
+    }
+
+    .address-form-group {
+        margin-bottom: 0;
+        position: relative;
+    }
+
+    .address-form-group label {
+        display: block;
+        margin-bottom: 3px;
+        color: #111827;
+        font-weight: 500;
+        font-size: 12px;
+    }
+
+    .address-form-group input,
+    .address-form-group select {
+        width: 100%;
+        padding: 7px 8px;
+        border-radius: 8px;
+        font-size: 11px;
+    }
+
+}

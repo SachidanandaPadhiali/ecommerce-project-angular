@@ -1,4 +1,3 @@
-/* profile.component.css */
 .tabs {
     width: 100%;
     margin: 1rem;
@@ -41,7 +40,7 @@
     background: var(--bg);
 }
 
-.info-right{
+.info-right {
     text-align: center;
     font-size: var(--h3-font-size);
 }
@@ -85,6 +84,21 @@
     color: #2b069a;
     border: 1px solid #a686ef;
 }
+
+.address-card h3 {
+    color: var(--gray-900);
+    font-size: var(--h1-font-size);
+    line-height: 15px;
+    margin: 10px;
+    margin-left: 0;
+}
+
+.address-card P {
+    color: var(--gray-700);
+    font-size: var(--normal-font-size);
+    padding: 2px;
+}
+
 .action-buttons {
     margin-top: 12px;
 }
@@ -101,5 +115,46 @@
 }
 
 .action-buttons button:last-child {
+    float: inline-end;
     background-color: #ef4444;
+}
+
+@media screen and (max-width: 550px) {
+    .tabs {
+        width: 100%;
+        margin: 1rem 0.5rem;
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .tab {
+        padding: 0.2rem 0.5rem;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        animation: fadeIn .3s ease-out;
+    }
+
+    .address-cards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .address-card {
+        margin: 0;
+        max-width: 90vw;
+        border: none;
+    }
+
+    .address-card h3 {
+        font-size: var(--h3-font-size);
+        line-height: 12px;
+        margin: 6px;
+        margin-left: 0;
+    }
+
+    .address-card P {
+        font-size: var(--medium-font-size);
+    }
+
 }

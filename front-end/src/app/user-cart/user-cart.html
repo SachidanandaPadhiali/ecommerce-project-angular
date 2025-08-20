@@ -26,9 +26,9 @@
                             <span role="button" (click)="addProductToCart(item.product.id ?? 0)">+</span>
                         </div>
                     </div>
-                    <p style="text-decoration: line-through;color: #a1a1aa;">{{ item.originalPrice |
-                        currency:'INR':'symbol' }}</p>
                     <h3>{{ item.price | currency:'INR':'symbol' }}</h3>
+                    <p style="text-decoration: line-through;color: #a1a1aa;">MRP {{ item.originalPrice |
+                        currency:'INR':'symbol' }}</p>
                 </div>
             </div>
         </div>
@@ -40,8 +40,15 @@
                 <b>Cart Total : </b>{{ curUserCart?.total| currency:'INR':'symbol' }}
             </div>
             <div class="value">
-                <b>Delivery charge : </b>{{ deliveryCharges | currency:'INR':'symbol' }}
+                <b>Delivery charge : </b>{{ 100 | currency:'INR':'symbol' }}
             </div>
+            <div class="value">
+                <b>Total Amount : </b>{{ ((curUserCart?.total ?? 0)+(100)) | currency:'INR':'symbol' }}
+            </div>
+            @if(deliveryCharges=== 0){
+            <div class="value">
+                <b>Delivery Discount : </b>{{ -100 | currency:'INR':'symbol' }}
+            </div>}
             <hr>
             <div class="value">
                 <b>Sub Total : </b>
