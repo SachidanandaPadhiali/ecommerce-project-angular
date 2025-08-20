@@ -1,0 +1,172 @@
+.main-content {
+    display: flex;
+    flex-direction: row;
+}
+
+.tabs {
+    position: relative;
+    margin: 20px 0;
+}
+
+.progress-container {
+    display: flex;
+    position: relative;
+    gap: 10rem;
+    width: 100%;
+}
+
+.progress-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    height: 4px;
+    background: #a686ef;
+    z-index: 1;
+}
+
+.step {
+    position: relative;
+    z-index: 2;
+    padding: .5rem 2rem;
+    border-radius: 8px;
+    font-size: .9rem;
+    text-align: center;
+    animation: fadeIn .3s ease-out;
+    background: var(--bg);
+    color: #2b069a;
+    border: 1px solid #b2b1b3;
+    font-weight: var(--font-semi-bold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background 0.3s ease, color 0.5s ease;
+}
+
+.step.active {
+    background: var(--electric-violet);
+    color: var(--white-text);
+    border: 1px solid #a686ef;
+    font-weight: var(--font-bold);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+}
+
+.controls {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.nav-buttons {
+    margin-top: 12px;
+}
+
+.nav-buttons button:last-child {
+    float: inline-end;
+}
+
+.nav-buttons .nav-btn {
+    margin: 6px;
+    padding: 6px 12px;
+    border: none;
+    background-color: var(--primary);
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* ========== RIGHT PANEL ==========*/
+.left-section {
+    width: 100%;
+    min-width: 70vw;
+}
+
+.tabs {
+    width: 100%;
+    margin: 1rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.tab {
+    user-select: none;
+    outline: none;
+    padding: .5rem 2rem;
+    border-radius: 8px;
+    font-size: .9rem;
+    text-align: center;
+    animation: fadeIn .3s ease-out;
+    background: var(--bg);
+    color: #2b069a;
+    border: 1px solid #b2b1b3;
+    font-weight: var(--font-semi-bold);
+}
+
+.tab:hover {
+    background: color-mix(in srgb, var(--electric-violet) 5%, transparent);
+    color: #2b069a;
+    border: 1px solid #a686ef;
+}
+
+.tab.active {
+    background: color-mix(in srgb, var(--electric-violet) 30%, transparent);
+    color: #2b069a;
+    border: 1px solid #a686ef;
+    font-weight: var(--font-bold);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+}
+
+.panel {
+    padding: 1rem;
+    background: var(--bg);
+}
+
+/* ========== RIGHT PANEL ==========*/
+.right-section {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 2rem;
+    padding: 1rem;
+    position: relative;
+    background-color: var(--bg-accent);
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    gap: 0.5rem;
+    -webkit-transition: -webkit-box-shadow 0.25s;
+    transition: -webkit-box-shadow 0.25s;
+    transition: box-shadow 0.25s;
+    transition: box-shadow 0.25s, -webkit-box-shadow 0.25s;
+    height: 100vh;
+}
+
+.right-section .value {
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.right-section hr {
+    height: 1px;
+    background: var(--red-to-pink-to-purple-horizontal-gradient);
+    font-size: 0;
+    border: 0;
+}
+
+.right-section .checkout {
+    width: 100%;
+    flex-direction: flex-end;
+    padding: 0.75rem;
+    background-color: var(--bright-blue);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: var(--normal-font-size);
+    font-weight: var(--font-semi-bold);
+}

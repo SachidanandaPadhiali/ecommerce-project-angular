@@ -11,6 +11,7 @@ import { Shop } from './shop/shop';
 import { Wishlist } from './wishlist/wishlist';
 import { UserProfile } from './user-profile/user-profile';
 import { UserCart } from './user-cart/user-cart';
+import { Checkout } from './checkout/checkout';
 
 export const routes: Routes = [
     { path: '', component: Home },
@@ -24,6 +25,7 @@ export const routes: Routes = [
     { path: 'shop', component: Shop },
     { path: 'user/wishlist', component: Wishlist, canActivate: [authGuard], data: { role: 'user' } },
     { path: 'user/cart', component: UserCart, canActivate: [authGuard], data: { role: 'user' } },
+    { path: 'user/checkOut', component: Checkout, canActivate: [authGuard], data: { role: 'user' } },
     { path: 'user/profile', component: UserProfile, canActivate: [authGuard], data: { role: 'user' } },
     { path: 'shop/category/:name', component: Shop, runGuardsAndResolvers: 'paramsChange' }
 ];

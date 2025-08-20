@@ -54,7 +54,7 @@
                 <b>Sub Total : </b>
                 {{ ((curUserCart?.total ?? 0) + (deliveryCharges)) | currency:'INR':'symbol' }}
             </div>
-            <button class="main-btn checkout">Checkout</button>
+            <button class="main-btn checkout" (click)="goToCheckOut()">Checkout</button>
         </div>
     </div>
 </div>

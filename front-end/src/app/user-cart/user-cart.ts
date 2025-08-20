@@ -6,6 +6,7 @@ import { Product } from '../models/product.model';
 import { CartEntry } from '../models/CartEntry.model';
 import { Cart } from '../models/Cart.model';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-cart',
@@ -30,7 +31,7 @@ export class UserCart implements OnInit {
 
   delete = faTrash;
 
-  constructor(private userService: UserService, private cdr: ChangeDetectorRef, private commonModule: CommonModule) { }
+  constructor(private userService: UserService, private cdr: ChangeDetectorRef, private commonModule: CommonModule, private router: Router) { }
 
   ngOnInit(): void {
     this.userId = Number(JSON.parse(localStorage.getItem('user') || '{}')?.id);
@@ -46,7 +47,7 @@ export class UserCart implements OnInit {
           this.cartCount += item.quantity ?? 0;
         });
         this.curUserCart.totalCartCount = this.cartCount;
-        if(this.curUserCart.total > 500){
+        if (this.curUserCart.total > 500) {
           this.deliveryCharges = 0;
         }
         this.cdr.detectChanges();
@@ -161,4 +162,10 @@ export class UserCart implements OnInit {
     });
     this.cdr.detectChanges();
   }
+
+  goToCheckOut(): void {
+    console.warn("going to checkout");
+    this.router.navigate(['/user/checkOut']);
+  }
+
 }

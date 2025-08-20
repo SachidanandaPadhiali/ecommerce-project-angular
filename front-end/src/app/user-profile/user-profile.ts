@@ -5,7 +5,6 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { UserService } from '../services/user-service';
 import { AddressForm } from '../address-form/address-form';
-import { FormGroup } from '@angular/forms';
 
 type Section = 'basic' | 'shipping' | 'orders' | 'personalization';
 
