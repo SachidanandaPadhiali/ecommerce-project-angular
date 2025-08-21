@@ -1,0 +1,109 @@
+<div class="main-content">
+    @if(!isMobileView) {
+    <div class="left-section">
+        <div class="utility-btn cancel-btn">
+            <span class="button__text">Cancel Order</span>
+            <span class="button__icon">
+                <fa-icon [icon]="cancelOrder" class="icon"></fa-icon>
+            </span>
+        </div>
+
+        <nav class="tabs" role="tablist" aria-label="Checkout Steps">
+            <div class="progress-container">
+                <div class="progress-line" [style.width.%]="progressWidth"></div>
+                <div *ngFor="let s of sections; let i = index" class="step" [class.active]="i <= activeIndex">
+                    {{ s.label }}
+                </div>
+            </div>
+        </nav>
+
+        <section class="panel" role="tabpanel" [hidden]="!isActive(0)">
+            <h2>Delivery Address</h2>
+            <div id="addressList" class="address-list-container">
+                <div class="address-cards" *ngIf="userAddresses.length > 0">
+                    <!-- Loop through addresses and display each one -->
+                    <div class="address-card" *ngFor="let address of userAddresses;"
+                        [class.selected-address]="address === selectedAddress" (click)="selectAddress(address)">
+                        @if (address === selectedAddress) {
+                        <div class="defaultBadge">Delivering to this Address</div>
+                        }
+                        <h3>{{ address.userName }}</h3>
+                        <p> {{ address.flatNo }} <br> {{ address.addressLine1 }}
+                            <span *ngIf="address?.addressLine2">, {{ address.addressLine2 }}</span>
+                        </p>
+                        <p>{{ address.state }}, {{ address.country }} - {{ address.zipCode }}</p>
+                        <p>Mobile: {{ address.phoneNumber }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn" (click)="nextStep()">Next</button>
+            </div>
+        </section>
+
+        <section class="panel" role="tabpanel" [hidden]="!isActive(1)">
+            <h2>Choose your payment method</h2>
+            <div class="payment-options">
+                <div class="option" [class.selected]="paymentOption === 'cod'" (click)="selectPaymentOption('cod')">
+                    @if(paymentOption !== 'cod'){
+                    <div class="payment-btn">
+                        <span class="button__text">
+                            <h3>Cash on Delivery/Pay on Delivery</h3>
+                            <p>A convenience fee of ₹7 will apply.</p>
+                        </span>
+                        <span class="button__icon">
+                            <img src="assets/image/cod.png" alt="">
+                        </span>
+                    </div>
+                    }
+                    @if(paymentOption === 'cod'){
+                    <img src="assets/image/cod.png" alt="">
+                    <div class="text">
+                        <h3>Cash on Delivery/Pay on Delivery</h3>
+                        <p>A convenience fee of ₹7 will apply.</p>
+                        <p>Cash, UPI and Cards accepted.</p>
+                    </div>
+                    }
+                </div>
+                <div class="option" [class.selected]="paymentOption === 'upi'" (click)="selectPaymentOption('upi')">
+                    Online Payment</div>
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn" (click)="prevStep()">Back</button>
+                <button class="nav-btn" (click)="nextStep()">Review</button>
+            </div>
+        </section>
+
+        <section class="panel" role="tabpanel" [hidden]="!isActive(2)">
+            <h2>Review Your Order</h2>
+            <div class="nav-buttons">
+                <button class="nav-btn" (click)="prevStep()">Back</button>
+                <button>Place Order</button>
+            </div>
+        </section>
+    </div>
+    }
+    <div class="right-section">
+        <h3>Summary</h3>
+        <p><b>Total Number of Items : </b>{{ curUserCart?.totalCartCount }}</p>
+        <hr>
+        <div class="value">
+            <b>Cart Total : </b>{{ curUserCart?.total| currency:'INR':'symbol' }}
+        </div>
+        <div class="value">
+            <b>Delivery charge : </b>{{ 100 | currency:'INR':'symbol' }}
+        </div>
+        <div class="value">
+            <b>Total Amount : </b>{{ ((curUserCart?.total ?? 0)+(100)) | currency:'INR':'symbol' }}
+        </div>
+        @if(deliveryCharges=== 0){
+        <div class="value">
+            <b>Delivery Discount : </b>{{ -100 | currency:'INR':'symbol' }}
+        </div>}
+        <hr>
+        <div class="value">
+            <b>Sub Total : </b>
+            {{ ((curUserCart?.total ?? 0) + (deliveryCharges)) | currency:'INR':'symbol' }}
+        </div>
+    </div>
+</div>
