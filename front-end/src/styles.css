@@ -69,6 +69,60 @@ main {
     background: var(--accent);
 }
 
+.utility-btn {
+    float: inline-end;
+    text-align: center;
+    margin: 1rem;
+    padding: .5rem 2rem;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: var(--font-medium);
+    cursor: pointer;
+    transition: .3s;
+}
+
+.utility-btn:hover {
+    background: var(--primary);
+}
+
+.cancel-btn {
+    background-color: var(--accent);
+    color: var(--white-text);
+    overflow: hidden;
+    position: relative;
+}
+
+.cancel-btn .button__text {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.cancel-btn .button__icon {
+    position: absolute;
+    right: -40px;
+    transition: right 0.3s ease;
+}
+
+.cancel-btn:hover {
+    background: none;
+    color: var(--dark-text);
+}
+
+.cancel-btn:hover .button__text {
+    transform: translateX(-25px);
+}
+
+.cancel-btn:hover .button__icon {
+    right: 30px;
+}
+
+.cancel-btn:hover .icon {
+    font-size: 20px;
+}
+
 * {
     margin: 0;
     padding: 0;

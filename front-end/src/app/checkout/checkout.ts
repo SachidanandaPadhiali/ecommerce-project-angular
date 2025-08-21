@@ -1,46 +1,75 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, NgZone, OnInit } from '@angular/core';
 import { UserService } from '../services/user-service';
-import { Product } from '../models/product.model';
 import { CartEntry } from '../models/CartEntry.model';
 import { Cart } from '../models/Cart.model';
+import { UserAddress } from '../models/UserAddress.model';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faClose, faIndianRupee } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-checkout',
-  imports: [CommonModule],
+  imports: [CommonModule, FontAwesomeModule],
   templateUrl: './checkout.html',
   styleUrl: './checkout.css',
 })
 export class Checkout implements OnInit {
-  products: Product[] = [];
-  prodIds: number[] = [];
   loading: boolean = true;
 
+  //setting up basic variables
+  userId: number = 0;
+  error: string = '';
+
+  cancelOrder = faClose;
+  cod = faIndianRupee;
+
+  //setting up required cart variables
   userCart: Set<CartEntry> = new Set();
   cartItems: Set<number> = new Set();
   curUserCart: Cart | null = null;
   cartMap = new Map<number, number>();
   cartProductIds: Set<number> = new Set();
-
-  userId: number = 0;
-  error: string = '';
   cartCount: number = 0;
   deliveryCharges: number = 100;
 
+  //Address Selection
+  userAddresses: UserAddress[] = [];
+  selectedAddress: UserAddress | undefined = {
+    userId: 0, userName: '', phoneNumber: '', country: '', state: '',
+    flatNo: '', addressLine1: '', addressLine2: '', city: '', zipCode: '', default: false
+  };
+
+  // payment method selection
+  paymentOption: string = '';
+
+  // setting up the mobile view
+  isMobileView = window.innerWidth < 768;
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.isMobileView = event.target.innerWidth < 768;
+  }
+
+  //Sections of checkout process
   sections = [
     { id: 0, label: 'Delivery Address' },
     { id: 1, label: 'Payment Method' },
     { id: 2, label: 'Review Your Order' }
   ];
 
+  //setting up animation
   activeIndex = 0;  // start at first step
   progressWidth = 0;
   private animationFrame: number | null = null;
 
-  constructor(private userService: UserService, private cdr: ChangeDetectorRef, private commonModule: CommonModule) { }
+  constructor(private userService: UserService, private cdr: ChangeDetectorRef, private ngZone: NgZone, private commonModule: CommonModule) { }
 
   ngOnInit(): void {
     this.userId = Number(JSON.parse(localStorage.getItem('user') || '{}')?.id);
+    this.loadCart();
+    this.loadAddresses();
+  }
+
+  loadCart() {
     this.userService.getUserCart(this.userId).subscribe({
       next: (data: Cart) => {
         this.curUserCart = data;
@@ -63,10 +92,41 @@ export class Checkout implements OnInit {
     });
   }
 
+  loadAddresses() {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    this.userId = user?.id;
+
+    if (!this.userId) {
+      console.warn('No userId found in localStorage.');
+      return;
+    }
+
+    this.userService.getUserAddresses(this.userId).subscribe(
+      (addresses) => {
+        this.ngZone.run(() => {
+          this.userAddresses = [...addresses]; // triggers view update
+          this.cdr.detectChanges();
+
+          const defaultAddress = this.userAddresses.find(address => address.default === true);
+          this.selectedAddress = defaultAddress;
+        });
+      },
+      (error) => console.error('Error loading addresses:', error)
+    );
+  }
+
+  selectAddress(address: UserAddress) {
+    this.selectedAddress = address;
+  }
+
+  selectPaymentOption(value: string) {
+    this.paymentOption = value;
+    console.log('Selected:', value);
+  }
+
   isActive(id: number) {
     return this.activeIndex === id;
   }
-
   setActive(id: number) {
     this.activeIndex = id;
   }
@@ -76,6 +136,7 @@ export class Checkout implements OnInit {
       this.activeIndex++;
       this.animateProgress();
     }
+    console.log(this.selectedAddress);
   }
   prevStep() {
     if (this.activeIndex > 0) {
@@ -85,7 +146,7 @@ export class Checkout implements OnInit {
   }
 
   private animateProgress() {
-    const targetWidth = (this.activeIndex / (this.sections.length - 1)) * 50;
+    const targetWidth = (this.activeIndex / (this.sections.length - 1)) * 100;
     const startWidth = this.progressWidth;
     const duration = 600;
     const startTime = performance.now();

@@ -11,7 +11,7 @@
 .progress-container {
     display: flex;
     position: relative;
-    gap: 10rem;
+    justify-content: space-between;
     width: 100%;
 }
 
@@ -78,7 +78,7 @@
     font-weight: 600;
 }
 
-/* ========== RIGHT PANEL ==========*/
+/* ========== LEFT PANEL ==========*/
 .left-section {
     width: 100%;
     min-width: 70vw;
@@ -123,6 +123,121 @@
 .panel {
     padding: 1rem;
     background: var(--bg);
+}
+
+/* ========== ADDRESS ==========*/
+.address-list-container {
+    padding: 20px;
+}
+
+.address-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.address-card {
+    background: var(--bg);
+    color: #2b069a;
+    border: 1px solid #b2b1b3;
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 700px;
+    cursor: pointer;
+}
+
+.address-card:hover {
+    background: color-mix(in srgb, var(--electric-violet) 5%, transparent);
+    color: #2b069a;
+    border: 1px solid #a686ef;
+}
+
+.selected-address {
+    background: color-mix(in srgb, var(--electric-violet) 5%, transparent);
+    border: 2px solid #a686ef;
+}
+
+/* ========== PAYMENT METHOD ==========*/
+.payment-btn-options {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.option {
+    margin: 1rem 0;
+    padding: 0.5rem;
+    color: #2b069a;
+    border: 1px solid #a686ef;
+    cursor: pointer;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: row;
+}
+
+.option:hover {
+    background: color-mix(in srgb, var(--electric-violet) 5%, transparent);
+    border: 2px solid #a686ef;
+}
+
+.selected {
+    background: color-mix(in srgb, var(--electric-violet) 15%, transparent);
+    border: 2px solid var(--accent);
+}
+
+.option img {
+    height: 40px;
+    width: auto;
+    margin: 6px;
+}
+
+.option .text h3 {
+    font-size: var(--h3-font-size);
+    font-weight: var(--font-semi-bold);
+    margin-bottom: 0.5rem;
+}
+
+.option .text p {
+    font-size: var(--small-font-size);
+    font-weight: var(--font-medium);
+    line-height: var(--medium-font-size);
+    letter-spacing: 1px;
+}
+
+.payment-btn {
+    overflow: hidden;
+    position: relative;
+}
+
+.payment-btn .button__text {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.payment-btn .button__icon {
+    position: absolute;
+    left: -100px;
+    transition: left 0.3s ease;
+}
+
+.payment-btn img {
+    height: 38px;
+    width: auto;
+}
+
+.payment-btn:hover {
+    background: none;
+    color: var(--dark-text);
+}
+
+.payment-btn:hover .button__text {
+    transform: translateX(45px);
+}
+
+.payment-btn:hover .button__icon {
+    left: 0;
 }
 
 /* ========== RIGHT PANEL ==========*/
@@ -170,3 +285,5 @@
     font-size: var(--normal-font-size);
     font-weight: var(--font-semi-bold);
 }
+
+@media screen and (max-width: 1000px) {}
