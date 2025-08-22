@@ -1,6 +1,7 @@
 <div class="main-content">
     @if(!isMobileView) {
     <div class="left-section">
+        <!-- CANCEL TRANSACTION -->
         <div class="utility-btn cancel-btn">
             <span class="button__text">Cancel Order</span>
             <span class="button__icon">
@@ -8,6 +9,7 @@
             </span>
         </div>
 
+        <!-- TOP NAVIGATION -->
         <nav class="tabs" role="tablist" aria-label="Checkout Steps">
             <div class="progress-container">
                 <div class="progress-line" [style.width.%]="progressWidth"></div>
@@ -17,11 +19,11 @@
             </div>
         </nav>
 
+        <!-- ADDRESS SECTION -->
         <section class="panel" role="tabpanel" [hidden]="!isActive(0)">
             <h2>Delivery Address</h2>
             <div id="addressList" class="address-list-container">
                 <div class="address-cards" *ngIf="userAddresses.length > 0">
-                    <!-- Loop through addresses and display each one -->
                     <div class="address-card" *ngFor="let address of userAddresses;"
                         [class.selected-address]="address === selectedAddress" (click)="selectAddress(address)">
                         @if (address === selectedAddress) {
@@ -37,10 +39,11 @@
                 </div>
             </div>
             <div class="nav-buttons">
-                <button class="nav-btn" (click)="nextStep()">Next</button>
+                <button class="nav-btn" (click)="nextStep()">Choose Payment Method</button>
             </div>
         </section>
 
+        <!-- PAYMENT SECTION -->
         <section class="panel" role="tabpanel" [hidden]="!isActive(1)">
             <h2>Choose your payment method</h2>
             <div class="payment-options">
@@ -66,7 +69,39 @@
                     }
                 </div>
                 <div class="option" [class.selected]="paymentOption === 'upi'" (click)="selectPaymentOption('upi')">
-                    Online Payment</div>
+                    @if(paymentOption !== 'upi'){
+                    <div class="payment-btn">
+                        <span class="button__text">
+                            <h3>Pay Using UPI</h3>
+                            <p>Instant checkout via UPI. No cards, no hassle.</p>
+                        </span>
+                        <span class="button__icon">
+                            <img src="assets/image/upi.png" alt="">
+                        </span>
+                        <span class="upi-opt">
+                            <img src="assets/image/upiopt.png" alt="">
+                        </span>
+                    </div>
+                    }
+                    @if(paymentOption === 'upi'){
+                    <img src="assets/image/upi.png" alt="">
+                    <div class="text">
+                        <h3>Pay Using UPI</h3>
+                        <p>Choose UPI option.</p>
+                        <div class="upi-opts">
+                            <div class="upi-option" [class.selected-upi]="upiPaymentOption === 'gpay'"
+                                (click)="selectUPIPaymentOption('gpay')">Google Pay</div>
+                            <div class="upi-option" [class.selected-upi]="upiPaymentOption === 'phonePe'"
+                                (click)="selectUPIPaymentOption('phonePe')">Phone Pe</div>
+                            <div class="upi-option" [class.selected-upi]="upiPaymentOption === 'paytm'"
+                                (click)="selectUPIPaymentOption('paytm')">Paytm</div>
+                            <div class="upi-option" [class.selected-upi]="upiPaymentOption === 'bhim'"
+                                (click)="selectUPIPaymentOption('bhim')">BHIM UPI</div>
+                        </div>
+                        <p>Pay using {{ upiPaymentOption }}</p>
+                    </div>
+                    }
+                </div>
             </div>
             <div class="nav-buttons">
                 <button class="nav-btn" (click)="prevStep()">Back</button>
@@ -74,11 +109,12 @@
             </div>
         </section>
 
+        <!-- REVIEW SECTION -->
         <section class="panel" role="tabpanel" [hidden]="!isActive(2)">
             <h2>Review Your Order</h2>
             <div class="nav-buttons">
                 <button class="nav-btn" (click)="prevStep()">Back</button>
-                <button>Place Order</button>
+                <button (click)="reViewOrder()">Place Order</button>
             </div>
         </section>
     </div>
@@ -100,10 +136,14 @@
         <div class="value">
             <b>Delivery Discount : </b>{{ -100 | currency:'INR':'symbol' }}
         </div>}
+        @if(paymentOption === 'cod'){
+        <div class="value">
+            <b>convinienceFee: </b>{{ 7.00 | currency:'INR':'symbol' }}
+        </div>}
         <hr>
         <div class="value">
             <b>Sub Total : </b>
-            {{ ((curUserCart?.total ?? 0) + (deliveryCharges)) | currency:'INR':'symbol' }}
+            {{ ((curUserCart?.total ?? 0) + (deliveryCharges) + (convinienceFee)) | currency:'INR':'symbol' }}
         </div>
     </div>
 </div>

@@ -23,32 +23,6 @@ export class Checkout implements OnInit {
   cancelOrder = faClose;
   cod = faIndianRupee;
 
-  //setting up required cart variables
-  userCart: Set<CartEntry> = new Set();
-  cartItems: Set<number> = new Set();
-  curUserCart: Cart | null = null;
-  cartMap = new Map<number, number>();
-  cartProductIds: Set<number> = new Set();
-  cartCount: number = 0;
-  deliveryCharges: number = 100;
-
-  //Address Selection
-  userAddresses: UserAddress[] = [];
-  selectedAddress: UserAddress | undefined = {
-    userId: 0, userName: '', phoneNumber: '', country: '', state: '',
-    flatNo: '', addressLine1: '', addressLine2: '', city: '', zipCode: '', default: false
-  };
-
-  // payment method selection
-  paymentOption: string = '';
-
-  // setting up the mobile view
-  isMobileView = window.innerWidth < 768;
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this.isMobileView = event.target.innerWidth < 768;
-  }
-
   //Sections of checkout process
   sections = [
     { id: 0, label: 'Delivery Address' },
@@ -61,12 +35,50 @@ export class Checkout implements OnInit {
   progressWidth = 0;
   private animationFrame: number | null = null;
 
+  //setting up required cart variables
+  userCart: Set<CartEntry> = new Set();
+  cartItems: Set<number> = new Set();
+  curUserCart: Cart | null = null;
+  cartMap = new Map<number, number>();
+  cartProductIds: Set<number> = new Set();
+  cartCount: number = 0;
+  deliveryCharges: number = 100;
+  convinienceFee: number = 7;
+
+  //Address Selection
+  userAddresses: UserAddress[] = [];
+  selectedAddress: UserAddress | undefined = {
+    userId: 0, userName: '', phoneNumber: '', country: '', state: '',
+    flatNo: '', addressLine1: '', addressLine2: '', city: '', zipCode: '', default: false
+  };
+
+  // payment method selection
+  paymentOption: string = 'cod';
+  upiPaymentOption: string = 'gpay';
+
+  // setting up the mobile view
+  isMobileView = window.innerWidth < 768;
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.isMobileView = event.target.innerWidth < 768;
+  }
+
   constructor(private userService: UserService, private cdr: ChangeDetectorRef, private ngZone: NgZone, private commonModule: CommonModule) { }
 
   ngOnInit(): void {
     this.userId = Number(JSON.parse(localStorage.getItem('user') || '{}')?.id);
     this.loadCart();
     this.loadAddresses();
+    this.setInitialProgress();
+  }
+
+  reViewOrder() {
+    console.log(this.userCart);
+    console.log(this.cartItems);
+    console.log(this.curUserCart);
+    console.log(this.cartCount, this.deliveryCharges, this.convinienceFee);
+    console.log(this.selectedAddress);
+    console.log(this.paymentOption, this.upiPaymentOption);
   }
 
   loadCart() {
@@ -121,7 +133,19 @@ export class Checkout implements OnInit {
 
   selectPaymentOption(value: string) {
     this.paymentOption = value;
-    console.log('Selected:', value);
+    if (value === 'cod') {
+      this.convinienceFee = 7;
+    }
+    if (value !== 'cod') {
+      this.convinienceFee = 0;
+    }
+    this.cdr.detectChanges();
+  }
+
+  selectUPIPaymentOption(value: string) {
+    this.upiPaymentOption = value;
+    console.warn(value, this.upiPaymentOption);
+    this.cdr.detectChanges();
   }
 
   isActive(id: number) {
@@ -132,11 +156,18 @@ export class Checkout implements OnInit {
   }
 
   nextStep() {
+    if (this.activeIndex === 1) {
+      if (this.paymentOption === 'upi' && this.upiPaymentOption === '') {
+        console.warn(this.upiPaymentOption);
+        this.error = 'Please Choose Payment Option';
+        return;
+      }
+    }
     if (this.activeIndex < this.sections.length - 1) {
       this.activeIndex++;
+      console.warn("moving to", this.activeIndex, this.sections.length);
       this.animateProgress();
     }
-    console.log(this.selectedAddress);
   }
   prevStep() {
     if (this.activeIndex > 0) {
@@ -145,13 +176,17 @@ export class Checkout implements OnInit {
     }
   }
 
+  private setInitialProgress() {
+    // map index -> percentage
+    const targetWidth = (this.activeIndex / (this.sections.length - 1)) * 100;
+    this.progressWidth = targetWidth; // directly set without animation
+  }
+
   private animateProgress() {
     const targetWidth = (this.activeIndex / (this.sections.length - 1)) * 100;
     const startWidth = this.progressWidth;
     const duration = 600;
     const startTime = performance.now();
-
-    console.log('Animating from', startWidth, 'to', targetWidth);
 
     if (this.animationFrame) {
       cancelAnimationFrame(this.animationFrame);

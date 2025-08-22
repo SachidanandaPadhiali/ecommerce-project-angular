@@ -70,12 +70,12 @@ main {
 }
 
 .utility-btn {
-    float: inline-end;
+    width: 150px;
     text-align: center;
     margin: 1rem;
     padding: .5rem 2rem;
     background: var(--accent);
-    color: white;
+    color: var(--white-text);
     border: none;
     border-radius: 8px;
     font-size: 1rem;
@@ -89,8 +89,7 @@ main {
 }
 
 .cancel-btn {
-    background-color: var(--accent);
-    color: var(--white-text);
+    background-color: var(--warning);
     overflow: hidden;
     position: relative;
 }

@@ -28,14 +28,16 @@
     position: relative;
     z-index: 2;
     padding: .5rem 2rem;
+    border: none;
     border-radius: 8px;
     font-size: .9rem;
     text-align: center;
     animation: fadeIn .3s ease-out;
+    border: 1px solid var(--border);
     background: var(--bg);
     color: #2b069a;
-    border: 1px solid #b2b1b3;
     font-weight: var(--font-semi-bold);
+    box-shadow: 0 5px 5px color-mix(in srgb, var(--electric-violet) 10%, transparent);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -45,9 +47,9 @@
 }
 
 .step.active {
+    border: none;
     background: var(--electric-violet);
     color: var(--white-text);
-    border: 1px solid #a686ef;
     font-weight: var(--font-bold);
     letter-spacing: 1.2px;
     text-transform: uppercase;
@@ -170,16 +172,19 @@
     margin: 1rem 0;
     padding: 0.5rem;
     color: #2b069a;
-    border: 1px solid #a686ef;
+    border: 1px solid var(--border);
     cursor: pointer;
     border-radius: 12px;
     display: flex;
     flex-direction: row;
+    gap: 1rem;
+    min-width: 700px;
+    max-width: 800px;
 }
 
 .option:hover {
     background: color-mix(in srgb, var(--electric-violet) 5%, transparent);
-    border: 2px solid #a686ef;
+    border-color: #a686ef;
 }
 
 .selected {
@@ -188,9 +193,9 @@
 }
 
 .option img {
-    height: 40px;
+    max-height: 40px;
+    height: auto;
     width: auto;
-    margin: 6px;
 }
 
 .option .text h3 {
@@ -200,18 +205,20 @@
 }
 
 .option .text p {
-    font-size: var(--small-font-size);
+    font-size: var(--normal-font-size);
     font-weight: var(--font-medium);
-    line-height: var(--medium-font-size);
-    letter-spacing: 1px;
+    line-height: var(--normal-font-size);
+    letter-spacing: 0.5px;
 }
 
 .payment-btn {
     overflow: hidden;
     position: relative;
+    width: 100%;
 }
 
 .payment-btn .button__text {
+    width: 310px;
     display: inline-block;
     transition: transform 0.3s ease;
 }
@@ -222,8 +229,14 @@
     transition: left 0.3s ease;
 }
 
+.payment-btn .upi-opt {
+    position: absolute;
+    right: -260px;
+    transition: right .8s ease;
+}
+
 .payment-btn img {
-    height: 38px;
+    height: 33px;
     width: auto;
 }
 
@@ -238,6 +251,65 @@
 
 .payment-btn:hover .button__icon {
     left: 0;
+}
+
+.payment-btn:hover .upi-opt {
+    right: 10px;
+}
+
+.upi-opts {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 1rem;
+}
+
+.upi-option {
+    margin: 1rem 0;
+    padding: 0.5rem;
+    color: #2b069a;
+    border: 1px solid var(--accent);
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+.upi-option:hover {
+    background: color-mix(in srgb, var(--electric-violet) 5%, transparent);
+    border-color: #a686ef;
+}
+
+.selected-upi {
+    background: var(--warning);
+}
+
+/* ========== REVIEW ORDER ==========*/
+.review-order-container {
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    background: color-mix(in srgb, var(--electric-violet) 2%, transparent);
+}
+
+.cart-line {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.details-line {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.review-order {
+    padding: 0.5rem;
+    background-color: var(--bg-white);
+    border-radius: 12px;
 }
 
 /* ========== RIGHT PANEL ==========*/
