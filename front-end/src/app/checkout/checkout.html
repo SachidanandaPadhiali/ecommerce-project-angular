@@ -1,6 +1,7 @@
 <div class="main-content">
     @if(!isMobileView) {
     <div class="left-section">
+        <h1>Review Your Order</h1>
         <!-- CANCEL TRANSACTION -->
         <div class="utility-btn cancel-btn">
             <span class="button__text">Cancel Order</span>
@@ -111,10 +112,64 @@
 
         <!-- REVIEW SECTION -->
         <section class="panel" role="tabpanel" [hidden]="!isActive(2)">
-            <h2>Review Your Order</h2>
+            <div class="review-order-container">
+                <div class="cart-line order-items-container">
+                    <h2>Your Items</h2>
+                    <div class="order-items">
+                        <div *ngFor="let item of curUserCart?.items" class="order-item">
+                            <img [src]="'assets/image/products/' + item.product.imageUrl"
+                                alt="{{item.product.imageUrl}}" class="image-store" />
+                            <div class="order-item-details">
+                                <h3>{{ item.product.name }}</h3>
+                                <p><b>Quantity :</b> {{ item.quantity }} | <b>color : </b>{{ item.product.color }}</p>
+                                <h3>{{ item.price | currency:'INR':'symbol' }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="details-line">
+                    <div class="review-address">
+                        <h3 style="padding: 0.5rem;">Delivery Address</h3>
+                        <div class="review-address-card">
+                            <h3>{{ selectedAddress?.userName }}</h3>
+                            <p> Flat No. {{ selectedAddress?.flatNo }} <br> {{ selectedAddress?.addressLine1 }}
+                                <span *ngIf="selectedAddress?.addressLine2">, {{ selectedAddress?.addressLine2 }}</span>
+                            </p>
+                            <p>{{ selectedAddress?.state }}, {{ selectedAddress?.country }} - {{
+                                selectedAddress?.zipCode }}</p>
+                            <p>Mobile: {{ selectedAddress?.phoneNumber }}</p>
+                        </div>
+                    </div>
+                    <div class="review-payment">
+                        <h3 style="padding: 0.5rem;">Payment Option</h3>
+                        <div class="review-card">
+                            <h3>Pay Using :
+                                @if(paymentOption === 'upi'){ {{upiPaymentOption}}
+                                } @if(paymentOption === 'cod'){ Cash on Delivery
+                                }
+                            </h3>
+                            @if(paymentOption === 'upi'){
+                            <img src="assets/image/{{upiPaymentOption}}.png" alt="">
+                            }
+                        </div>
+                    </div>
+                    <div class="review-shipping">
+                        <h3 style="padding: 0.5rem;">Shipping method</h3>
+                        <div class="review-card" style="flex-direction: column;">
+                            <h3>{{ shippingMethod }} Delivery</h3>
+                            <p>Delivery with in <b>{{ shippingDays }}</b> days</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="nav-buttons">
                 <button class="nav-btn" (click)="prevStep()">Back</button>
-                <button (click)="reViewOrder()">Place Order</button>
+                <div class="utility-btn order-btn">
+                    <span class="button__text">Place Order</span>
+                    <span class="button__icon">
+                        <fa-icon [icon]="placeOrder" class="icon"></fa-icon>
+                    </span>
+                </div>
             </div>
         </section>
     </div>

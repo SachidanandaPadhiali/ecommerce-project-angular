@@ -5,7 +5,7 @@ import { CartEntry } from '../models/CartEntry.model';
 import { Cart } from '../models/Cart.model';
 import { UserAddress } from '../models/UserAddress.model';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faClose, faIndianRupee } from '@fortawesome/free-solid-svg-icons';
+import { faClose, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-checkout',
@@ -21,7 +21,7 @@ export class Checkout implements OnInit {
   error: string = '';
 
   cancelOrder = faClose;
-  cod = faIndianRupee;
+  placeOrder = faCheck;
 
   //Sections of checkout process
   sections = [
@@ -56,6 +56,10 @@ export class Checkout implements OnInit {
   paymentOption: string = 'cod';
   upiPaymentOption: string = 'gpay';
 
+  //shipping method selecetion
+  shippingMethod: string = 'standard';
+  shippingDays: number = 7;
+  
   // setting up the mobile view
   isMobileView = window.innerWidth < 768;
   @HostListener('window:resize', ['$event'])
