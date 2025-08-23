@@ -316,36 +316,6 @@
                             }
                         </div>
                     </div>
-                    <!-- PRICE SECTION-->
-                    <div class="bottom-section">
-                        <h3>Summary</h3>
-                        <p><b>Total Number of Items : </b>{{ curUserCart?.totalCartCount }}</p>
-                        <hr>
-                        <div class="value">
-                            <b>Cart Total : </b>{{ curUserCart?.total| currency:'INR':'symbol' }}
-                        </div>
-                        <div class="value">
-                            <b>Delivery charge : </b>{{ 100 | currency:'INR':'symbol' }}
-                        </div>
-                        <div class="value">
-                            <b>Total Amount : </b>{{ ((curUserCart?.total ?? 0)+(100)) |
-                            currency:'INR':'symbol' }}
-                        </div>
-                        @if(deliveryCharges=== 0){
-                        <div class="value">
-                            <b>Delivery Discount : </b>{{ -100 | currency:'INR':'symbol' }}
-                        </div>}
-                        @if(paymentOption === 'cod'){
-                        <div class="value" style="color: var(--accent);">
-                            <b>convinienceFee: </b>{{ 7.00 | currency:'INR':'symbol' }}
-                        </div>}
-                        <hr>
-                        <div class="value">
-                            <b>Sub Total : </b>
-                            {{ ((curUserCart?.total ?? 0) + (deliveryCharges) + (convinienceFee)) |
-                            currency:'INR':'symbol' }}
-                        </div>
-                    </div>
                     <div class="nav-buttons">
                         <button class="nav-btn" (click)="mprevStep()">Back</button>
                         <button class="nav-btn" (click)="mnextStep()">Review</button>
@@ -408,6 +378,37 @@
                                     <p>Delivery with in <b>{{ shippingDays }}</b> days</p>
                                 </div>
                             </div>
+                            <div class="right-section">
+                                <h3>Summary</h3>
+                                <p><b>Total Number of Items : </b>{{ curUserCart?.totalCartCount }}</p>
+                                <hr>
+                                <div class="value">
+                                    <b>Cart Total : </b>{{ curUserCart?.total| currency:'INR':'symbol' }}
+                                </div>
+                                <div class="value">
+                                    <b>Delivery charge : </b>{{ 100 | currency:'INR':'symbol' }}
+                                </div>
+                                <div class="value">
+                                    <b>Total Amount : </b>{{ ((curUserCart?.total ?? 0)+(100)) |
+                                    currency:'INR':'symbol' }}
+                                </div>
+                                @if(deliveryCharges=== 0){
+                                <div class="value">
+                                    <b>Delivery Discount : </b>{{ -100 | currency:'INR':'symbol' }}
+                                </div>}
+                                @if(paymentOption === 'cod'){
+                                <div class="value" style="color: var(--accent);">
+                                    <b>convinienceFee: </b>{{ 7.00 | currency:'INR':'symbol' }}
+                                </div>}
+                                <hr>
+                                <div class="value">
+                                    <b>Sub Total : </b>
+                                    {{ ((curUserCart?.total ?? 0) + (deliveryCharges) + (convinienceFee)) |
+                                    currency:'INR':'symbol' }}
+                                </div>
+                            </div>
+
+
                         </div>
                     </div>
                     <div class="nav-buttons">
@@ -428,5 +429,36 @@
         </div>
         }
     </div>
+    <!-- PRICE SECTION-->
+    <div class="right-section" *ngIf="activeIndex < 2">
+        <h3>Summary</h3>
+        <p><b>Total Number of Items : </b>{{ curUserCart?.totalCartCount }}</p>
+        <hr>
+        <div class="value">
+            <b>Cart Total : </b>{{ curUserCart?.total| currency:'INR':'symbol' }}
+        </div>
+        <div class="value">
+            <b>Delivery charge : </b>{{ 100 | currency:'INR':'symbol' }}
+        </div>
+        <div class="value">
+            <b>Total Amount : </b>{{ ((curUserCart?.total ?? 0)+(100)) |
+            currency:'INR':'symbol' }}
+        </div>
+        @if(deliveryCharges=== 0){
+        <div class="value">
+            <b>Delivery Discount : </b>{{ -100 | currency:'INR':'symbol' }}
+        </div>}
+        @if(paymentOption === 'cod'){
+        <div class="value" style="color: var(--accent);">
+            <b>convinienceFee: </b>{{ 7.00 | currency:'INR':'symbol' }}
+        </div>}
+        <hr>
+        <div class="value">
+            <b>Sub Total : </b>
+            {{ ((curUserCart?.total ?? 0) + (deliveryCharges) + (convinienceFee)) |
+            currency:'INR':'symbol' }}
+        </div>
+    </div>
+
     }
 </div>

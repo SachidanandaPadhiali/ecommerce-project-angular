@@ -67,6 +67,7 @@
 
     /*===== Font weight =====*/
     --font-slim: 200;
+    --font-slim: 300;
     --font-medium: 400;
     --font-semi-bold: 550;
     --font-bold: 700;
