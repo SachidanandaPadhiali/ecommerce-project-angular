@@ -99,7 +99,6 @@
                             <div class="upi-option" [class.selected-upi]="upiPaymentOption === 'bhim'"
                                 (click)="selectUPIPaymentOption('bhim')">BHIM UPI</div>
                         </div>
-                        <p>Pay using {{ upiPaymentOption }}</p>
                     </div>
                     }
                 </div>
@@ -313,7 +312,6 @@
                                     <div class="upi-option" [class.selected-upi]="upiPaymentOption === 'bhim'"
                                         (click)="selectUPIPaymentOption('bhim')">BHIM UPI</div>
                                 </div>
-                                <p>Pay using {{ upiPaymentOption }}</p>
                             </div>
                             }
                         </div>
@@ -338,7 +336,7 @@
                             <b>Delivery Discount : </b>{{ -100 | currency:'INR':'symbol' }}
                         </div>}
                         @if(paymentOption === 'cod'){
-                        <div class="value">
+                        <div class="value" style="color: var(--accent);">
                             <b>convinienceFee: </b>{{ 7.00 | currency:'INR':'symbol' }}
                         </div>}
                         <hr>
