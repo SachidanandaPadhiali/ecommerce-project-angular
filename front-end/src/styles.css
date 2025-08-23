@@ -70,10 +70,8 @@ main {
 }
 
 .utility-btn {
-    width: 150px;
     text-align: center;
-    margin: 1rem;
-    padding: .5rem 2rem;
+    padding: .5rem 1rem;
     background: var(--accent);
     color: var(--white-text);
     border: none;
@@ -89,6 +87,8 @@ main {
 }
 
 .cancel-btn {
+    width: 130px;
+    margin: 1rem;
     background-color: var(--error);
     overflow: hidden;
     position: relative;
@@ -101,7 +101,7 @@ main {
 
 .cancel-btn .button__icon {
     position: absolute;
-    right: -40px;
+    right: -30px;
     transition: right 0.3s ease;
 }
 
@@ -111,11 +111,11 @@ main {
 }
 
 .cancel-btn:hover .button__text {
-    transform: translateX(-25px);
+    transform: translateX(-15px);
 }
 
 .cancel-btn:hover .button__icon {
-    right: 30px;
+    right: 20px;
 }
 
 .cancel-btn:hover .icon {
@@ -123,6 +123,7 @@ main {
 }
 
 .order-btn {
+    width: 110px;
     background-color: var(--success);
     overflow: hidden;
     position: relative;
@@ -141,16 +142,17 @@ main {
 }
 
 .order-btn:hover {
-    background: none;
-    color: var(--dark-text);
+    background: #DCFCE7;
+    color: #166534;
+    border: 1px solid #86EFAC;
 }
 
 .order-btn:hover .button__text {
-    transform: translateX(-25px);
+    transform: translateX(-15px);
 }
 
 .order-btn:hover .button__icon {
-    right: 30px;
+    right: 10px;
 }
 
 .order-btn:hover .icon {
@@ -968,6 +970,11 @@ td.text-right {
 }
 
 @media (max-width: 500px) {
+
+    .cancel-btn .icon {
+        margin-left: 0.5rem;
+        font-size: var(--small-font-size);
+    }
 
     .product-grid {
         gap: 0.1rem;

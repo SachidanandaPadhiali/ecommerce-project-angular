@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, HostListener, NgZone, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, NgZone, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { UserService } from '../services/user-service';
 import { CartEntry } from '../models/CartEntry.model';
 import { Cart } from '../models/Cart.model';
@@ -13,6 +13,7 @@ import { faClose, faCheck } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './checkout.html',
   styleUrl: './checkout.css',
 })
+
 export class Checkout implements OnInit {
   loading: boolean = true;
 
@@ -35,6 +36,12 @@ export class Checkout implements OnInit {
   progressWidth = 0;
   private animationFrame: number | null = null;
 
+  //setting up mobile dropdowns
+  activeId = 0;
+
+  @ViewChildren('content') contentRefs!: QueryList<ElementRef>;
+  private toggleFrame: number | null = null;
+
   //setting up required cart variables
   userCart: Set<CartEntry> = new Set();
   cartItems: Set<number> = new Set();
@@ -51,6 +58,8 @@ export class Checkout implements OnInit {
     userId: 0, userName: '', phoneNumber: '', country: '', state: '',
     flatNo: '', addressLine1: '', addressLine2: '', city: '', zipCode: '', default: false
   };
+  showAddresses: boolean = false;
+  otherAddresses: UserAddress[] = [];
 
   // payment method selection
   paymentOption: string = 'cod';
@@ -59,12 +68,16 @@ export class Checkout implements OnInit {
   //shipping method selecetion
   shippingMethod: string = 'standard';
   shippingDays: number = 7;
-  
+
   // setting up the mobile view
   isMobileView = window.innerWidth < 768;
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.isMobileView = event.target.innerWidth < 768;
+  }
+
+  trackById(index: number, item: any): number {
+    return item.id;
   }
 
   constructor(private userService: UserService, private cdr: ChangeDetectorRef, private ngZone: NgZone, private commonModule: CommonModule) { }
@@ -131,8 +144,20 @@ export class Checkout implements OnInit {
     );
   }
 
+  showAddressPopUp() {
+    this.otherAddresses = this.userAddresses.filter(n => n !== this.selectedAddress);
+    this.showAddresses = true;
+  }
+  
+  closePopup() {
+    this.showAddresses = false;
+  }
+  
   selectAddress(address: UserAddress) {
     this.selectedAddress = address;
+    if(this.isMobileView){
+      this.closePopup();
+    }
   }
 
   selectPaymentOption(value: string) {
@@ -209,5 +234,24 @@ export class Checkout implements OnInit {
     };
 
     this.animationFrame = requestAnimationFrame(step);
+  }
+
+  //toggle
+  mnextStep() {
+    if (this.activeIndex === 1) {
+      if (this.paymentOption === 'upi' && this.upiPaymentOption === '') {
+        console.warn(this.upiPaymentOption);
+        this.error = 'Please Choose Payment Option';
+        return;
+      }
+    }
+    if (this.activeIndex < this.sections.length - 1) {
+      this.activeIndex++;
+    }
+  }
+  mprevStep() {
+    if (this.activeIndex > 0) {
+      this.activeIndex--;
+    }
   }
 }

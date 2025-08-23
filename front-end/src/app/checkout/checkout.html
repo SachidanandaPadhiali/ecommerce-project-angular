@@ -171,9 +171,9 @@
                     </span>
                 </div>
             </div>
+            <p style="text-align: right;">By Placing the order, you agree to E-Shop's Terms and conditions</p>
         </section>
     </div>
-    }
     <div class="right-section">
         <h3>Summary</h3>
         <p><b>Total Number of Items : </b>{{ curUserCart?.totalCartCount }}</p>
@@ -201,4 +201,234 @@
             {{ ((curUserCart?.total ?? 0) + (deliveryCharges) + (convinienceFee)) | currency:'INR':'symbol' }}
         </div>
     </div>
+    }
+    @if(isMobileView) {
+    <div class="left-section">
+        <h1>Review Your Order</h1>
+        <!-- CANCEL TRANSACTION -->
+        <div class="utility-btn cancel-btn">
+            Cancel Order<fa-icon [icon]="cancelOrder" class="icon"></fa-icon>
+        </div>
+
+        @for (s of sections;track s.id; let i = $index){
+        <div class="section-container" [class.active]="isActive(i)">
+            <section>
+                @switch (i) {
+
+                <!-- ADDRESS SECTION -->
+                @case (0) {
+                <div class="panel" role="tabpanel">
+                    <h2>Delivery Address</h2>
+                    <div class="address-card" style="margin: 1rem 0;">
+                        @if(selectedAddress){
+                        <h3>{{ selectedAddress.userName }}</h3>
+                        <p> {{ selectedAddress.flatNo }} <br> {{ selectedAddress.addressLine1 }}
+                            @if(selectedAddress.addressLine2){<span>, {{ selectedAddress.addressLine2
+                                }}</span>}
+                        </p>
+                        <p>{{ selectedAddress.state }}, {{ selectedAddress.country }} - {{
+                            selectedAddress.zipCode }}
+                        </p>
+                        <p>Mobile: {{ selectedAddress.phoneNumber }}</p>
+                        }
+                    </div>
+                    <button class="utility-btn" (click)="showAddressPopUp()">Choose Another Address</button>
+                    <div class="popup" *ngIf="showAddresses">
+                        <div id="addressList" class="address-list-container">
+                            <div class="address-cards" *ngIf="userAddresses.length > 0">
+                                <div class="address-card" *ngFor="let address of otherAddresses;"
+                                    (click)="selectAddress(address)">
+                                    <h3>{{ address.userName }}</h3>
+                                    <p> {{ address.flatNo }} <br> {{ address.addressLine1 }}
+                                        @if(address?.addressLine2){<span>, {{ address.addressLine2
+                                            }}</span>}
+                                    </p>
+                                    <p>{{ address.state }}, {{ address.country }} - {{ address.zipCode }}
+                                    </p>
+                                    <p>Mobile: {{ address.phoneNumber }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nav-buttons">
+                        <button class="nav-btn" (click)="mnextStep()">Choose Payment Method</button>
+                    </div>
+                </div>}
+
+                <!-- PAYMENT SECTION -->
+                @case (1) {
+                <div class="panel" role="tabpanel">
+                    <h2>Choose your payment method</h2>
+                    <div class="payment-options">
+                        <div class="option" [class.selected]="paymentOption === 'cod'"
+                            (click)="selectPaymentOption('cod')">
+                            @if(paymentOption !== 'cod'){
+                            <div class="payment-btn">
+                                <span class="button__text">
+                                    <h3>Cash on Delivery/Pay on Delivery</h3>
+                                    <p>A convenience fee of ₹7 will apply.</p>
+                                </span>
+                                <span class="button__icon">
+                                    <img src="assets/image/cod.png" alt="">
+                                </span>
+                            </div>
+                            }
+                            @if(paymentOption === 'cod'){
+                            <img src="assets/image/cod.png" alt="">
+                            <div class="text">
+                                <h3>Cash on Delivery/Pay on Delivery</h3>
+                                <p>A convenience fee of ₹7 will apply.</p>
+                                <p>Cash, UPI and Cards accepted.</p>
+                            </div>
+                            }
+                        </div>
+                        <div class="option" [class.selected]="paymentOption === 'upi'"
+                            (click)="selectPaymentOption('upi')">
+                            @if(paymentOption !== 'upi'){
+                            <div class="payment-btn">
+                                <span class="button__text">
+                                    <h3>Pay Using UPI</h3>
+                                    <p>Instant checkout via UPI. No cards, no hassle.</p>
+                                </span>
+                                <span class="button__icon">
+                                    <img src="assets/image/upi.png" alt="">
+                                </span>
+                                <span class="upi-opt">
+                                    <img src="assets/image/upiopt.png" alt="">
+                                </span>
+                            </div>
+                            }
+                            @if(paymentOption === 'upi'){
+                            <img src="assets/image/upi.png" alt="">
+                            <div class="text">
+                                <h3>Pay Using UPI</h3>
+                                <p>Choose UPI option.</p>
+                                <div class="upi-opts">
+                                    <div class="upi-option" [class.selected-upi]="upiPaymentOption === 'gpay'"
+                                        (click)="selectUPIPaymentOption('gpay')">Google Pay</div>
+                                    <div class="upi-option" [class.selected-upi]="upiPaymentOption === 'phonePe'"
+                                        (click)="selectUPIPaymentOption('phonePe')">Phone Pe</div>
+                                    <div class="upi-option" [class.selected-upi]="upiPaymentOption === 'paytm'"
+                                        (click)="selectUPIPaymentOption('paytm')">Paytm</div>
+                                    <div class="upi-option" [class.selected-upi]="upiPaymentOption === 'bhim'"
+                                        (click)="selectUPIPaymentOption('bhim')">BHIM UPI</div>
+                                </div>
+                                <p>Pay using {{ upiPaymentOption }}</p>
+                            </div>
+                            }
+                        </div>
+                    </div>
+                    <!-- PRICE SECTION-->
+                    <div class="bottom-section">
+                        <h3>Summary</h3>
+                        <p><b>Total Number of Items : </b>{{ curUserCart?.totalCartCount }}</p>
+                        <hr>
+                        <div class="value">
+                            <b>Cart Total : </b>{{ curUserCart?.total| currency:'INR':'symbol' }}
+                        </div>
+                        <div class="value">
+                            <b>Delivery charge : </b>{{ 100 | currency:'INR':'symbol' }}
+                        </div>
+                        <div class="value">
+                            <b>Total Amount : </b>{{ ((curUserCart?.total ?? 0)+(100)) |
+                            currency:'INR':'symbol' }}
+                        </div>
+                        @if(deliveryCharges=== 0){
+                        <div class="value">
+                            <b>Delivery Discount : </b>{{ -100 | currency:'INR':'symbol' }}
+                        </div>}
+                        @if(paymentOption === 'cod'){
+                        <div class="value">
+                            <b>convinienceFee: </b>{{ 7.00 | currency:'INR':'symbol' }}
+                        </div>}
+                        <hr>
+                        <div class="value">
+                            <b>Sub Total : </b>
+                            {{ ((curUserCart?.total ?? 0) + (deliveryCharges) + (convinienceFee)) |
+                            currency:'INR':'symbol' }}
+                        </div>
+                    </div>
+                    <div class="nav-buttons">
+                        <button class="nav-btn" (click)="mprevStep()">Back</button>
+                        <button class="nav-btn" (click)="mnextStep()">Review</button>
+                    </div>
+                </div>}
+
+                <!-- REVIEW SECTION -->
+                @case (2) {
+                <div class="panel" role="tabpanel">
+                    <div class="review-order-container">
+                        <div class="cart-line order-items-container">
+                            <h2>Your Items</h2>
+                            <div class="order-items">
+                                <div *ngFor="let item of curUserCart?.items" class="order-item">
+                                    <img [src]="'assets/image/products/' + item.product.imageUrl"
+                                        alt="{{item.product.imageUrl}}" class="image-store" />
+                                    <div class="order-item-details">
+                                        <h3>{{ item.product.name }}</h3>
+                                        <p><b>Quantity :</b> {{ item.quantity }} | <b>color : </b>{{
+                                            item.product.color
+                                            }}</p>
+                                        <h3>{{ item.price | currency:'INR':'symbol' }}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="details-line">
+                            <div class="review-address">
+                                <h3 style="padding: 0.5rem;">Delivery Address</h3>
+                                <div class="review-address-card">
+                                    <h3>{{ selectedAddress?.userName }}</h3>
+                                    <p> Flat No. {{ selectedAddress?.flatNo }} <br> {{
+                                        selectedAddress?.addressLine1 }}
+                                        <span *ngIf="selectedAddress?.addressLine2">, {{
+                                            selectedAddress?.addressLine2
+                                            }}</span>
+                                    </p>
+                                    <p>{{ selectedAddress?.state }}, {{ selectedAddress?.country }} - {{
+                                        selectedAddress?.zipCode }}</p>
+                                    <p>Mobile: {{ selectedAddress?.phoneNumber }}</p>
+                                </div>
+                            </div>
+                            <div class="review-payment">
+                                <h3 style="padding: 0.5rem;">Payment Option</h3>
+                                <div class="review-card">
+                                    <h3>Pay Using :
+                                        @if(paymentOption === 'upi'){ {{upiPaymentOption}}
+                                        } @if(paymentOption === 'cod'){ Cash on Delivery
+                                        }
+                                    </h3>
+                                    @if(paymentOption === 'upi'){
+                                    <img src="assets/image/{{upiPaymentOption}}.png" alt="">
+                                    }
+                                </div>
+                            </div>
+                            <div class="review-shipping">
+                                <h3 style="padding: 0.5rem;">Shipping method</h3>
+                                <div class="review-card" style="flex-direction: column;">
+                                    <h3>{{ shippingMethod }} Delivery</h3>
+                                    <p>Delivery with in <b>{{ shippingDays }}</b> days</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nav-buttons">
+                        <button class="nav-btn" (click)="mprevStep()">Back</button>
+                        <div class="utility-btn order-btn">
+                            <span class="button__text">Place Order</span>
+                            <span class="button__icon">
+                                <fa-icon [icon]="placeOrder" class="icon"></fa-icon>
+                            </span>
+                        </div>
+                    </div>
+                    <p style="text-align: right;">By Placing the order, you agree to E-Shop's Terms and
+                        conditions</p>
+                </div>
+                }
+                }
+            </section>
+        </div>
+        }
+    </div>
+    }
 </div>
