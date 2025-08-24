@@ -1,6 +1,7 @@
 .main-content {
     display: flex;
     flex-direction: row;
+    align-self: flex-start;
 }
 
 .tabs {
@@ -123,6 +124,7 @@
 
 .panel {
     padding: 2rem;
+    padding-right: 0;
     background: var(--bg);
 }
 
@@ -177,8 +179,6 @@
     display: flex;
     flex-direction: row;
     gap: 1rem;
-    min-width: 700px;
-    max-width: 800px;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -243,7 +243,7 @@
 }
 
 .payment-btn img {
-    height: 33px;
+    height: 25px;
     width: auto;
 }
 
@@ -298,7 +298,8 @@
     border-radius: 12px;
     display: flex;
     flex-direction: column;
-    background: color-mix(in srgb, var(--electric-violet) 2%, transparent);
+    background: color-mix(in srgb, var(--electric-violet) 4%, transparent);
+    padding: 1rem;
 }
 
 .cart-line {
@@ -319,14 +320,16 @@
 }
 
 .order-items {
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    align-items: flex-start;
     gap: 1rem;
 }
 
 .order-items>div {
-    flex: 0 0 30%;
+    flex: 0 0 40;
     box-sizing: border-box;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
@@ -337,7 +340,6 @@
     flex-direction: row;
     border: 1px solid var(--border);
     border-radius: 8px;
-    min-width: 400px;
 }
 
 .order-item .image-store {
@@ -363,12 +365,12 @@
 .details-line {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-between;
-    gap: 2rem;
 }
 
 .details-line>div {
-    flex: 0 0 30%;
+    flex: 0 25%;
     box-sizing: border-box;
 }
 
@@ -380,6 +382,8 @@
     border: none;
     border-radius: 8px;
     height: 170px;
+    min-width: 200px;
+    width: 100%;
 }
 
 .review-card {
@@ -391,7 +395,6 @@
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    min-width: 300px;
     height: 140px;
     display: flex;
     flex-direction: row;
@@ -416,7 +419,6 @@
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    min-width: 300px;
     height: 140px;
 }
 
@@ -719,7 +721,7 @@
     }
 
     .right-section {
-        flex: 0 0 20%;
+        flex: 0 0 30%;
     }
 
     .right-section .value {
