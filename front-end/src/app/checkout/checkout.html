@@ -233,6 +233,7 @@
                     </div>
                     <button class="utility-btn" (click)="showAddressPopUp()">Choose Another Address</button>
                     <div class="popup" *ngIf="showAddresses">
+                        <button class="close-popup" (click)="closePopup()">&times;</button>
                         <div id="addressList" class="address-list-container">
                             <div class="address-cards" *ngIf="userAddresses.length > 0">
                                 <div class="address-card" *ngFor="let address of otherAddresses;"
