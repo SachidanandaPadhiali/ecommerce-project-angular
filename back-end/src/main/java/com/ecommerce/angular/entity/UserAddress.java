@@ -46,4 +46,21 @@ public class UserAddress {
     private String ZipCode;
     private String country;
     private boolean isDefault;
+
+    @Override
+    public String toString() {
+        return "UserAddress{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", flatNo='" + flatNo + '\'' +
+                ", addressLine1='" + addressLine1 + '\'' +
+                ", addressLine2='" + addressLine2 + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", ZipCode='" + ZipCode + '\'' +
+                ", country='" + country + '\'' +
+                ", isDefault=" + isDefault +
+                '}';
+    }
 }

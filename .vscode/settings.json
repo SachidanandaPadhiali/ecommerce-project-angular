@@ -1,0 +1,26 @@
+{
+  "java.completion.enabled": true,
+  "java.completion.favoriteStaticMembers": [
+    "java.util.Objects.requireNonNull",
+    "org.springframework.util.StringUtils.hasText"
+  ],
+  "java.completion.guessMethodArguments": true,
+  "java.completion.importOrder": [
+    "java",
+    "javax",
+    "org",
+    "com"
+  ],
+  "editor.quickSuggestions": {
+    "comments": true,
+    "strings": true,
+    "other": true
+  },
+  "editor.suggestOnTriggerCharacters": true,
+  "editor.suggest.snippetsPreventQuickSuggestions": false,
+  "editor.inlineSuggest.enabled": true,
+  "java.compile.nullAnalysis.mode": "automatic",
+  "java.import.gradle.enabled": true,
+  "java.import.maven.enabled": true,
+  "java.configuration.updateBuildConfiguration": "automatic"
+}

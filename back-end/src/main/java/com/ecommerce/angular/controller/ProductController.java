@@ -4,9 +4,6 @@
  */
 package com.ecommerce.angular.controller;
 
-import com.ecommerce.angular.dto.EcommResponse;
-import com.ecommerce.angular.dto.ProductDTO;
-import com.ecommerce.angular.dto.ProductRequest;
 import com.ecommerce.angular.entity.Product;
 import com.ecommerce.angular.service.ProductService;
 import java.util.List;
@@ -32,6 +29,14 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
+    /**
+     * Retrieves a product by its unique identifier.
+     * 
+     * @param productId the unique identifier of the product
+     * @return the product if found, otherwise null
+     * @param productId
+     * @return 
+     */
     @GetMapping("/getProductById")
     public ResponseEntity<?> getProductById(@RequestParam Long productId) {
         Product product = productService.getProductById(productId);
@@ -42,6 +47,12 @@ public class ProductController {
         }
     }
 
+    /**
+     * Retrieves a list of products by their category.
+     * 
+     * @param categoryName the category of the products to retrieve
+     * @return the list of products if found, otherwise null
+     */
     @GetMapping("/category")
     public ResponseEntity<?> getProductByCategory(@RequestParam String categoryName) {
         List<Product> products = productService.getProductByCategory(categoryName);

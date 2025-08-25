@@ -25,14 +25,27 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     private String email;
     private String password;
     private String role;
-    
+
     private String name;
     private String phoneNo;
     private String gender;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNo='" + phoneNo + '\'' +
+                ", role='" + role + '\'' +
+                ", gender='" + gender + '\'' +
+                '}';
+    }
 }

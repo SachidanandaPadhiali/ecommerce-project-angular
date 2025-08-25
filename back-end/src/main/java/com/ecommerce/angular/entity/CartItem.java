@@ -36,7 +36,7 @@ public class CartItem {
     @ManyToOne
     @JsonBackReference
     private Cart cart;
-    
+
     @ManyToOne
     private Product product;
 
@@ -44,4 +44,10 @@ public class CartItem {
     private double price;
     private double originalPrice;
 
+    @Override
+    public String toString() {
+        return "CartItem{" + "id=" +
+                id + ", cart=" + cart + ", product=" + product.getName() + ", quantity=" + quantity + ", price=" + price
+                + ", originalPrice=" + originalPrice + '}';
+    }
 }

@@ -46,4 +46,11 @@ public class Cart {
 
     private BigDecimal total;
 
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "id=" + id +
+                ", total=" + total +
+                '}';
+    }
 }

@@ -5,13 +5,11 @@
 package com.ecommerce.angular.service;
 
 import com.ecommerce.angular.dto.CartResponse;
-import com.ecommerce.angular.dto.EcommResponse;
 import com.ecommerce.angular.entity.*;
 import com.ecommerce.angular.repo.CartItemRepo;
 import com.ecommerce.angular.repo.CartRepo;
 import com.ecommerce.angular.repo.ProductRepo;
 import com.ecommerce.angular.repo.UserRepo;
-import com.ecommerce.angular.utils.EcommUtils;
 import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -58,7 +56,7 @@ public class CartServiceImpl implements CartService {
                     newCart.setTotal(BigDecimal.ZERO);
                     return newCart;
                 });
-        
+
         Optional<CartItem> existingItemOpt = cart.getItems().stream()
                 .filter(item -> item.getProduct().getId().equals(productId))
                 .findFirst();
