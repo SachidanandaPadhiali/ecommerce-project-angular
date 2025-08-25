@@ -19,7 +19,7 @@ import com.ecommerce.angular.entity.Cart;
 import com.ecommerce.angular.entity.CartItem;
 import com.ecommerce.angular.entity.OrderItem;
 import com.ecommerce.angular.entity.Product;
-
+import com.ecommerce.angular.entity.SellerItems;
 import com.ecommerce.angular.repo.ProductRepo;
 import com.ecommerce.angular.repo.UserAddressRepo;
 import com.ecommerce.angular.repo.CartRepo;
@@ -72,9 +72,6 @@ public class OrderServiceImpl implements OrderService {
 
         System.out.println(user);
         System.out.println(cart);
-        for (CartItem item : cart.getItems()) {
-            System.out.println(item);
-        }
         System.out.println(userAddress);
 
         List<OrderItem> orderItems = new ArrayList<>();
@@ -85,7 +82,15 @@ public class OrderServiceImpl implements OrderService {
                     .price(item.getPrice())
                     .build();
             orderItems.add(orderItem);
+
+            // Update Inventory
+            Product product = item.getProduct();
+            product.setQuantity(product.getQuantity() - item.getQuantity());
+            productRepo.save(product);
         }
+
+        // SellerItems sellerItem =
+        // sellerItemRepo.findByProductId(item.getProduct().getId());
 
         UserOrders userOrder = UserOrders.builder()
                 .user(user).items(orderItems).total(orderRequest.getOrderTotal()).status("PENDING")
@@ -93,9 +98,14 @@ public class OrderServiceImpl implements OrderService {
 
         for (OrderItem item : orderItems) {
             item.setOrder(userOrder);
-        } 
+        }
 
         UserOrders savedOrder = orderRepo.save(userOrder);
+
+        // Update Cart and remove all items from cart
+        cart.setUserOrder(savedOrder);
+        cart.getItems().clear();
+        cartRepo.save(cart);
 
         return savedOrder.getId();
     }
