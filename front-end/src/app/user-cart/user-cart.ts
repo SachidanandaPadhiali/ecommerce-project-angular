@@ -38,17 +38,23 @@ export class UserCart implements OnInit {
 
     this.userService.getUserCart(this.userId).subscribe({
       next: (data: Cart) => {
+        console.log("data", data);
         this.curUserCart = data;
-        this.cartProductIds = new Set(data.items.map(i => i.product?.id ?? 0));
 
-        this.cartMap.clear();
-        this.curUserCart.items.forEach(item => {
-          this.cartMap.set(item.product?.id ?? 0, item.quantity ?? 0);
-          this.cartCount += item.quantity ?? 0;
-        });
-        this.curUserCart.totalCartCount = this.cartCount;
-        if (this.curUserCart.total > 500) {
-          this.deliveryCharges = 0;
+        if (data.status !== 'EMPTY') {
+          this.curUserCart = data;
+          this.cartProductIds = new Set(data.items.map(i => i.product?.id ?? 0));
+
+          this.cartMap.clear();
+          this.curUserCart.items.forEach(item => {
+            this.cartMap.set(item.product?.id ?? 0, item.quantity ?? 0);
+            this.cartCount += item.quantity ?? 0;
+          });
+          this.curUserCart.totalCartCount = this.cartCount;
+          if (this.curUserCart.total > 500) {
+            this.deliveryCharges = 0;
+          }
+
         }
         this.cdr.detectChanges();
       },

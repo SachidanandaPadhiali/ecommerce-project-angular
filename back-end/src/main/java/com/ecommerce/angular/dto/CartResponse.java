@@ -5,25 +5,41 @@
 package com.ecommerce.angular.dto;
 
 import java.math.BigDecimal;
-import lombok.AllArgsConstructor;
+import java.util.List;
+
+import com.ecommerce.angular.entity.CartItem;
+
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  *
  * @author sagar
  */
 @Data
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class CartResponse {
-    public long userId;
-    public long productId;
-    public int quantity;
-    public double productTotal;
-    public BigDecimal cartTotal;
+
+    private Long id;
+    private UserDTO user;
+    private List<CartItem> items;
+    private BigDecimal productTotal;
+    private CartStatus status;
+
+    // Constructors
+    public CartResponse(Long id, UserDTO user, List<CartItem> items, BigDecimal total, CartStatus status) {
+        this.id = id != null ? id : 0L;
+        this.user = user != null ? user : new UserDTO();  // empty object instead of null
+        this.items = items != null ? items : List.of();   // empty list instead of null
+        this.productTotal = total != null ? total : BigDecimal.valueOf(0.0);
+        this.status = status != null ? status : CartStatus.EMPTY;
+    }
 }
 /*
 {

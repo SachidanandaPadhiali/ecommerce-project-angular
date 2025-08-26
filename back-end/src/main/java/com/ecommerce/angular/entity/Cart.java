@@ -7,8 +7,12 @@ package com.ecommerce.angular.entity;
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.ecommerce.angular.dto.CartStatus;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,6 +21,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.util.ArrayList;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -29,6 +34,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Cart {
 
     @Id
@@ -46,11 +52,15 @@ public class Cart {
 
     private BigDecimal total;
 
+    @Enumerated(EnumType.STRING)
+    private CartStatus status;
+
     @Override
     public String toString() {
-        return "Cart{" +
-                "id=" + id +
-                ", total=" + total +
-                '}';
+        return "Cart{"
+                + "id=" + id
+                + ", total=" + total
+                + ", status=" + status
+                + '}';
     }
 }

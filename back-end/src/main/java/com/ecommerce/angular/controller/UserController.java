@@ -4,6 +4,7 @@
  */
 package com.ecommerce.angular.controller;
 
+import com.ecommerce.angular.dto.CartItemResponse;
 import com.ecommerce.angular.dto.CartResponse;
 import com.ecommerce.angular.dto.EcommResponse;
 import com.ecommerce.angular.dto.OrderRequest;
@@ -125,12 +126,12 @@ public class UserController {
      * @return ResponseEntity containing the updated cart object
      */
     @PostMapping("/addToCart")
-    public ResponseEntity<CartResponse> addToCart(
+    public ResponseEntity<CartItemResponse> addToCart(
             @RequestParam Long userId,
             @RequestParam Long productId,
             @RequestParam(defaultValue = "1") int quantity) {
-        CartResponse updatedCart = cartService.addOrUpdateCart(userId, productId, quantity);
-        return ResponseEntity.ok(updatedCart);
+        CartItemResponse updatedCartItem = cartService.addOrUpdateCart(userId, productId, quantity);
+        return ResponseEntity.ok(updatedCartItem);
     }
 
     /**
@@ -158,7 +159,7 @@ public class UserController {
      * @return ResponseEntity containing the cart object
      */
     @PostMapping("/getCart")
-    public Optional<Cart> getCart(@RequestBody UserRequest userRequest) {
+    public CartResponse getCart(@RequestBody UserRequest userRequest) {
         return cartService.getCart(userRequest.getUserId());
     }
 

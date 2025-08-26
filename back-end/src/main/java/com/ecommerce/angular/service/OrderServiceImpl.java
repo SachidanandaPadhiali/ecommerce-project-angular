@@ -4,6 +4,7 @@
  */
 package com.ecommerce.angular.service;
 
+import com.ecommerce.angular.dto.CartStatus;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -54,8 +55,7 @@ public class OrderServiceImpl implements OrderService {
     /**
      * API to generate an order
      * 
-     * @param orderRequest OrderRequest containing the user id, cart id and address
-     *                     id
+     * @param orderRequest OrderRequest containing the user id, cart id and address id
      * @return Generated orderId
      */
     @Override
@@ -105,6 +105,8 @@ public class OrderServiceImpl implements OrderService {
         // Update Cart and remove all items from cart
         cart.setUserOrder(savedOrder);
         cart.getItems().clear();
+        CartStatus status = CartStatus.ORDERED;
+        cart.setStatus(status);
         cartRepo.save(cart);
 
         return savedOrder.getId();

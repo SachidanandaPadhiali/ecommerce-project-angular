@@ -4,9 +4,8 @@
  */
 package com.ecommerce.angular.service;
 
+import com.ecommerce.angular.dto.CartItemResponse;
 import com.ecommerce.angular.dto.CartResponse;
-import com.ecommerce.angular.entity.Cart;
-import java.util.Optional;
 
 /**
  *
@@ -14,8 +13,8 @@ import java.util.Optional;
  */
 public interface CartService {
 
-    CartResponse addOrUpdateCart(Long userId, Long productId, int quantity);
-    Optional<Cart> getCart(Long userId);
+    CartItemResponse addOrUpdateCart(Long userId, Long productId, int quantity);
+    CartResponse getCart(Long userId);
     void removeItemFromCart(Long userId, Long productId);
 
 }

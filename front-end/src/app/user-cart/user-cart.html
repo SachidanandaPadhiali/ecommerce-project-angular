@@ -2,8 +2,9 @@
     <h1 class="heading-page">YOUR CART</h1>
 
     <p *ngIf="!curUserCart">Cart not loaded</p>
-    <p *ngIf="curUserCart?.items?.length === 0" class="message error">Cart is empty</p>
-
+    @if(curUserCart?.items?.length === 0){
+    <p class="message error">Cart is empty</p>
+    }@else {
     <div class="cart-container">
         <div class="cart-card">
             <div *ngFor="let item of curUserCart?.items" class="cart-item">
@@ -57,4 +58,5 @@
             <button class="main-btn checkout" (click)="goToCheckOut()">Checkout</button>
         </div>
     </div>
+    }
 </div>

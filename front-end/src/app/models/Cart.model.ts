@@ -8,4 +8,5 @@ export interface Cart {
     userOrder: any;
     total: number|0;
     totalCartCount: number;
+    status:string;
 }
