@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { UserService } from '../services/user-service';
 import { Product } from '../models/product.model';
 import { CartEntry } from '../models/CartEntry.model';
@@ -29,6 +29,7 @@ export class UserCart implements OnInit {
   cartCount: number = 0;
   deliveryCharges: number = 100;
 
+  cartIcon = faCartShopping;
   delete = faTrash;
 
   constructor(private userService: UserService, private cdr: ChangeDetectorRef, private commonModule: CommonModule, private router: Router) { }

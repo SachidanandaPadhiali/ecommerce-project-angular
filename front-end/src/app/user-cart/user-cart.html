@@ -1,10 +1,16 @@
 <div class="main-content">
-    <h1 class="heading-page">YOUR CART</h1>
-
     <p *ngIf="!curUserCart">Cart not loaded</p>
     @if(curUserCart?.items?.length === 0){
-    <p class="message error">Cart is empty</p>
+    <div class="cart-empty">
+        <div class="empty-cart">
+            <img class="empty-cart-icon" src="assets/image/empty-cart.jpg" alt="EMPTY CART">
+            <h2>Your Cart Is Currently Empty!</h2>
+            <p> Looks like you have not made your choice yet. Please continue shopping. </p>
+        </div>
+    </div>
     }@else {
+    <h1 class="heading-page">YOUR CART</h1>
+
     <div class="cart-container">
         <div class="cart-card">
             <div *ngFor="let item of curUserCart?.items" class="cart-item">
