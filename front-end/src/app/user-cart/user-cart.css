@@ -31,6 +31,21 @@
     border-radius: 50%;
 }
 
+.cart-card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 2rem;
+    position: relative;
+    background-color: var(--white);
+    border-radius: 15px;
+    border: 1px solid var(--border);
+    -webkit-transition: -webkit-box-shadow 0.25s;
+    transition: -webkit-box-shadow 0.25s;
+    transition: box-shadow 0.25s;
+    transition: box-shadow 0.25s, -webkit-box-shadow 0.25s;
+    width: 80%;
+    height: auto;
+}
+
 /* store item component */
 .cart-item {
     width: 90%;

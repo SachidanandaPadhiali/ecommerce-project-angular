@@ -6,6 +6,7 @@ import { Cart } from '../models/Cart.model';
 import { UserAddress } from '../models/UserAddress.model';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faClose, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { OrderRequest } from '../models/OrderRequest.model';
 
 @Component({
   selector: 'app-checkout',
@@ -55,7 +56,7 @@ export class Checkout implements OnInit {
   //Address Selection
   userAddresses: UserAddress[] = [];
   selectedAddress: UserAddress | undefined = {
-    userId: 0, userName: '', phoneNumber: '', country: '', state: '',
+    id: 0, userId: 0, userName: '', phoneNumber: '', country: '', state: '',
     flatNo: '', addressLine1: '', addressLine2: '', city: '', zipCode: '', default: false
   };
   showAddresses: boolean = false;
@@ -96,6 +97,7 @@ export class Checkout implements OnInit {
     console.log(this.cartCount, this.deliveryCharges, this.convinienceFee);
     console.log(this.selectedAddress);
     console.log(this.paymentOption, this.upiPaymentOption);
+    console.log(this.shippingMethod, this.shippingDays);
   }
 
   loadCart() {
@@ -148,14 +150,13 @@ export class Checkout implements OnInit {
     this.otherAddresses = this.userAddresses.filter(n => n !== this.selectedAddress);
     this.showAddresses = true;
   }
-  
   closePopup() {
     this.showAddresses = false;
   }
-  
+
   selectAddress(address: UserAddress) {
     this.selectedAddress = address;
-    if(this.isMobileView){
+    if (this.isMobileView) {
       this.closePopup();
     }
   }
@@ -177,6 +178,21 @@ export class Checkout implements OnInit {
     this.cdr.detectChanges();
   }
 
+  generateOrder() {
+    this.cdr.detectChanges();
+    const orderRequest: OrderRequest = {
+      userId: this.userId,
+      addressId: this.selectedAddress?.id ?? 0,
+      cartId: this.curUserCart?.id ?? 0,
+      orderTotal: this.curUserCart?.total ?? 0,
+      isExpressDelivery: this.shippingMethod === 'express'
+    }
+    this.userService.generateOrder(orderRequest).subscribe({
+      next: (data) => {
+        console.log(data);
+      }
+    })
+  }
   isActive(id: number) {
     return this.activeIndex === id;
   }

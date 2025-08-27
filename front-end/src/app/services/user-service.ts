@@ -6,6 +6,7 @@ import { Product } from '../models/product.model';
 import { CartEntry } from '../models/CartEntry.model';
 import { Cart } from '../models/Cart.model';
 import { UserAddress } from '../models/UserAddress.model';
+import { OrderRequest } from '../models/OrderRequest.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,6 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   private apiUrl = environment.apiUrl;
-  private cart: CartEntry[] = [];
 
   userSignUp(data: object): Observable<{ responseCode: string; responseMessage: string }> {
     return this.http.post<{ responseCode: string; responseMessage: string }>(`${this.apiUrl}/user`, data)
@@ -51,11 +51,6 @@ export class UserService {
     return this.http.post<Cart>(`${this.apiUrl}/getCart`, { userId });
   }
 
-  clearCart(): void {
-    this.cart = [];
-    console.log('Cart cleared');
-  }
-
   getUserAddresses(userId: number): Observable<UserAddress[]> {
     return this.http.post<UserAddress[]>(`${this.apiUrl}/getUserAddresses`, { userId });
   }
@@ -74,5 +69,10 @@ export class UserService {
   updateUserAddress(updatedAddress: UserAddress): Observable<any> {
     console.log("addressId",updatedAddress.id);
     return this.http.put(`${this.apiUrl}/addUserAddress?addressId=${updatedAddress.id}`, updatedAddress);
+  }
+
+  generateOrder(orderRequest: OrderRequest): Observable<any> {
+    console.log(orderRequest);
+    return this.http.post(`${this.apiUrl}/generateOrder`, orderRequest);
   }
 }
