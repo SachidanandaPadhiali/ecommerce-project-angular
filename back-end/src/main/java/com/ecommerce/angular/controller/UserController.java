@@ -6,6 +6,7 @@ package com.ecommerce.angular.controller;
 
 import com.ecommerce.angular.dto.CartItemResponse;
 import com.ecommerce.angular.dto.CartResponse;
+import com.ecommerce.angular.dto.CartStatus;
 import com.ecommerce.angular.dto.EcommResponse;
 import com.ecommerce.angular.dto.OrderRequest;
 import com.ecommerce.angular.dto.UserAddressDTO;
@@ -19,6 +20,8 @@ import com.ecommerce.angular.service.CartService;
 import com.ecommerce.angular.service.OrderService;
 import com.ecommerce.angular.service.UserService;
 import com.ecommerce.angular.utils.EcommUtils;
+
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -83,7 +86,6 @@ public class UserController {
         return userService.createAccount(userDTO);
     }
 
-    
     /**
      * API to get the wish list of the user
      * 
@@ -99,7 +101,8 @@ public class UserController {
      * API to add a product to the user's wish list
      * 
      * @param userRequest UserRequest containing the user id and product id
-     * @return ResponseEntity containing the EcommResponse object with success message
+     * @return ResponseEntity containing the EcommResponse object with success
+     *         message
      */
     @PostMapping("/addProductWishList")
     public EcommResponse addProductWishList(@RequestBody UserRequest userRequest) {
@@ -110,7 +113,8 @@ public class UserController {
      * API to delete a product from the user's wish list
      * 
      * @param userRequest UserRequest containing the user id and product id
-     * @return ResponseEntity containing the EcommResponse object with success message
+     * @return ResponseEntity containing the EcommResponse object with success
+     *         message
      */
     @PostMapping("/deleteProductWishList")
     public EcommResponse deleteProductWishList(@RequestBody UserRequest userRequest) {
@@ -120,9 +124,9 @@ public class UserController {
     /**
      * API to add a product to the user's cart
      * 
-     * @param userId the user id
+     * @param userId    the user id
      * @param productId the product id
-     * @param quantity the quantity of the product to add, default is 1
+     * @param quantity  the quantity of the product to add, default is 1
      * @return ResponseEntity containing the updated cart object
      */
     @PostMapping("/addToCart")
@@ -130,16 +134,17 @@ public class UserController {
             @RequestParam Long userId,
             @RequestParam Long productId,
             @RequestParam(defaultValue = "1") int quantity) {
-        CartItemResponse updatedCartItem = cartService.addOrUpdateCart(userId, productId, quantity);
-        return ResponseEntity.ok(updatedCartItem);
+        CartItemResponse updatedCart = cartService.addOrUpdateCart(userId, productId, quantity);
+        return ResponseEntity.ok(updatedCart);
     }
 
     /**
      * API to remove a product from the user's cart
      * 
-     * @param userId the user id
+     * @param userId    the user id
      * @param productId the product id
-     * @return ResponseEntity containing the EcommResponse object with success message
+     * @return ResponseEntity containing the EcommResponse object with success
+     *         message
      */
     @PostMapping("/removeFromCart")
     public ResponseEntity<EcommResponse> removeFromCart(
@@ -152,6 +157,15 @@ public class UserController {
                 .build());
     }
 
+    private CartResponse mapToResponse(Cart cart) {
+        return new CartResponse(
+                cart.getId(),
+                new UserDTO(cart.getUser()), // requires you to have a UserDTO(User user) constructor
+                cart.getItems(),
+                cart.getTotal(),
+                cart.getStatus());
+    }
+
     /**
      * API to get the user's cart
      * 
@@ -160,7 +174,15 @@ public class UserController {
      */
     @PostMapping("/getCart")
     public CartResponse getCart(@RequestBody UserRequest userRequest) {
-        return cartService.getCart(userRequest.getUserId());
+        return cartService.getCart(userRequest.getUserId())
+                .map(this::mapToResponse)
+                .orElseGet(() -> CartResponse.builder()
+                        .id(0L)
+                        .user(new UserDTO())
+                        .items(List.of())
+                        .total(BigDecimal.ZERO)
+                        .status(CartStatus.EMPTY)
+                        .build());
     }
 
     /**
@@ -177,9 +199,10 @@ public class UserController {
     /**
      * API to remove a user address
      * 
-     * @param userId the user id
+     * @param userId    the user id
      * @param addressId the address id to remove
-     * @return ResponseEntity containing the EcommResponse object with success message
+     * @return ResponseEntity containing the EcommResponse object with success
+     *         message
      */
     @PostMapping("/removeUserAddress")
     public ResponseEntity<EcommResponse> removeUserAddres(
@@ -197,10 +220,11 @@ public class UserController {
      * API to add a user address
      * 
      * @param userAddress UserAddressDTO containing the address details
-     * @return ResponseEntity containing the EcommResponse object with success message
+     * @return ResponseEntity containing the EcommResponse object with success
+     *         message
      */
     @PostMapping("/addUserAddress")
-    public ResponseEntity<EcommResponse> addUserAddres(@RequestBody UserAddressDTO userAddress) {        
+    public ResponseEntity<EcommResponse> addUserAddres(@RequestBody UserAddressDTO userAddress) {
         addressService.addUserAddress(userAddress);
         return ResponseEntity.ok(EcommResponse.builder()
                 .responseCode(EcommUtils.ADDRESS_ADDED_CODE)
@@ -211,13 +235,15 @@ public class UserController {
     /**
      * API to update a user address
      * 
-     * @param addressId the id of the address to update
+     * @param addressId   the id of the address to update
      * @param userAddress UserAddressDTO containing the updated address details
-     * @return ResponseEntity containing the EcommResponse object with success message
+     * @return ResponseEntity containing the EcommResponse object with success
+     *         message
      */
     @PutMapping("/addUserAddress")
-    public ResponseEntity<EcommResponse> updateUserAddres(@RequestParam Long addressId,@RequestBody UserAddressDTO userAddress) {        
-        addressService.updateUserAddress(addressId,userAddress);
+    public ResponseEntity<EcommResponse> updateUserAddres(@RequestParam Long addressId,
+            @RequestBody UserAddressDTO userAddress) {
+        addressService.updateUserAddress(addressId, userAddress);
         return ResponseEntity.ok(EcommResponse.builder()
                 .responseCode(EcommUtils.ADDRESS_UPDATED_CODE)
                 .responseMessage(EcommUtils.ADDRESS_UPDATED_MESSAGE)
@@ -227,11 +253,13 @@ public class UserController {
     /**
      * API to generate an order
      * 
-     * @param orderRequest OrderRequest containing the user id, cart id and address id
-     * @return ResponseEntity containing the EcommResponse object with success message
+     * @param orderRequest OrderRequest containing the user id, cart id and address
+     *                     id
+     * @return ResponseEntity containing the EcommResponse object with success
+     *         message
      */
     @PostMapping("/generateOrder")
-    public Map<Long,EcommResponse> generateOrder(@RequestBody OrderRequest orderRequest) {
+    public Map<Long, EcommResponse> generateOrder(@RequestBody OrderRequest orderRequest) {
         Long orderId = orderService.generateOrder(orderRequest);
         return Map.of(orderId, EcommResponse.builder()
                 .responseCode(EcommUtils.ORDER_GENERATED_CODE)

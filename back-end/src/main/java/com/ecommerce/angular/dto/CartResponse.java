@@ -29,7 +29,7 @@ public class CartResponse {
     private Long id;
     private UserDTO user;
     private List<CartItem> items;
-    private BigDecimal productTotal;
+    private BigDecimal total;
     private CartStatus status;
 
     // Constructors
@@ -37,7 +37,7 @@ public class CartResponse {
         this.id = id != null ? id : 0L;
         this.user = user != null ? user : new UserDTO();  // empty object instead of null
         this.items = items != null ? items : List.of();   // empty list instead of null
-        this.productTotal = total != null ? total : BigDecimal.valueOf(0.0);
+        this.total = total != null ? total : BigDecimal.valueOf(0.0);
         this.status = status != null ? status : CartStatus.EMPTY;
     }
 }

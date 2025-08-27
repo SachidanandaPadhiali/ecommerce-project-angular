@@ -56,6 +56,8 @@ export class Shop implements OnInit {
         });
       })
     ).subscribe(({ products, cart }) => {
+      console.log(products);
+      console.log(cart);
       // Clear and repopulate the shared cartMap
       this.cartMap.clear();
       this.cartProductIds = new Set(cart.items.map(i => i.product?.id ?? 0));

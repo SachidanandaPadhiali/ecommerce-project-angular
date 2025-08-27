@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCartShopping, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { UserService } from '../services/user-service';
 import { Product } from '../models/product.model';
 import { CartEntry } from '../models/CartEntry.model';
@@ -29,7 +29,6 @@ export class UserCart implements OnInit {
   cartCount: number = 0;
   deliveryCharges: number = 100;
 
-  cartIcon = faCartShopping;
   delete = faTrash;
 
   constructor(private userService: UserService, private cdr: ChangeDetectorRef, private commonModule: CommonModule, private router: Router) { }
@@ -37,25 +36,27 @@ export class UserCart implements OnInit {
   ngOnInit(): void {
     this.userId = Number(JSON.parse(localStorage.getItem('user') || '{}')?.id);
 
+    /**
+     * This function is called when the observable returned by getUserCart() emits a new value.
+     * It updates the component properties with the new data and calculates the total number of items in the cart.
+     * If the total price of the items in the cart is greater than 500, it sets the delivery charges to 0.
+     * Finally, it calls detectChanges() on the ChangeDetectorRef to mark the component as needing to be re-rendered.
+     * @param data The new data emitted by the observable, which is a Cart object.
+     */
     this.userService.getUserCart(this.userId).subscribe({
       next: (data: Cart) => {
-        console.log("data", data);
+        console.log(data);
         this.curUserCart = data;
+        this.cartProductIds = new Set(data.items.map(i => i.product?.id ?? 0));
 
-        if (data.status !== 'EMPTY') {
-          this.curUserCart = data;
-          this.cartProductIds = new Set(data.items.map(i => i.product?.id ?? 0));
-
-          this.cartMap.clear();
-          this.curUserCart.items.forEach(item => {
-            this.cartMap.set(item.product?.id ?? 0, item.quantity ?? 0);
-            this.cartCount += item.quantity ?? 0;
-          });
-          this.curUserCart.totalCartCount = this.cartCount;
-          if (this.curUserCart.total > 500) {
-            this.deliveryCharges = 0;
-          }
-
+        this.cartMap.clear();
+        this.curUserCart.items.forEach(item => {
+          this.cartMap.set(item.product?.id ?? 0, item.quantity ?? 0);
+          this.cartCount += item.quantity ?? 0;
+        });
+        this.curUserCart.totalCartCount = this.cartCount;
+        if (this.curUserCart.total > 500) {
+          this.deliveryCharges = 0;
         }
         this.cdr.detectChanges();
       },

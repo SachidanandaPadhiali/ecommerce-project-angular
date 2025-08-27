@@ -4,6 +4,7 @@
  */
 package com.ecommerce.angular.repo;
 
+import com.ecommerce.angular.dto.CartStatus;
 import com.ecommerce.angular.entity.Cart;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,4 +16,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface CartRepo extends JpaRepository<Cart, Long> {
 
     Optional<Cart> findByUserId(Long userId);
+    Optional<Cart> findByUserIdAndStatus(Long userId, CartStatus status);
 }
