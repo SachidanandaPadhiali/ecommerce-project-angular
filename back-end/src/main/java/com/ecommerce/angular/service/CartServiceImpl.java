@@ -40,7 +40,9 @@ public class CartServiceImpl implements CartService {
     @Override
     @Transactional
     public Optional<Cart> getCart(Long userId) {
-        return cartRepo.findByUserIdAndStatus(userId, CartStatus.ACTIVE);
+        Optional<Cart> userCart = cartRepo.findByUserIdAndStatus(userId, CartStatus.ACTIVE);
+        System.err.println(userCart);
+        return userCart;
     }
     
     @Override
@@ -55,12 +57,12 @@ public class CartServiceImpl implements CartService {
                 .orElseGet(() -> {
                     Cart newCart = new Cart();
                     newCart.setUser(user);
+                    newCart.setStatus(CartStatus.ACTIVE);
                     newCart.setTotal(BigDecimal.ZERO);
                     return newCart;
                 });
 
         // Check if the product is already in the cart, if yes, update the quantity,
-        // else add the product to the cart
         Optional<CartItem> existingItemOpt = cart.getItems().stream()
                 .filter(item -> item.getProduct().getId().equals(productId))
                 .findFirst();

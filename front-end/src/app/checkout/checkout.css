@@ -133,7 +133,7 @@
     padding: 20px;
 }
 
-.address-cards {
+.address-rds {
     display: flex;
     flex-direction: column;
     gap: 1rem;

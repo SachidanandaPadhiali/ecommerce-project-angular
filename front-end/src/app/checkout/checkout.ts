@@ -7,6 +7,7 @@ import { UserAddress } from '../models/UserAddress.model';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faClose, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { OrderRequest } from '../models/OrderRequest.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-checkout',
@@ -81,7 +82,7 @@ export class Checkout implements OnInit {
     return item.id;
   }
 
-  constructor(private userService: UserService, private cdr: ChangeDetectorRef, private ngZone: NgZone, private commonModule: CommonModule) { }
+  constructor(private userService: UserService, private cdr: ChangeDetectorRef, private ngZone: NgZone, private commonModule: CommonModule, private router: Router) { }
 
   ngOnInit(): void {
     this.userId = Number(JSON.parse(localStorage.getItem('user') || '{}')?.id);
@@ -190,6 +191,8 @@ export class Checkout implements OnInit {
     this.userService.generateOrder(orderRequest).subscribe({
       next: (data) => {
         console.log(data);
+        this.cdr.detectChanges();
+        this.router.navigate(['/order-placed']);
       }
     })
   }

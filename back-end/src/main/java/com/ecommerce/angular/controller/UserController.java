@@ -174,7 +174,7 @@ public class UserController {
      */
     @PostMapping("/getCart")
     public CartResponse getCart(@RequestBody UserRequest userRequest) {
-        return cartService.getCart(userRequest.getUserId())
+        CartResponse userCart = cartService.getCart(userRequest.getUserId())
                 .map(this::mapToResponse)
                 .orElseGet(() -> CartResponse.builder()
                         .id(0L)
@@ -183,6 +183,7 @@ public class UserController {
                         .total(BigDecimal.ZERO)
                         .status(CartStatus.EMPTY)
                         .build());
+        return userCart;
     }
 
     /**

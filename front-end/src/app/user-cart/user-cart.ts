@@ -68,7 +68,14 @@ export class UserCart implements OnInit {
       }
     });
   }
+  goToHome() {
+    this.router.navigate(['/']);
+  }
 
+  /**
+   * Adds a product to the user's cart by updating the cart state and making an API call to add the product to the user's cart.
+   * @param productId The id of the product to add to the cart.
+   */
   addProductToCart(productId: number): void {
 
     if (!this.curUserCart || !this.curUserCart.items) return;
