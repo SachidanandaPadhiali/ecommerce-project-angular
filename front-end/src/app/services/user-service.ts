@@ -78,7 +78,7 @@ export class UserService {
   }
 
   getOrderData(orderId: number): Observable<OrderModel> {
-    return this.http.post<OrderModel>(`${this.apiUrl}/getOrderData`, { orderId });
+    return this.http.post<OrderModel>(`${this.apiUrl}/getOrderData`, orderId);
   }
 
 }

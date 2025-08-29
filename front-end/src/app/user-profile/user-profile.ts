@@ -5,6 +5,8 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { UserService } from '../services/user-service';
 import { AddressForm } from '../address-form/address-form';
+import { OrderModel } from '../models/OrderModel.model';
+import { finalize, Observable } from 'rxjs';
 
 type Section = 'basic' | 'shipping' | 'orders' | 'personalization';
 
@@ -18,8 +20,10 @@ export class UserProfile {
 
   userId: number = 0;
   userAddresses: UserAddress[] = [];
+  userOrders$!: Observable<OrderModel>;
   active: Section = 'basic';
   showForm: boolean = false;
+  isLoadingOrders = true;
 
   sections: { id: Section; label: string }[] = [
     { id: 'basic', label: 'Basic info' },
@@ -33,14 +37,34 @@ export class UserProfile {
     this.loadAddresses();
   }
 
+  /**
+   * Select a section in the user profile.
+   * @param section - one of basic, shipping, orders, or personalization
+   */
   select(section: Section) {
     this.active = section;
+    console.log('Current section:', section);
+    if (this.isActive('orders')) {
+      this.showOrders();
+      console.log('check');
+    }
   }
 
+  /**
+   * Whether the given section is currently active.
+   * @param id - one of basic, shipping, orders, or personalization
+   * @returns true if the given section is active, false otherwise
+   */
   isActive(id: Section) {
     return this.active === id;
   }
 
+  /**
+   * Loads the user addresses from the server.
+   * If there is no user id in local storage, does nothing.
+   * If there is an error loading the addresses, logs an error to the console.
+   * Otherwise, sets the userAddresses property to the loaded addresses and triggers a view update.
+   */
   loadAddresses() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     this.userId = user?.id;
@@ -65,6 +89,14 @@ export class UserProfile {
     return item.id;
   }
 
+  /**
+   * Removes a user address from the server and from the local list of addresses.
+   * If the user cancels the deletion, does nothing.
+   * If there is an error deleting the address, logs an error to the console
+   * and reverts the local list of addresses to its previous state.
+   * @param addressId - the id of the address to remove
+   * @param addressName - the name of the address to remove
+   */
   removeAddress(addressId: number, addressName: string) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '350px',
@@ -92,6 +124,13 @@ export class UserProfile {
     });
   }
 
+  /**
+   * Opens the address form dialog in add mode to create a new address
+   * Subscribes to the result of the dialog and if the user clicks save,
+   * sends a request to the server to save the new address.
+   * If successful, reloads the user addresses and triggers a view update.
+   * If there is an error saving the address, logs an error to the console.
+   */
   showAddressForm() {
     const dialogRef = this.dialog.open(AddressForm, {
       width: '1300px',
@@ -119,6 +158,10 @@ export class UserProfile {
     });
   }
 
+  /**
+   * Opens the address form dialog in edit mode to update an existing address
+   * @param addressId The ID of the address to update
+   */
   showAddressUpdateForm(addressId: number) {
     const updateAddress = this.userAddresses.find(addr => addr.id === addressId);
     console.log(updateAddress);
@@ -149,4 +192,12 @@ export class UserProfile {
       }
     });
   }
+
+  showOrders() {
+    this.isLoadingOrders = true;
+    this.userOrders$ = this.userService.getOrderData(8).pipe(
+      finalize(() => this.isLoadingOrders = false)
+    );
+  }
+
 }

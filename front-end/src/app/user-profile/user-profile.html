@@ -47,6 +47,24 @@
 
     <section class="panel" role="tabpanel" [hidden]="!isActive('orders')">
         <h2>Order management</h2>
+        <div *ngIf="isLoadingOrders">Loading orders...</div>
+        <div *ngIf="userOrders$ | async as orders">
+            <h3>{{ orders?.id }}</h3>
+            <div class="address-card">
+                <h3>{{ orders?.shippingAddress?.userName }}</h3>
+                <p> {{ orders?.shippingAddress?.flatNo }} <br> {{ orders?.shippingAddress?.addressLine1 }}
+                    <span *ngIf="orders?.shippingAddress?.addressLine2">, {{
+                        orders?.shippingAddress?.addressLine2
+                        }}</span>
+                </p>
+                <p>{{ orders?.shippingAddress?.state }}, {{ orders?.shippingAddress?.country }} - {{
+                    orders?.shippingAddress?.zipCode }}</p>
+                <p>Mobile: {{ orders?.shippingAddress?.phoneNumber }}</p>
+            </div>
+        </div>
+        <ng-template #noOrders>
+            <p>No order found.</p>
+        </ng-template>
         <!-- recent orders, track, returns, invoices, re-order -->
     </section>
 

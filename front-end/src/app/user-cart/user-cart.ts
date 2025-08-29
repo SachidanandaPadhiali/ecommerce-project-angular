@@ -182,7 +182,7 @@ export class UserCart implements OnInit {
 
   goToCheckOut(): void {
     console.warn("going to checkout");
-    this.router.navigate(['/user/checkOut']);
+    this.router.navigate(['/user/checkout']);
   }
 
 }

@@ -4,7 +4,7 @@ import { SellerAuth } from './seller-auth/seller-auth';
 import { SellerHome } from './seller-home/seller-home';
 import { Login } from './login/login';
 import { UserHome } from './user-home/user-home';
-import { authGuard, redirectIfAuthenticatedGuard } from './auth-guard';
+import { authGuard, checkoutGuard, redirectIfAuthenticatedGuard } from './auth-guard';
 import { SellerAddProduct } from './seller-add-product/seller-add-product';
 import { UserAuth } from './user-auth/user-auth';
 import { Shop } from './shop/shop';
@@ -27,7 +27,7 @@ export const routes: Routes = [
     { path: 'shop/category/:name', component: Shop, runGuardsAndResolvers: 'paramsChange' },
     { path: 'user/wishlist', component: Wishlist, canActivate: [authGuard], data: { role: 'user' } },
     { path: 'user/cart', component: UserCart, canActivate: [authGuard], data: { role: 'user' } },
-    { path: 'user/checkOut', component: Checkout, canActivate: [authGuard], data: { role: 'user' } },
+    { path: 'user/checkout', component: Checkout, canActivate: [checkoutGuard], data: { role: 'user' } },
     { path: 'user/profile', component: UserProfile, canActivate: [authGuard], data: { role: 'user' } },
     { path: 'order-placed', component: OrderPlaced, canActivate: [authGuard], data: { role: 'user' } },
 ];
