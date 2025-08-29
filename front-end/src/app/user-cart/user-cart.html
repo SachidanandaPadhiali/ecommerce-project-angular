@@ -1,6 +1,10 @@
+@if(isLoading){<div>
+    <!-- Show spinner or skeleton loader -->
+    <p>Loading your cart...</p>
+</div>}
 <div class="main-content">
-    <p *ngIf="!curUserCart">Cart not loaded</p>
-    @if(curUserCart?.items?.length === 0){
+    <p *ngIf="!curUserCart && !isLoading">Cart not loaded</p>
+    @if(curUserCart?.items?.length === 0 && !isLoading){
     <div class="cart-empty">
         <div class="empty-cart">
             <img class="empty-cart-icon" src="assets/image/empty-cart.jpg" alt="EMPTY CART">
@@ -9,7 +13,8 @@
             <button class="utility-btn" (click)="goToHome()">Shop Now</button>
         </div>
     </div>
-    }@else {
+    }
+    @if((curUserCart?.items?.length ?? 0) > 0 && !isLoading){
     <h1 class="heading-page">YOUR CART</h1>
 
     <div class="cart-container">

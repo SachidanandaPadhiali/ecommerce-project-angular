@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
   styleUrl: './user-cart.css'
 })
 export class UserCart implements OnInit {
+  isLoading: boolean = true;
   products: Product[] = [];
   prodIds: number[] = [];
   loading: boolean = true;
@@ -34,6 +35,7 @@ export class UserCart implements OnInit {
   constructor(private userService: UserService, private cdr: ChangeDetectorRef, private commonModule: CommonModule, private router: Router) { }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.userId = Number(JSON.parse(localStorage.getItem('user') || '{}')?.id);
 
     /**
@@ -45,7 +47,6 @@ export class UserCart implements OnInit {
      */
     this.userService.getUserCart(this.userId).subscribe({
       next: (data: Cart) => {
-        console.log(data);
         this.curUserCart = data;
         this.cartProductIds = new Set(data.items.map(i => i.product?.id ?? 0));
 
@@ -58,6 +59,7 @@ export class UserCart implements OnInit {
         if (this.curUserCart.total > 500) {
           this.deliveryCharges = 0;
         }
+        this.isLoading = false;
         this.cdr.detectChanges();
       },
       error: (err) => {

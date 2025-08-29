@@ -8,10 +8,11 @@ import com.ecommerce.angular.dto.CartStatus;
 import java.util.List;
 import java.util.ArrayList;
 
-import org.apache.el.lang.ELArithmetic.LongDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ecommerce.angular.dto.OrderRequest;
+import com.ecommerce.angular.dto.OrderResponse;
+import com.ecommerce.angular.dto.OrderStatus;
 
 import com.ecommerce.angular.entity.User;
 import com.ecommerce.angular.entity.UserAddress;
@@ -20,12 +21,10 @@ import com.ecommerce.angular.entity.Cart;
 import com.ecommerce.angular.entity.CartItem;
 import com.ecommerce.angular.entity.OrderItem;
 import com.ecommerce.angular.entity.Product;
-import com.ecommerce.angular.entity.SellerItems;
 import com.ecommerce.angular.repo.ProductRepo;
 import com.ecommerce.angular.repo.UserAddressRepo;
 import com.ecommerce.angular.repo.CartRepo;
 import com.ecommerce.angular.repo.OrderRepo;
-import com.ecommerce.angular.repo.CartItemRepo;
 import com.ecommerce.angular.repo.UserRepo;
 
 import jakarta.transaction.Transactional;
@@ -54,8 +53,9 @@ public class OrderServiceImpl implements OrderService {
 
     /**
      * API to generate an order
-     * 
-     * @param orderRequest OrderRequest containing the user id, cart id and address id
+     *
+     * @param orderRequest OrderRequest containing the user id, cart id and
+     * address id
      * @return Generated orderId
      */
     @Override
@@ -91,9 +91,8 @@ public class OrderServiceImpl implements OrderService {
 
         // SellerItems sellerItem =
         // sellerItemRepo.findByProductId(item.getProduct().getId());
-
         UserOrders userOrder = UserOrders.builder()
-                .user(user).items(orderItems).total(orderRequest.getOrderTotal()).status("PENDING")
+                .user(user).items(orderItems).total(orderRequest.getOrderTotal()).status(OrderStatus.PENDING)
                 .shippingAddress(userAddress).isExpressDelivery(orderRequest.isExpressDelivery()).build();
 
         for (OrderItem item : orderItems) {
@@ -110,5 +109,20 @@ public class OrderServiceImpl implements OrderService {
         cartRepo.save(cart);
 
         return savedOrder.getId();
+    }
+
+    @Override
+    @Transactional
+    public OrderResponse getOrderData(Long orderId) {
+        UserOrders userOrder = orderRepo.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+        System.out.println(userOrder);
+        return OrderResponse.builder()
+                .id(orderId)
+                .shippingAddress(userOrder.getShippingAddress())
+                .items(userOrder.getItems())
+                .total(userOrder.getTotal())
+                .status(userOrder.getStatus())
+                .build();
     }
 }

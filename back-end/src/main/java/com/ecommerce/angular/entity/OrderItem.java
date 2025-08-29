@@ -4,6 +4,7 @@
  */
 package com.ecommerce.angular.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,7 +22,7 @@ import lombok.NoArgsConstructor;
  * @author sachidananda
  */
 @Entity
-@Table(name="Order_Item")
+@Table(name = "Order_Item")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -33,6 +34,7 @@ public class OrderItem {
     private Long id;
 
     @ManyToOne
+    @JsonBackReference
     private UserOrders order;
 
     @ManyToOne
@@ -40,5 +42,12 @@ public class OrderItem {
 
     private int quantity;
     private double price;
+
+    @Override
+    public String toString() {
+        return "CartItem{" + "id="
+                + id + ", cart=" + order + ", product=" + product.getName() + ", quantity=" + quantity + ", price=" + price
+                + '}';
+    }
 
 }

@@ -9,6 +9,7 @@ import com.ecommerce.angular.dto.CartResponse;
 import com.ecommerce.angular.dto.CartStatus;
 import com.ecommerce.angular.dto.EcommResponse;
 import com.ecommerce.angular.dto.OrderRequest;
+import com.ecommerce.angular.dto.OrderResponse;
 import com.ecommerce.angular.dto.UserAddressDTO;
 import com.ecommerce.angular.dto.UserDTO;
 import com.ecommerce.angular.dto.UserRequest;
@@ -266,5 +267,16 @@ public class UserController {
                 .responseCode(EcommUtils.ORDER_GENERATED_CODE)
                 .responseMessage(EcommUtils.ORDER_GENERATED_MESSAGE)
                 .build());
+    }
+
+    /**
+     * API to get the list of user addresses
+     * 
+     * @param orderId containing the order id
+     * @return ResponseEntity containing the Order Data
+     */
+    @PostMapping("/getOrderData")
+    public OrderResponse getOrderData(@RequestBody Long orderId) {
+        return orderService.getOrderData(orderId);
     }
 }

@@ -7,6 +7,7 @@ import { CartEntry } from '../models/CartEntry.model';
 import { Cart } from '../models/Cart.model';
 import { UserAddress } from '../models/UserAddress.model';
 import { OrderRequest } from '../models/OrderRequest.model';
+import { OrderModel } from '../models/OrderModel.model';
 
 @Injectable({
   providedIn: 'root'
@@ -75,4 +76,9 @@ export class UserService {
     console.log(orderRequest);
     return this.http.post(`${this.apiUrl}/generateOrder`, orderRequest);
   }
+
+  getOrderData(orderId: number): Observable<OrderModel> {
+    return this.http.post<OrderModel>(`${this.apiUrl}/getOrderData`, { orderId });
+  }
+
 }

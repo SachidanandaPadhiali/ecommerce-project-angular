@@ -181,7 +181,7 @@ export class Checkout implements OnInit {
     this.userService.generateOrder(orderRequest).subscribe({
       next: (data) => {
         console.log(data);
-        this.router.navigate(['/order-placed'], { state: { orderData: data } });
+        this.router.navigate(['/order-placed'], { state: { orderGen: data.id } });
       },
       error: (err) => {
         console.error('Error generating order:', err);
