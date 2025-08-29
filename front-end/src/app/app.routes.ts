@@ -4,7 +4,7 @@ import { SellerAuth } from './seller-auth/seller-auth';
 import { SellerHome } from './seller-home/seller-home';
 import { Login } from './login/login';
 import { UserHome } from './user-home/user-home';
-import { authGuard } from './auth-guard';
+import { authGuard, redirectIfAuthenticatedGuard } from './auth-guard';
 import { SellerAddProduct } from './seller-add-product/seller-add-product';
 import { UserAuth } from './user-auth/user-auth';
 import { Shop } from './shop/shop';
@@ -16,9 +16,9 @@ import { OrderPlaced } from './order-placed/order-placed';
 
 export const routes: Routes = [
     { path: '', component: Home },
-    { path: 'seller-auth', component: SellerAuth },
-    { path: 'user-auth', component: UserAuth },
-    { path: 'log-in', component: Login },
+    { path: 'seller-auth', component: SellerAuth, canActivate: [redirectIfAuthenticatedGuard] },
+    { path: 'user-auth', component: UserAuth, canActivate: [redirectIfAuthenticatedGuard] },
+    { path: 'log-in', component: Login, canActivate: [redirectIfAuthenticatedGuard] },
     { path: 'user-home', component: UserHome, canActivate: [authGuard], data: { role: 'user' } },
     { path: 'seller-home', component: SellerHome, canActivate: [authGuard], data: { role: 'seller' } },
     { path: 'seller-product', component: SellerAddProduct },

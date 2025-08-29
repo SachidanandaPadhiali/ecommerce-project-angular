@@ -91,16 +91,6 @@ export class Checkout implements OnInit {
     this.setInitialProgress();
   }
 
-  reViewOrder() {
-    console.log(this.userCart);
-    console.log(this.cartItems);
-    console.log(this.curUserCart);
-    console.log(this.cartCount, this.deliveryCharges, this.convinienceFee);
-    console.log(this.selectedAddress);
-    console.log(this.paymentOption, this.upiPaymentOption);
-    console.log(this.shippingMethod, this.shippingDays);
-  }
-
   loadCart() {
     this.userService.getUserCart(this.userId).subscribe({
       next: (data: Cart) => {
@@ -191,8 +181,12 @@ export class Checkout implements OnInit {
     this.userService.generateOrder(orderRequest).subscribe({
       next: (data) => {
         console.log(data);
-        this.cdr.detectChanges();
-        this.router.navigate(['/order-placed']);
+        this.router.navigate(['/order-placed'], { state: { orderData: data } });
+      },
+      error: (err) => {
+        console.error('Error generating order:', err);
+        this.error = 'Failed to generate order';
+        this.router.navigate(['/user/cart']);
       }
     })
   }

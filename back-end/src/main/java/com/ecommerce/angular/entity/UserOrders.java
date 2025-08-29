@@ -52,7 +52,7 @@ public class UserOrders {
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
-    @OneToOne
+    @ManyToOne
     private UserAddress shippingAddress;
 
     private boolean isExpressDelivery;
