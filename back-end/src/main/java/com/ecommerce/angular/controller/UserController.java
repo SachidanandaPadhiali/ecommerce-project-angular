@@ -270,7 +270,7 @@ public class UserController {
     }
 
     /**
-     * API to get the list of user addresses
+     * API to get the order
      * 
      * @param orderId containing the order id
      * @return ResponseEntity containing the Order Data
@@ -278,5 +278,10 @@ public class UserController {
     @PostMapping("/getOrderData")
     public OrderResponse getOrderData(@RequestBody Long orderId) {
         return orderService.getOrderData(orderId);
+    }
+    
+    @PostMapping("/getUserOrders")
+    public List<OrderResponse> getUserOrders(@RequestBody UserRequest userRequest) {
+        return orderService.getUserOrders(userRequest.getUserId());
     }
 }

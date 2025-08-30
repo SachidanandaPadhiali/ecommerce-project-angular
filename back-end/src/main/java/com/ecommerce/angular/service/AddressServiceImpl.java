@@ -36,9 +36,6 @@ public class AddressServiceImpl implements AddressService {
     @Override
     @Transactional
     public void removeUserAddress(Long userId, Long addressId) {
-        User user = userRepo.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
         UserAddress userAddress = userAddressRepo.findById(addressId)
                 .orElseThrow(() -> new RuntimeException("Address Not Found"));
         userAddressRepo.delete(userAddress);
@@ -76,9 +73,6 @@ public class AddressServiceImpl implements AddressService {
     @Override
     @Transactional
     public UserAddress updateUserAddress(Long addressId, UserAddressDTO userAddress) {
-        User user = userRepo.findById(userAddress.getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
         UserAddress updateAddress = userAddressRepo.findById(addressId).orElseThrow(() -> new RuntimeException("User not found"));
 
         updateAddress.setUserName(userAddress.getUserName());

@@ -6,6 +6,7 @@ package com.ecommerce.angular.service;
 
 import com.ecommerce.angular.dto.OrderRequest;
 import com.ecommerce.angular.dto.OrderResponse;
+import java.util.List;
 
 
 /**
@@ -16,4 +17,5 @@ public interface OrderService {
     
     public Long generateOrder(OrderRequest orderRequest);
     public OrderResponse getOrderData(Long orderId);
+    public List<OrderResponse> getUserOrders(Long userId);
 }

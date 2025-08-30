@@ -125,4 +125,22 @@ public class OrderServiceImpl implements OrderService {
                 .status(userOrder.getStatus())
                 .build();
     }
+
+    @Override
+    @Transactional
+    public List<OrderResponse> getUserOrders(Long userId) {
+        List<UserOrders> userOrders = orderRepo.findByUserId(userId);
+        List<OrderResponse> userOrdersData = new ArrayList<OrderResponse>();
+        for(UserOrders userOrder : userOrders){
+            OrderResponse newOrderResponse = OrderResponse.builder()
+                .id(userOrder.getId())
+                .shippingAddress(userOrder.getShippingAddress())
+                .items(userOrder.getItems())
+                .total(userOrder.getTotal())
+                .status(userOrder.getStatus())
+                .build();
+            userOrdersData.add(newOrderResponse);
+        }
+        return userOrdersData;
+    }
 }
