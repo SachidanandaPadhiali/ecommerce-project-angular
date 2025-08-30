@@ -20,7 +20,7 @@ export class UserProfile {
 
   userId: number = 0;
   userAddresses: UserAddress[] = [];
-  userOrders$!: Observable<OrderModel>;
+  userOrders$!: Observable<OrderModel[]>;
   active: Section = 'basic';
   showForm: boolean = false;
   isLoadingOrders = true;
@@ -195,9 +195,10 @@ export class UserProfile {
 
   showOrders() {
     this.isLoadingOrders = true;
-    this.userOrders$ = this.userService.getOrderData(8).pipe(
+    this.userOrders$ = this.userService.getUserOrders(this.userId).pipe(
       finalize(() => this.isLoadingOrders = false)
     );
+    console.log(this.userOrders$);
   }
 
 }

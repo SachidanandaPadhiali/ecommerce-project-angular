@@ -68,7 +68,7 @@ export class UserService {
   }
 
   updateUserAddress(updatedAddress: UserAddress): Observable<any> {
-    console.log("addressId",updatedAddress.id);
+    console.log("addressId", updatedAddress.id);
     return this.http.put(`${this.apiUrl}/addUserAddress?addressId=${updatedAddress.id}`, updatedAddress);
   }
 
@@ -79,6 +79,10 @@ export class UserService {
 
   getOrderData(orderId: number): Observable<OrderModel> {
     return this.http.post<OrderModel>(`${this.apiUrl}/getOrderData`, orderId);
+  }
+
+  getUserOrders(userId: number): Observable<OrderModel[]> {
+    return this.http.post<OrderModel[]>(`${this.apiUrl}/getUserOrders`, { userId });
   }
 
 }

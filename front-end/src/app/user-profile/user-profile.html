@@ -49,17 +49,30 @@
         <h2>Order management</h2>
         <div *ngIf="isLoadingOrders">Loading orders...</div>
         <div *ngIf="userOrders$ | async as orders">
-            <h3>{{ orders?.id }}</h3>
-            <div class="address-card">
-                <h3>{{ orders?.shippingAddress?.userName }}</h3>
-                <p> {{ orders?.shippingAddress?.flatNo }} <br> {{ orders?.shippingAddress?.addressLine1 }}
-                    <span *ngIf="orders?.shippingAddress?.addressLine2">, {{
-                        orders?.shippingAddress?.addressLine2
-                        }}</span>
-                </p>
-                <p>{{ orders?.shippingAddress?.state }}, {{ orders?.shippingAddress?.country }} - {{
-                    orders?.shippingAddress?.zipCode }}</p>
-                <p>Mobile: {{ orders?.shippingAddress?.phoneNumber }}</p>
+            <div *ngFor="let order of orders">
+                <h3>{{ order?.id }} | {{ order?.status }} | {{ order?.total | currency:'INR':'symbol' }}</h3>
+                <div class="address-card">
+                    <h3>{{ order?.shippingAddress?.userName }}</h3>
+                    <p> {{ order?.shippingAddress?.flatNo }} <br> {{ order?.shippingAddress?.addressLine1 }}
+                        <span *ngIf="order?.shippingAddress?.addressLine2">, {{
+                            order?.shippingAddress?.addressLine2
+                            }}</span>
+                    </p>
+                    <p>{{ order?.shippingAddress?.state }}, {{ order?.shippingAddress?.country }} - {{
+                        order?.shippingAddress?.zipCode }}</p>
+                    <p>Mobile: {{ order?.shippingAddress?.phoneNumber }}</p>
+                </div>
+                <div class="order-items">
+                    <div *ngFor="let item of order.items" class="order-item">
+                        <img [src]="'assets/products/' + item.product.imageUrl" alt="{{item.product.imageUrl}}"
+                            class="image-store" />
+                        <div class="order-item-details">
+                            <h3>{{ item.product.name }}</h3>
+                            <p><b>Quantity :</b> {{ item.quantity }} | <b>color : </b>{{ item.product.color }}</p>
+                            <h3>{{ item.price | currency:'INR':'symbol' }}</h3>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <ng-template #noOrders>
