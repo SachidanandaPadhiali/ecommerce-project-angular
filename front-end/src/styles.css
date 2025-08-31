@@ -32,7 +32,7 @@ h1 {
 }
 
 h5 {
-    font-size: 2rem;
+    font-size: var(--mb-4);
     font-weight: var(--font-semi-bold);
     line-height: 100%;
     margin: 0;
@@ -71,12 +71,12 @@ main {
 
 .utility-btn {
     text-align: center;
-    padding: .5rem 1rem;
+    padding: var(--mb-1) var(--mb-2);
     background: var(--accent);
     color: var(--white-text);
     border: none;
     border-radius: 8px;
-    font-size: 1rem;
+    font-size: var(--mb-2);
     font-weight: var(--font-medium);
     cursor: pointer;
     transition: .3s;
@@ -88,7 +88,7 @@ main {
 
 .cancel-btn {
     width: 130px;
-    margin: 1rem;
+    margin: var(--mb-2);
     background-color: var(--error);
     overflow: hidden;
     position: relative;
@@ -174,7 +174,7 @@ main {
 }
 
 .content p {
-    margin-top: 1.5rem;
+    margin-top: var(--mb-3);
 }
 
 @media screen and (max-width: 650px) {
@@ -187,7 +187,7 @@ main {
         height: 1px;
         width: 100%;
         background: var(--red-to-pink-to-purple-horizontal-gradient);
-        margin-block: 1.5rem;
+        margin-block: var(--mb-3);
     }
 }
 
@@ -195,14 +195,14 @@ main {
     height: 100px;
     width: 2px;
     background: var(--red-to-pink-to-purple-vertical-gradient);
-    margin-inline: 0.5rem;
+    margin-inline: var(--mb-1);
 }
 
 .social-links {
     display: flex;
     align-items: center;
     gap: 0.73rem;
-    margin-top: 1.5rem;
+    margin-top: var(--mb-3);
 }
 
 .social-links path {
@@ -352,7 +352,7 @@ input:focus {
 .remember {
     display: flex;
     align-items: center;
-    gap: .5rem;
+    gap: var(--mb-1);
     cursor: pointer;
 }
 
@@ -369,7 +369,7 @@ input:focus {
 
 .login-link {
     text-align: center;
-    margin-top: 1.5rem;
+    margin-top: var(--mb-3);
     color: var(--accent-blue);
     font-weight: var(--font-semi-bold);
     font-size: .9rem;
@@ -393,15 +393,15 @@ input:focus {
     }
 
     .sign-container {
-        margin: 1rem;
-        padding: 1.5rem;
+        margin: var(--mb-2);
+        padding: var(--mb-3);
     }
 }
 
 @media (max-width: 768px) {
     .sign-container {
-        margin: 1rem;
-        padding: 1.5rem;
+        margin: var(--mb-2);
+        padding: var(--mb-3);
     }
 
     .form-overlay {
@@ -412,7 +412,7 @@ input:focus {
 .message {
     padding: .8rem;
     border-radius: 6px;
-    margin-bottom: 1rem;
+    margin-bottom: var(--mb-2);
     font-size: .9rem;
     text-align: center;
     animation: fadeIn .3s ease-out;
@@ -421,7 +421,7 @@ input:focus {
 .error {
     padding: .8rem;
     border-radius: 6px;
-    margin-bottom: 1rem;
+    margin-bottom: var(--mb-2);
     font-size: .9rem;
     text-align: center;
     animation: fadeIn .3s ease-out;
@@ -437,7 +437,7 @@ input:focus {
 }
 
 .count {
-    padding: .5rem;
+    padding: var(--mb-1);
     border-radius: 6px;
     text-align: center;
     background: #e3d5fc;
@@ -447,10 +447,10 @@ input:focus {
 
 .cart {
     width: 10rem;
-    height: 2rem;
+    height: var(--mb-4);
     color: var(--primary);
     background: var(--warning);
-    margin: 1rem 0;
+    margin: var(--mb-2) 0;
     text-transform: uppercase;
     text-align: center;
     letter-spacing: 2px;
@@ -977,7 +977,7 @@ td.text-right {
     }
 
     .cancel-btn .icon {
-        margin-left: 0.5rem;
+        margin-left: var(--mb-1);
         font-size: var(--small-font-size);
     }
 

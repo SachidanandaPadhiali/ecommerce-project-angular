@@ -47,30 +47,65 @@
 
     <section class="panel" role="tabpanel" [hidden]="!isActive('orders')">
         <h2>Order management</h2>
-        <div *ngIf="isLoadingOrders">Loading orders...</div>
-        <div *ngIf="userOrders$ | async as orders">
-            <div *ngFor="let order of orders">
-                <h3>{{ order?.id }} | {{ order?.status }} | {{ order?.total | currency:'INR':'symbol' }}</h3>
-                <div class="address-card">
-                    <h3>{{ order?.shippingAddress?.userName }}</h3>
-                    <p> {{ order?.shippingAddress?.flatNo }} <br> {{ order?.shippingAddress?.addressLine1 }}
-                        <span *ngIf="order?.shippingAddress?.addressLine2">, {{
-                            order?.shippingAddress?.addressLine2
-                            }}</span>
-                    </p>
-                    <p>{{ order?.shippingAddress?.state }}, {{ order?.shippingAddress?.country }} - {{
-                        order?.shippingAddress?.zipCode }}</p>
-                    <p>Mobile: {{ order?.shippingAddress?.phoneNumber }}</p>
+        <div *ngIf="isLoadingOrders">sLoading orders...</div>
+        <div *ngIf="sortedOrders$ | async as orders">
+            <div *ngFor="let order of orders; let i = index" class="order-container">
+                <div class="upper-section">
+                    <div class="upper-left">
+                        <div class="order-info">
+                            <h4>Order Placed</h4>
+                            <p>{{ order?.orderDate | date:'dd/MM/yyyy' }}</p>
+                        </div>
+                        <div class="order-info">
+                            <h4>Order total</h4>
+                            <p>{{ order?.total | currency:'INR':'symbol' }}</p>
+                        </div>
+                        <div class="order-info">
+                            <h4>Billing Address</h4>
+                            <div class="button-container" #triggerRef>
+                                <a (click)="showAddress(i)">{{ order.shippingAddress.userName }} ▼</a>
+
+                                @if(activeShippingAddress === i){
+                                <div class="popup">
+                                    <h3>{{ order?.shippingAddress?.userName }}</h3>
+                                    <p> {{ order?.shippingAddress?.flatNo }} <br> {{
+                                        order?.shippingAddress?.addressLine1 }}
+                                        <span *ngIf="order?.shippingAddress?.addressLine2">, {{
+                                            order?.shippingAddress?.addressLine2
+                                            }}</span>
+                                    </p>
+                                    <p>{{ order?.shippingAddress?.state }}, {{ order?.shippingAddress?.country }} -
+                                        {{
+                                        order?.shippingAddress?.zipCode }}</p>
+                                    <p>Mobile: {{ order?.shippingAddress?.phoneNumber }}</p>
+                                </div>}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-summary">
+                        <div class="order-info">
+                            <h4>Order #{{ order?.id }}</h4>
+                            <h3>{{ order?.status }}</h3>
+                        </div>
+                    </div>
                 </div>
                 <div class="order-items">
-                    <div *ngFor="let item of order.items" class="order-item">
-                        <img [src]="'assets/products/' + item.product.imageUrl" alt="{{item.product.imageUrl}}"
-                            class="image-store" />
-                        <div class="order-item-details">
-                            <h3>{{ item.product.name }}</h3>
-                            <p><b>Quantity :</b> {{ item.quantity }} | <b>color : </b>{{ item.product.color }}</p>
-                            <h3>{{ item.price | currency:'INR':'symbol' }}</h3>
+                    <div *ngFor="let item of order.items" class="order-item-container">
+                        <div class="order-item">
+                            <img [src]="'assets/products/' + item.product.imageUrl" alt="{{item.product.imageUrl}}"
+                                class="image-store" />
+                            <div class="order-item-details">
+                                <h3>{{ item.product.name }}</h3>
+                                <p>{{ item.product.description }}</p>
+                            </div>
                         </div>
+                        @if(order?.status === 'Delivered'){
+                        <div class="order-support">
+                            <button class="utility-btn">Track Order</button>
+                            <button class="utility-btn">Return Item</button>
+                            <button class="utility-btn">Get Invoice</button>
+                            <button class="utility-btn">Reorder</button>
+                        </div>}
                     </div>
                 </div>
             </div>

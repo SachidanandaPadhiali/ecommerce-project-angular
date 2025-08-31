@@ -108,7 +108,7 @@
     justify-content: space-around;
     width: 100%;
     max-width: 700px;
-    margin-bottom: 3rem;
+    margin-bottom: var(--mb-6);
   }
 
   .content h1 {
@@ -116,7 +116,7 @@
   }
 
   .content p {
-    margin-top: 1.5rem;
+    margin-top: var(--mb-3);
   }
 
   .divider {

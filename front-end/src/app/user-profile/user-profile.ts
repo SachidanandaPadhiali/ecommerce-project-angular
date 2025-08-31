@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, NgZone } from '@angular/core';
+import { ChangeDetectorRef, NgZone, Component, ElementRef, HostListener, ViewChildren, QueryList } from '@angular/core';
 import { UserAddress } from '../models/UserAddress.model';
 import { CommonModule } from '@angular/common';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog';
@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserService } from '../services/user-service';
 import { AddressForm } from '../address-form/address-form';
 import { OrderModel } from '../models/OrderModel.model';
-import { finalize, Observable } from 'rxjs';
+import { finalize, map, Observable } from 'rxjs';
 
 type Section = 'basic' | 'shipping' | 'orders' | 'personalization';
 
@@ -21,9 +21,16 @@ export class UserProfile {
   userId: number = 0;
   userAddresses: UserAddress[] = [];
   userOrders$!: Observable<OrderModel[]>;
+  sortedOrders$!: Observable<OrderModel[]>;
   active: Section = 'basic';
   showForm: boolean = false;
   isLoadingOrders = true;
+
+  showShippingAddress: boolean = false;
+  activeShippingAddress: number | null = null;
+
+  @ViewChildren('popupRef') popupRefs!: QueryList<ElementRef>;
+  @ViewChildren('triggerRef') triggerRefs!: QueryList<ElementRef>;
 
   sections: { id: Section; label: string }[] = [
     { id: 'basic', label: 'Basic info' },
@@ -199,6 +206,48 @@ export class UserProfile {
       finalize(() => this.isLoadingOrders = false)
     );
     console.log(this.userOrders$);
+
+    this.sortedOrders$ = this.userOrders$.pipe(
+      map(orders =>
+        orders.sort((a, b) => b.id - a.id)
+      )
+    );
   }
 
+  /**
+   * Toggles the popup for the given shipping address.
+   * If the popup is already open for the given index, it closes the popup.
+   * @param index The index of the shipping address to show/hide
+   */
+  showAddress(index: number) {
+    this.activeShippingAddress = this.activeShippingAddress === index ? null : index;
+  }
+
+  closePopup() {
+    this.activeShippingAddress = null;
+  }
+
+  /**
+   * Close the popup if the user clicks outside of it.
+   * This is a host listener that listens for document clicks
+   * and checks if the clicked element is inside of the popup.
+   * If it is not, it calls {@link closePopup} to close the popup.
+   * @param event The MouseEvent that triggered the handler
+   */
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+
+    const clickedInsidePopup = this.popupRefs.some(ref =>
+      ref.nativeElement.contains(target)
+    );
+
+    const clickedInsideTrigger = this.triggerRefs.some(ref =>
+      ref.nativeElement.contains(target)
+    );
+
+    if (!clickedInsidePopup && !clickedInsideTrigger) {
+      this.closePopup();
+    }
+  }
 }

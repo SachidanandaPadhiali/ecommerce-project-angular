@@ -20,7 +20,7 @@
     <div class="cart-container">
         <div class="cart-card">
             <div *ngFor="let item of curUserCart?.items" class="cart-item">
-                <img [src]="'assets/image/products/' + item.product.imageUrl" alt="{{item.product.imageUrl}}"
+                <img [src]="'assets/products/' + item.product.imageUrl" alt="{{item.product.imageUrl}}"
                     class="image-store" />
                 <div class="cart-item-details">
                     <h3>{{ item.product.name }}</h3>

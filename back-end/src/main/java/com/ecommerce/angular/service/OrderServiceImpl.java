@@ -35,19 +35,19 @@ import jakarta.transaction.Transactional;
  */
 @Service
 public class OrderServiceImpl implements OrderService {
-
+    
     @Autowired
     UserRepo userRepo;
-
+    
     @Autowired
     CartRepo cartRepo;
-
+    
     @Autowired
     ProductRepo productRepo;
-
+    
     @Autowired
     UserAddressRepo userAddressRepo;
-
+    
     @Autowired
     OrderRepo orderRepo;
 
@@ -63,17 +63,17 @@ public class OrderServiceImpl implements OrderService {
     public Long generateOrder(OrderRequest orderRequest) {
         User user = userRepo.findById(orderRequest.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
-
+        
         Cart cart = cartRepo.findById(orderRequest.getCartId())
                 .orElseThrow(() -> new RuntimeException("Product not found"));
-
+        
         UserAddress userAddress = userAddressRepo.findById(orderRequest.getAddressId())
                 .orElseThrow(() -> new RuntimeException("Product not found"));
-
+        
         System.out.println(user);
         System.out.println(cart);
         System.out.println(userAddress);
-
+        
         List<OrderItem> orderItems = new ArrayList<>();
         for (CartItem item : cart.getItems()) {
             OrderItem orderItem = OrderItem.builder()
@@ -94,11 +94,11 @@ public class OrderServiceImpl implements OrderService {
         UserOrders userOrder = UserOrders.builder()
                 .user(user).items(orderItems).total(orderRequest.getOrderTotal()).status(OrderStatus.PENDING)
                 .shippingAddress(userAddress).isExpressDelivery(orderRequest.isExpressDelivery()).build();
-
+        
         for (OrderItem item : orderItems) {
             item.setOrder(userOrder);
         }
-
+        
         UserOrders savedOrder = orderRepo.save(userOrder);
 
         // Update Cart and remove all items from cart
@@ -107,10 +107,10 @@ public class OrderServiceImpl implements OrderService {
         CartStatus status = CartStatus.ORDERED;
         cart.setStatus(status);
         cartRepo.save(cart);
-
+        
         return savedOrder.getId();
     }
-
+    
     @Override
     @Transactional
     public OrderResponse getOrderData(Long orderId) {
@@ -125,20 +125,22 @@ public class OrderServiceImpl implements OrderService {
                 .status(userOrder.getStatus())
                 .build();
     }
-
+    
     @Override
     @Transactional
     public List<OrderResponse> getUserOrders(Long userId) {
         List<UserOrders> userOrders = orderRepo.findByUserId(userId);
         List<OrderResponse> userOrdersData = new ArrayList<OrderResponse>();
-        for(UserOrders userOrder : userOrders){
+        
+        for (UserOrders userOrder : userOrders) {
             OrderResponse newOrderResponse = OrderResponse.builder()
-                .id(userOrder.getId())
-                .shippingAddress(userOrder.getShippingAddress())
-                .items(userOrder.getItems())
-                .total(userOrder.getTotal())
-                .status(userOrder.getStatus())
-                .build();
+                    .id(userOrder.getId())
+                    .shippingAddress(userOrder.getShippingAddress())
+                    .items(userOrder.getItems())
+                    .total(userOrder.getTotal())
+                    .orderDate(userOrder.getCreatedAt().toLocalDate())
+                    .status(userOrder.getStatus())
+                    .build();
             userOrdersData.add(newOrderResponse);
         }
         return userOrdersData;

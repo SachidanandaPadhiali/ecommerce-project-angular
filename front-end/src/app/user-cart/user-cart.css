@@ -101,7 +101,7 @@
     display: flex;
     flex-direction: column;
     align-items: left;
-    gap: 0.5rem;
+    gap: var(--mb-1);
 }
 
 .cart-total .value {
@@ -170,7 +170,7 @@
     }
 
     .cart-item .cart-item-details {
-        gap: 0.5rem;
+        gap: var(--mb-1);
         margin: 0 0.3rem;
     }
 

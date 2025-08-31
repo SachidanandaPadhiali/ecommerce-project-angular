@@ -116,7 +116,7 @@
                     <h2>Your Items</h2>
                     <div class="order-items">
                         <div *ngFor="let item of curUserCart?.items" class="order-item">
-                            <img [src]="'assets/image/products/' + item.product.imageUrl"
+                            <img [src]="'assets/products/' + item.product.imageUrl"
                                 alt="{{item.product.imageUrl}}" class="image-store" />
                             <div class="order-item-details">
                                 <h3>{{ item.product.name }}</h3>
@@ -156,7 +156,7 @@
                         <h3 style="padding: 0.5rem;">Shipping method</h3>
                         <div class="review-card" style="flex-direction: column;">
                             <h3>{{ shippingMethod }} Delivery</h3>
-                            <p>Delivery with in <b>{{ shippingDays }}</b> days</p>
+                            <p>Delivery with in <b>8-10</b> days</p>
                         </div>
                     </div>
                 </div>
@@ -331,7 +331,7 @@
                             <h2>Your Items</h2>
                             <div class="order-items">
                                 <div *ngFor="let item of curUserCart?.items" class="order-item">
-                                    <img [src]="'assets/image/products/' + item.product.imageUrl"
+                                    <img [src]="'assets/products/' + item.product.imageUrl"
                                         alt="{{item.product.imageUrl}}" class="image-store" />
                                     <div class="order-item-details">
                                         <h3>{{ item.product.name }}</h3>
@@ -376,7 +376,7 @@
                                 <h3 style="padding: 0.5rem;">Shipping method</h3>
                                 <div class="review-card" style="flex-direction: column;">
                                     <h3>{{ shippingMethod }} Delivery</h3>
-                                    <p>Delivery with in <b>{{ shippingDays }}</b> days</p>
+                                    <p>Delivery with in <b>8-10</b> days</p>
                                 </div>
                             </div>
                             <div class="right-section">
@@ -421,8 +421,8 @@
                             </span>
                         </div>
                     </div>
-                    <p style="text-align: right;">By Placing the order, you agree to E-Shop's Terms and
-                        conditions</p>
+                    <p style="text-align: right;">By Placing the order, you agree to E-Shop's <a>Terms and
+                        conditions</a></p>
                 </div>
                 }
                 }
