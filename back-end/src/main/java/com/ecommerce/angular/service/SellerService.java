@@ -6,7 +6,9 @@ package com.ecommerce.angular.service;
 
 import com.ecommerce.angular.dto.EcommResponse;
 import com.ecommerce.angular.dto.ProductDTO;
+import com.ecommerce.angular.dto.SellerRequest;
 import com.ecommerce.angular.entity.Product;
+import com.ecommerce.angular.entity.UserOrders;
 import java.util.List;
 
 /**
@@ -32,10 +34,10 @@ public interface SellerService {
     /**
      * Deletes a product from the seller's inventory.
      *
-     * @param product The product to be deleted.
+     * @param productId is the Id of the product to be deleted.
      * @return EcommResponse containing the result of the operation.
      */
-    EcommResponse deleteProduct(Long produtId);
+    EcommResponse deleteProduct(Long productId);
     /**
      * Retrieves list of products added by the seller.
      *
@@ -44,4 +46,5 @@ public interface SellerService {
      */
     public List<Product> getProducts(Long sellerId);
 
+    public List<UserOrders> getOrders(SellerRequest request);
 }

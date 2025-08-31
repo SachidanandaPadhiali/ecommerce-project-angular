@@ -4,19 +4,21 @@
  */
 package com.ecommerce.angular.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  *
  * @author sagar
  */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SellerRequest {
 
     private Long sellerId;
-
-    public Long getSellerId() {
-        return sellerId;
-    }
-
-    public void setSellerId(Long sellerId) {
-        this.sellerId = sellerId;
-    }
+    private Long orderId;
 }

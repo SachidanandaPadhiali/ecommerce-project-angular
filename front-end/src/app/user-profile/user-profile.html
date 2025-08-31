@@ -99,9 +99,14 @@
                                 <p>{{ item.product.description }}</p>
                             </div>
                         </div>
-                        @if(order?.status === 'Delivered'){
+                        @if(order?.status !== 'Delivered'){
                         <div class="order-support">
                             <button class="utility-btn">Track Order</button>
+                            <button class="utility-btn">Get Invoice</button>
+                            <button class="utility-btn">Reorder</button>
+                        </div>}
+                        @if(order?.status === 'Delivered'){
+                        <div class="order-support">
                             <button class="utility-btn">Return Item</button>
                             <button class="utility-btn">Get Invoice</button>
                             <button class="utility-btn">Reorder</button>

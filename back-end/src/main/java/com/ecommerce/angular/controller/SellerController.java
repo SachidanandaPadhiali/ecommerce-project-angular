@@ -58,4 +58,13 @@ public class SellerController {
         return new ResponseEntity<>(sellerService.getProducts(request.getSellerId()), HttpStatus.OK);
     }
 
+    @PostMapping("/getOrders")
+    public ResponseEntity<?> getOrders(@RequestBody SellerRequest request) {
+        return new ResponseEntity<>(sellerService.getOrders(request, HttpStatus.OK);
+    }
+
+    @PostMapping("/updateOrderStatus"){
+    public OrderUpdateResponse updateOrderStatus(@RequestBody SellerRequest sellerRequest){
+    }
+}
 }

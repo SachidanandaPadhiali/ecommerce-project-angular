@@ -45,6 +45,13 @@ public class CartServiceImpl implements CartService {
         return userCart;
     }
     
+    /**
+     *
+     * @param userId
+     * @param productId
+     * @param quantity
+     * @return
+     */
     @Override
     @Transactional
     public CartItemResponse addOrUpdateCart(Long userId, Long productId, int quantity) {
@@ -110,6 +117,11 @@ public class CartServiceImpl implements CartService {
         return cartResponse; // cascade saves items
     }
     
+    /**
+     *
+     * @param userId
+     * @param productId
+     */
     @Override
     @Transactional
     public void removeItemFromCart(Long userId, Long productId) {
