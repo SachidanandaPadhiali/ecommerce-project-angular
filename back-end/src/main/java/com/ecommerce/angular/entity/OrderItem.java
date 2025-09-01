@@ -11,7 +11,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -45,13 +44,15 @@ public class OrderItem {
     private double price;
 
     @ManyToOne
-    @JoinColumn(name = "seller_order_id") // Refers to SellerOrders
+    @JoinColumn(name = "seller_order_id", nullable = false) // Refers to SellerOrders
+    @JsonBackReference("seller-items")
     private SellerOrders sellerOrder;
 
     @Override
     public String toString() {
         return "CartItem{" + "id="
-                + id + ", cart=" + order + ", product=" + product.getName() + ", quantity=" + quantity + ", price=" + price
+                + id + ", cart=" + order + ", product=" + product.getName() + ", quantity=" + quantity + ", price="
+                + price
                 + '}';
     }
 

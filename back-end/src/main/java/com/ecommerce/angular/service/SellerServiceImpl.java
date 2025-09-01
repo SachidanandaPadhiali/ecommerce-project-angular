@@ -7,7 +7,6 @@ package com.ecommerce.angular.service;
 import com.ecommerce.angular.dto.EcommResponse;
 import com.ecommerce.angular.dto.ProductDTO;
 import com.ecommerce.angular.dto.SellerOrdersDTO;
-import com.ecommerce.angular.dto.SellerRequest;
 import com.ecommerce.angular.entity.Product;
 import com.ecommerce.angular.entity.SellerItems;
 import com.ecommerce.angular.entity.SellerOrders;
@@ -124,7 +123,8 @@ public class SellerServiceImpl implements SellerService {
         List<SellerOrdersDTO> sellerOrderDetails = new ArrayList<SellerOrdersDTO>();
 
         for (SellerOrders sellerOrder : sellerOrders) {
-            UserOrders order = orderRepo.findById(sellerOrder.getId())
+        System.out.println(sellerOrder);
+            UserOrders order = orderRepo.findById(sellerOrder.getUserOrder().getId())
                     .orElseThrow(() -> new RuntimeException("Order not found"));
 
             SellerOrdersDTO orderData = SellerOrdersDTO.builder()
