@@ -4,7 +4,6 @@ import { UserAddress } from "./UserAddress.model";
 
 export interface OrderModel {
     id: number;
-    user: EcommUser;
     items: CartEntry[];
     shippingAddress: UserAddress;
     orderDate: string;

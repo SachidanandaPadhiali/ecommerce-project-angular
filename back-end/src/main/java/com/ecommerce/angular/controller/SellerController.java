@@ -7,10 +7,8 @@ package com.ecommerce.angular.controller;
 import com.ecommerce.angular.dto.EcommResponse;
 import com.ecommerce.angular.dto.ProductDTO;
 import com.ecommerce.angular.dto.SellerRequest;
-import com.ecommerce.angular.entity.Product;
 import com.ecommerce.angular.service.SellerService;
 
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -60,11 +58,6 @@ public class SellerController {
 
     @PostMapping("/getOrders")
     public ResponseEntity<?> getOrders(@RequestBody SellerRequest request) {
-        return new ResponseEntity<>(sellerService.getOrders(request, HttpStatus.OK);
+        return new ResponseEntity<>(sellerService.getSellerOrders(request.getSellerId()), HttpStatus.OK);
     }
-
-    @PostMapping("/updateOrderStatus"){
-    public OrderUpdateResponse updateOrderStatus(@RequestBody SellerRequest sellerRequest){
-    }
-}
 }

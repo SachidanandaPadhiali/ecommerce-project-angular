@@ -6,13 +6,20 @@ package com.ecommerce.angular.service;
 
 import com.ecommerce.angular.dto.EcommResponse;
 import com.ecommerce.angular.dto.ProductDTO;
+import com.ecommerce.angular.dto.SellerOrdersDTO;
+import com.ecommerce.angular.dto.SellerRequest;
 import com.ecommerce.angular.entity.Product;
 import com.ecommerce.angular.entity.SellerItems;
+import com.ecommerce.angular.entity.SellerOrders;
 import com.ecommerce.angular.entity.User;
+import com.ecommerce.angular.entity.UserOrders;
+import com.ecommerce.angular.repo.OrderRepo;
 import com.ecommerce.angular.repo.ProductRepo;
 import com.ecommerce.angular.repo.SellerItemRepo;
+import com.ecommerce.angular.repo.SellerOrdersRepo;
 import com.ecommerce.angular.repo.SellerRepo;
 import com.ecommerce.angular.utils.EcommUtils;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +39,12 @@ public class SellerServiceImpl implements SellerService {
 
     @Autowired
     SellerItemRepo sellerItemRepo;
+
+    @Autowired
+    SellerOrdersRepo sellerOrdersRepo;
+
+    @Autowired
+    OrderRepo orderRepo;
 
     @Override
     public EcommResponse addProduct(ProductDTO product) {
@@ -105,4 +118,23 @@ public class SellerServiceImpl implements SellerService {
         return sellerRepo.findProductsBySellerId(sellerId);
     }
 
+    @Override
+    public List<SellerOrdersDTO> getSellerOrders(Long sellerId) {
+        List<SellerOrders> sellerOrders = sellerOrdersRepo.findBySellerId(sellerId);
+        List<SellerOrdersDTO> sellerOrderDetails = new ArrayList<SellerOrdersDTO>();
+
+        for (SellerOrders sellerOrder : sellerOrders) {
+            UserOrders order = orderRepo.findById(sellerOrder.getId())
+                    .orElseThrow(() -> new RuntimeException("Order not found"));
+
+            SellerOrdersDTO orderData = SellerOrdersDTO.builder()
+                    .id(sellerOrder.getId())
+                    .items(order.getItems())
+                    .status(order.getStatus())
+                    .build();
+            
+            sellerOrderDetails.add(orderData);
+        }
+        return sellerOrderDetails;
+    }
 }

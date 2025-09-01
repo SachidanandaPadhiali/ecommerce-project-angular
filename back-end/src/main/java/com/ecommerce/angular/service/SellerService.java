@@ -6,9 +6,9 @@ package com.ecommerce.angular.service;
 
 import com.ecommerce.angular.dto.EcommResponse;
 import com.ecommerce.angular.dto.ProductDTO;
+import com.ecommerce.angular.dto.SellerOrdersDTO;
 import com.ecommerce.angular.dto.SellerRequest;
 import com.ecommerce.angular.entity.Product;
-import com.ecommerce.angular.entity.UserOrders;
 import java.util.List;
 
 /**
@@ -46,5 +46,5 @@ public interface SellerService {
      */
     public List<Product> getProducts(Long sellerId);
 
-    public List<UserOrders> getOrders(SellerRequest request);
+    public List<SellerOrdersDTO> getSellerOrders(Long sellerId);
 }

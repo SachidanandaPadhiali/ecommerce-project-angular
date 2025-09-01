@@ -4,15 +4,15 @@
  */
 package com.ecommerce.angular.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Table;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,39 +20,32 @@ import lombok.NoArgsConstructor;
 
 /**
  *
- * @author sachidananda
+ * @author sagar
  */
 @Entity
-@Table(name = "Order_Item")
+@Table(name = "seller_orders")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class OrderItem {
+public class SellerOrders {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JsonBackReference
-    private UserOrders order;
+    private User seller;
 
-    @ManyToOne
-    private Product product;
-
-    private int quantity;
-    private double price;
-
-    @ManyToOne
-    @JoinColumn(name = "seller_order_id") // Refers to SellerOrders
-    private SellerOrders sellerOrder;
+    @OneToMany(mappedBy = "sellerOrder", cascade = CascadeType.ALL)
+    private List<OrderItem> orders;
 
     @Override
     public String toString() {
-        return "CartItem{" + "id="
-                + id + ", cart=" + order + ", product=" + product.getName() + ", quantity=" + quantity + ", price=" + price
+        return "Product{"
+                + "id=" + id
+                + "User = " + seller
+                + ", total=" + orders
                 + '}';
     }
-
 }

@@ -6,32 +6,23 @@ package com.ecommerce.angular.dto;
 
 import com.ecommerce.angular.entity.OrderItem;
 import com.ecommerce.angular.entity.UserAddress;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
  *
  * @author sagar
  */
 @Data
-@Getter
-@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class OrderResponse {
-
+public class SellerOrdersDTO {
     private Long id;
     private UserAddress shippingAddress;
     private List<OrderItem> items;
-    private LocalDate orderDate;
-    private BigDecimal total;
     private OrderStatus status;
 }

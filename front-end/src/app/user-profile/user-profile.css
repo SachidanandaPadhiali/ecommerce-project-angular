@@ -247,7 +247,7 @@
 .order-support {
     display: flex;
     flex-direction: column;
-    gap: var(--mb-1);
+    gap: var(--mb-2);
     min-width: 170px;
     cursor: pointer;
 }
