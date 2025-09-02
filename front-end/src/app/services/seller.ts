@@ -17,8 +17,8 @@ export class Seller {
     return this.http.post<{ responseCode: string; responseMessage: string }>(`${this.apiUrl}/user`, data)
   }
 
-  getUserOrders(userId: number): Observable<SellerOrderModel[]> {
-    return this.http.post<SellerOrderModel[]>(`${this.apiUrl}/getUserOrders`, { userId });
+  getSellerOrders(sellerId: number): Observable<SellerOrderModel[]> {
+    return this.http.post<SellerOrderModel[]>(`${this.sellerApiUrl}/getOrders`, { sellerId });
   }
 
 }

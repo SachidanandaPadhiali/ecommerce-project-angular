@@ -6,4 +6,5 @@ export interface SellerOrderModel {
     orderId: number;
     shippingAddress: UserAddress;
     items: CartEntry[];
+    status: string;
 }
