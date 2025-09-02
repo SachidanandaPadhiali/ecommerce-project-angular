@@ -13,6 +13,7 @@ import { UserProfile } from './user-profile/user-profile';
 import { UserCart } from './user-cart/user-cart';
 import { Checkout } from './checkout/checkout';
 import { OrderPlaced } from './order-placed/order-placed';
+import { SellerOrder } from './seller-order/seller-order';
 
 export const routes: Routes = [
     { path: '', component: Home },
@@ -21,6 +22,7 @@ export const routes: Routes = [
     { path: 'log-in', component: Login, canActivate: [redirectIfAuthenticatedGuard] },
     { path: 'user-home', component: UserHome, canActivate: [authGuard], data: { role: 'user' } },
     { path: 'seller-home', component: SellerHome, canActivate: [authGuard], data: { role: 'seller' } },
+    { path: 'seller-order', component: SellerOrder, canActivate: [authGuard], data: { role: 'seller' } },
     { path: 'seller-product', component: SellerAddProduct },
     { path: 'seller-product/:id', component: SellerAddProduct },
     { path: 'shop', component: Shop },
