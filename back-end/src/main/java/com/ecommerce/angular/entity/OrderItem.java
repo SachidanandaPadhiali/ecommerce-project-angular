@@ -4,8 +4,13 @@
  */
 package com.ecommerce.angular.entity;
 
+import java.math.BigDecimal;
+
+import com.ecommerce.angular.dto.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -47,6 +52,10 @@ public class OrderItem {
     @JoinColumn(name = "seller_order_id", nullable = false) // Refers to SellerOrders
     @JsonBackReference("seller-items")
     private SellerOrders sellerOrder;
+
+    private BigDecimal total;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
 
     @Override
     public String toString() {

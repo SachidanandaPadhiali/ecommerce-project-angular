@@ -6,7 +6,6 @@ package com.ecommerce.angular.dto;
 
 import com.ecommerce.angular.entity.OrderItem;
 import com.ecommerce.angular.entity.UserAddress;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,6 +22,6 @@ import lombok.NoArgsConstructor;
 public class SellerOrdersDTO {
     private Long id;
     private UserAddress shippingAddress;
-    private List<OrderItem> items;
+    private OrderItem item;
     private OrderStatus status;
 }
