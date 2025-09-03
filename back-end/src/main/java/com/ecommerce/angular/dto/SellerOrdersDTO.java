@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SellerOrdersDTO {
     private Long id;
+    private Long orderId;
     private UserAddress shippingAddress;
     private OrderItem item;
     private OrderStatus status;

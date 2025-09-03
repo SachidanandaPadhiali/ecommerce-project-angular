@@ -130,6 +130,7 @@ public class SellerServiceImpl implements SellerService {
                         for (OrderItem orderItem : order.getItems()) {
                                 SellerOrdersDTO orderData = SellerOrdersDTO.builder()
                                                 .id(sellerOrder.getId())
+                                                .orderId(order.getId())
                                                 .item(orderItem)
                                                 .status(orderItem.getStatus())
                                                 .shippingAddress(order.getShippingAddress())
