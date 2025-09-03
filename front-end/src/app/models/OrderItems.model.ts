@@ -6,4 +6,5 @@ export interface OrderItems {
   productId: number;
   quantity?: number;
   price: number;
+  status: string;
 }

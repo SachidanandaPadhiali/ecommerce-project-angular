@@ -53,7 +53,6 @@ public class OrderItem {
     @JsonBackReference("seller-items")
     private SellerOrders sellerOrder;
 
-    private BigDecimal total;
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 

@@ -34,7 +34,7 @@ export class SellerOrder implements OnInit {
       finalize(() => this.isLoadingOrders = false)
     );
 
-    console.log(this.sellerOrders$.forEach(order => console.log(order)));
+    this.sellerOrders$.forEach(order => console.log(order));
     this.cdRef.detectChanges();
   }
 }

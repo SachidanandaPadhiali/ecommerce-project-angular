@@ -2,16 +2,8 @@
     <h1>Orders</h1>
     <div *ngIf="sellerOrders$ | async as orders">
         <div *ngFor="let order of orders; let i = index">
-            <p>Seller Order ID: {{ order.id }}</p>
-            <p>Order Status: {{ order.status }}</p>
-            <hr>
-            <p>{{ order.shippingAddress }}</p>
-            <div *ngFor="let item of order.items">
-                <p>Product Name: {{ item.product.name }}</p>
-                <p>Item quantity: {{ item.quantity }}</p>
-                <p>Product Price: {{ item.price | currency:'INR':'symbol' }}</p>
-                <hr>
-            </div>
+                <p>Seller Order ID: {{ order.id }}</p>
+
             <hr>
             <hr>
         </div>
