@@ -1,22 +1,106 @@
 <div class="main-content">
-    <h1>Orders</h1>
-    <div *ngIf="sellerOrders$ | async as orders">
-        <div *ngFor="let order of orders; let i = index">
-            <p>Seller Order ID: {{ order.id }} | Order ID: {{ order.orderId }}</p>
-            <h3>{{ order?.shippingAddress?.userName }}</h3>
-            <p> {{ order?.shippingAddress?.flatNo }} <br> {{
-                order?.shippingAddress?.addressLine1 }}
-                <span *ngIf="order?.shippingAddress?.addressLine2">, {{
-                    order?.shippingAddress?.addressLine2
-                    }}</span>
-            </p>
-            <p>{{ order?.shippingAddress?.state }}, {{ order?.shippingAddress?.country }} -
-                {{
-                order?.shippingAddress?.zipCode }}</p>
-            <p>Mobile: {{ order?.shippingAddress?.phoneNumber }}</p>
-            <h3>Product Name: {{ order.item.product.name }} | {{ order.item.quantity}} | {{order.item.price}}</h3>
-            <h2>{{order.item.status}}</h2>
-            <hr>
-            <hr>
+    <h1>Manage Orders</h1>
+    <nav class="tabs" role="tablist" aria-label="Order status">
+        <div *ngFor="let s of sections" class="tab" role="tab" tabindex="0" [attr.aria-selected]="isActive(s.id)"
+            [class.active]="isActive(s.id)" (click)="select(s.id)" (keydown.enter)="select(s.id)"
+            (keydown.space)="select(s.id)">
+            <div class="info-right">{{ s.label }} {{ s.count }}</div>
         </div>
-    </div>
+    </nav>
+    
+    <!--PENDING ORDERS-->
+    <section class="panel" role="tabpanel" [hidden]="!isActive('PENDING')">
+        <div *ngIf="sellerOrders$ | async as orders">
+            <div *ngFor="let order of orders; let i = index">
+                <p>Seller Order ID: {{ order.id }} | Order ID: {{ order.orderId }}</p>
+                <h3>{{ order?.shippingAddress?.userName }}</h3>
+                <p> {{ order?.shippingAddress?.flatNo }} <br> {{
+                    order?.shippingAddress?.addressLine1 }}
+                    <span *ngIf="order?.shippingAddress?.addressLine2">, {{
+                        order?.shippingAddress?.addressLine2
+                        }}</span>
+                </p>
+                <p>{{ order?.shippingAddress?.state }}, {{ order?.shippingAddress?.country }} -
+                    {{
+                    order?.shippingAddress?.zipCode }}</p>
+                <p>Mobile: {{ order?.shippingAddress?.phoneNumber }}</p>
+                <h3>Product Name: {{ order.item.product.name }} | {{ order.item.quantity}} | {{order.item.price}}</h3>
+                <h2>{{order.item.status}}</h2>
+                <hr>
+                <hr>
+            </div>
+        </div>
+    </section>
+    
+    <!--RECIEVED ORDERS-->
+    <section class="panel" role="tabpanel" [hidden]="!isActive('PENDING')">
+        <div *ngIf="sellerOrders$ | async as orders">
+            <div *ngFor="let order of orders; let i = index">
+                <p>Seller Order ID: {{ order.id }} | Order ID: {{ order.orderId }}</p>
+                <h3>{{ order?.shippingAddress?.userName }}</h3>
+                <p> {{ order?.shippingAddress?.flatNo }} <br> {{
+                    order?.shippingAddress?.addressLine1 }}
+                    <span *ngIf="order?.shippingAddress?.addressLine2">, {{
+                        order?.shippingAddress?.addressLine2
+                        }}</span>
+                </p>
+                <p>{{ order?.shippingAddress?.state }}, {{ order?.shippingAddress?.country }} -
+                    {{
+                    order?.shippingAddress?.zipCode }}</p>
+                <p>Mobile: {{ order?.shippingAddress?.phoneNumber }}</p>
+                <h3>Product Name: {{ order.item.product.name }} | {{ order.item.quantity}} | {{order.item.price}}</h3>
+                <h2>{{order.item.status}}</h2>
+                <hr>
+                <hr>
+            </div>
+        </div>
+    </section>
+    
+    <!--CANCELLED ORDERS-->
+    <section class="panel" role="tabpanel" [hidden]="!isActive('PENDING')">
+        <div *ngIf="sellerOrders$ | async as orders">
+            <div *ngFor="let order of orders; let i = index">
+                <p>Seller Order ID: {{ order.id }} | Order ID: {{ order.orderId }}</p>
+                <h3>{{ order?.shippingAddress?.userName }}</h3>
+                <p> {{ order?.shippingAddress?.flatNo }} <br> {{
+                    order?.shippingAddress?.addressLine1 }}
+                    <span *ngIf="order?.shippingAddress?.addressLine2">, {{
+                        order?.shippingAddress?.addressLine2
+                        }}</span>
+                </p>
+                <p>{{ order?.shippingAddress?.state }}, {{ order?.shippingAddress?.country }} -
+                    {{
+                    order?.shippingAddress?.zipCode }}</p>
+                <p>Mobile: {{ order?.shippingAddress?.phoneNumber }}</p>
+                <h3>Product Name: {{ order.item.product.name }} | {{ order.item.quantity}} | {{order.item.price}}</h3>
+                <h2>{{order.item.status}}</h2>
+                <hr>
+                <hr>
+            </div>
+        </div>
+    </section>
+    
+    <!--SHIPPED ORDERS-->
+    <section class="panel" role="tabpanel" [hidden]="!isActive('PENDING')">
+        <div *ngIf="sellerOrders$ | async as orders">
+            <div *ngFor="let order of orders; let i = index">
+                <p>Seller Order ID: {{ order.id }} | Order ID: {{ order.orderId }}</p>
+                <h3>{{ order?.shippingAddress?.userName }}</h3>
+                <p> {{ order?.shippingAddress?.flatNo }} <br> {{
+                    order?.shippingAddress?.addressLine1 }}
+                    <span *ngIf="order?.shippingAddress?.addressLine2">, {{
+                        order?.shippingAddress?.addressLine2
+                        }}</span>
+                </p>
+                <p>{{ order?.shippingAddress?.state }}, {{ order?.shippingAddress?.country }} -
+                    {{
+                    order?.shippingAddress?.zipCode }}</p>
+                <p>Mobile: {{ order?.shippingAddress?.phoneNumber }}</p>
+                <h3>Product Name: {{ order.item.product.name }} | {{ order.item.quantity}} | {{order.item.price}}</h3>
+                <h2>{{order.item.status}}</h2>
+                <hr>
+                <hr>
+            </div>
+        </div>
+    </section>
+</div>

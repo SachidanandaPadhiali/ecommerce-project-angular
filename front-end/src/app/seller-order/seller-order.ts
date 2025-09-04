@@ -4,6 +4,8 @@ import { finalize, Observable } from 'rxjs';
 import { SellerOrderModel } from '../models/SellerOrder.model';
 import { CommonModule } from '@angular/common';
 
+type Section = 'PENDING' | 'RECIEVED' | 'CANCELLED' | 'SHIPPED';
+
 @Component({
   selector: 'app-seller-order',
   imports: [CommonModule],
@@ -15,6 +17,14 @@ export class SellerOrder implements OnInit {
   sellerId: number = 0;
   isLoadingOrders = true;
   sellerOrders$!: Observable<SellerOrderModel[]>;
+  active: Section = 'PENDING';
+
+  sections: { id: Section; label: string; count: number }[] = [
+    { id: 'PENDING', label: 'Pending', count: 0 },
+    { id: 'RECIEVED', label: 'Unshipped', count: 0 },
+    { id: 'CANCELLED', label: 'Cancelled', count: 0 },
+    { id: 'SHIPPED', label: 'Shipped', count: 0 },
+  ];
 
   constructor(private sellerService: Seller, private cdRef: ChangeDetectorRef) { }
   ngOnInit(): void {
@@ -35,6 +45,28 @@ export class SellerOrder implements OnInit {
     );
 
     this.sellerOrders$.forEach(order => console.log(order));
+    this.sellerOrders$.forEach(order => {
+      this.sections.forEach(section => {
+        section.count = order.filter(o => o.item.status === section.id).length;
+      });
+    });
     this.cdRef.detectChanges();
+  }
+  /**
+   * Select a section in the user profile.
+   * @param section - one of basic, shipping, orders, or personalization
+   */
+  select(status: string) {
+    this.active = status as Section;
+    console.log('showing ', status, ' orders');
+  }
+
+  /**
+   * Whether the given section is currently active.
+   * @param id - one of basic, shipping, orders, or personalization
+   * @returns true if the given section is active, false otherwise
+   */
+  isActive(id: string) {
+    return this.active === id;
   }
 }
