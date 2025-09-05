@@ -11,25 +11,45 @@
     <!--PENDING ORDERS-->
     <section class="panel" role="tabpanel" [hidden]="!isActive('PENDING')">
         <div *ngIf="sellerOrders$ | async as orders">
-            <div *ngFor="let order of orders; let i = index">
-                @if(order.item.status === 'PENDING'){
-                <p>Order#{{ order.orderId }}</p>
-                <h3>{{ order?.shippingAddress?.userName }}</h3>
-                <p> {{ order?.shippingAddress?.flatNo }} <br> {{
-                    order?.shippingAddress?.addressLine1 }}
-                    <span *ngIf="order?.shippingAddress?.addressLine2">, {{
-                        order?.shippingAddress?.addressLine2
-                        }}</span>
-                </p>
-                <p>{{ order?.shippingAddress?.state }}, {{ order?.shippingAddress?.country }} -
-                    {{
-                    order?.shippingAddress?.zipCode }}</p>
-                <p>Mobile: {{ order?.shippingAddress?.phoneNumber }}</p>
-                <h3>Product Name: {{ order.item.product.name }} | {{ order.item.quantity}} | {{order.item.price}}</h3>
-                <h2>{{order.item.status}}</h2>
-                <hr>
-                <hr>}
-            </div>
+
+            <table class="seller-order">
+                <thead>
+                    <tr>
+                        <th class="text-center">Order Date</th>
+                        <th class="text-center">Order Details</th>
+                        <th class="text-center">Image</th>
+                        <th class="text-center">Product Name</th>
+                        <th class="text-center">Delivery</th>
+                        <th class="text-center">Order Status</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="table-hover">
+                    <tr *ngFor="let order of orders; let i = index">
+                        @if(order.item.status === 'PENDING'){
+                        <td class="text-left hoverable">Order#{{ order.orderId }}</td>
+                        <td class="text-center hoverable">{{ order?.shippingAddress?.userName }} | {{
+                            order.item.quantity}} | {{order.item.price}}</td>
+                        <td class="text-center hoverable">
+                            <img [src]="'assets/products/' + order.item.product.imageUrl" alt="Product Image"
+                                height="50" />
+                        </td>
+                        <td class="text-center hoverable">{{ order.item.product.name }}</td>
+                        <td class="text-center hoverable">Standard</td>
+                        <td class="text-center hoverable">{{order.item.status}}</td>
+                        <td class="prod-action">
+                            <button class="btn action-btn edit-btn text-center">
+                                <span>Edit</span>
+                            </button>
+                            <!-- Button triggers the delete method -->
+                            <button class="btn action-btn delete-btn">
+                                <span>Delete</span>
+                            </button>
+                        </td>}
+                    </tr>
+
+                </tbody>
+            </table>
         </div>
     </section>
 

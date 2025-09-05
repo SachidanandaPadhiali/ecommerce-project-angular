@@ -40,3 +40,50 @@
     font-size: var(--h3-font-size);
     word-spacing: var(--mb-2);
 }
+
+.seller-order {
+    border-collapse: collapse;
+    margin: auto;
+    width: 90%;
+}
+
+.seller-order th {
+    color: var(--white-text);
+    background: var(--dark-text);
+    border: 1px solid var(--border);
+    border-top: none;
+    border-bottom: 4px solid var(--bg-btn);
+    font-size: var(--h2-font-size);
+    text-transform: uppercase;
+    font-weight: var(--font-normal);
+}
+
+.seller-order th:first-child {
+    border-left: none;
+    border-top-left-radius: 20px;
+}
+
+.seller-order th:last-child {
+    border-right: none;
+    border-top-right-radius: 20px;
+}
+
+.seller-order tr {
+    color: var(--dark-text);
+}
+
+.seller-order tr:hover td.hoverable {
+    color: var(--light-text);
+    background: var(--hover-bg);
+}
+
+.seller-order td {
+    background: var(--bg-white);
+    padding: var(--mb-1);
+    max-height: 50px;
+    text-align: left;
+    vertical-align: middle;
+    font-weight: var(--font-slim);
+    font-size: var(--normal-font-size);
+    border: none;
+}
