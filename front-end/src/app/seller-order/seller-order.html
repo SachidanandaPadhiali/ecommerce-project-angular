@@ -7,12 +7,13 @@
             <div class="info-right">{{ s.label }} {{ s.count }}</div>
         </div>
     </nav>
-    
+
     <!--PENDING ORDERS-->
     <section class="panel" role="tabpanel" [hidden]="!isActive('PENDING')">
         <div *ngIf="sellerOrders$ | async as orders">
             <div *ngFor="let order of orders; let i = index">
-                <p>Seller Order ID: {{ order.id }} | Order ID: {{ order.orderId }}</p>
+                @if(order.item.status === 'PENDING'){
+                <p>Order#{{ order.orderId }}</p>
                 <h3>{{ order?.shippingAddress?.userName }}</h3>
                 <p> {{ order?.shippingAddress?.flatNo }} <br> {{
                     order?.shippingAddress?.addressLine1 }}
@@ -27,15 +28,16 @@
                 <h3>Product Name: {{ order.item.product.name }} | {{ order.item.quantity}} | {{order.item.price}}</h3>
                 <h2>{{order.item.status}}</h2>
                 <hr>
-                <hr>
+                <hr>}
             </div>
         </div>
     </section>
-    
+
     <!--RECIEVED ORDERS-->
-    <section class="panel" role="tabpanel" [hidden]="!isActive('PENDING')">
+    <section class="panel" role="tabpanel" [hidden]="!isActive('RECIEVED')">
         <div *ngIf="sellerOrders$ | async as orders">
             <div *ngFor="let order of orders; let i = index">
+                @if (order.item.status === 'RECIEVED') {
                 <p>Seller Order ID: {{ order.id }} | Order ID: {{ order.orderId }}</p>
                 <h3>{{ order?.shippingAddress?.userName }}</h3>
                 <p> {{ order?.shippingAddress?.flatNo }} <br> {{
@@ -51,15 +53,16 @@
                 <h3>Product Name: {{ order.item.product.name }} | {{ order.item.quantity}} | {{order.item.price}}</h3>
                 <h2>{{order.item.status}}</h2>
                 <hr>
-                <hr>
+                <hr>}
             </div>
         </div>
     </section>
-    
+
     <!--CANCELLED ORDERS-->
-    <section class="panel" role="tabpanel" [hidden]="!isActive('PENDING')">
+    <section class="panel" role="tabpanel" [hidden]="!isActive('CANCELLED')">
         <div *ngIf="sellerOrders$ | async as orders">
             <div *ngFor="let order of orders; let i = index">
+                @if (order.item.status === 'CANCELLED') {
                 <p>Seller Order ID: {{ order.id }} | Order ID: {{ order.orderId }}</p>
                 <h3>{{ order?.shippingAddress?.userName }}</h3>
                 <p> {{ order?.shippingAddress?.flatNo }} <br> {{
@@ -75,15 +78,16 @@
                 <h3>Product Name: {{ order.item.product.name }} | {{ order.item.quantity}} | {{order.item.price}}</h3>
                 <h2>{{order.item.status}}</h2>
                 <hr>
-                <hr>
+                <hr>}
             </div>
         </div>
     </section>
-    
+
     <!--SHIPPED ORDERS-->
-    <section class="panel" role="tabpanel" [hidden]="!isActive('PENDING')">
+    <section class="panel" role="tabpanel" [hidden]="!isActive('SHIPPED')">
         <div *ngIf="sellerOrders$ | async as orders">
             <div *ngFor="let order of orders; let i = index">
+                @if (order.item.status === 'SHIPPED') {
                 <p>Seller Order ID: {{ order.id }} | Order ID: {{ order.orderId }}</p>
                 <h3>{{ order?.shippingAddress?.userName }}</h3>
                 <p> {{ order?.shippingAddress?.flatNo }} <br> {{
@@ -99,7 +103,7 @@
                 <h3>Product Name: {{ order.item.product.name }} | {{ order.item.quantity}} | {{order.item.price}}</h3>
                 <h2>{{order.item.status}}</h2>
                 <hr>
-                <hr>
+                <hr>}
             </div>
         </div>
     </section>
