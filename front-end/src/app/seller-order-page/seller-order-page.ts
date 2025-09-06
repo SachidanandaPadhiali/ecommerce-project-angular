@@ -1,14 +1,15 @@
 import { Component, Input, ElementRef, HostListener, ViewChildren, QueryList } from '@angular/core';
 import { SellerOrderModel } from '../models/SellerOrder.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-seller-order-page',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './seller-order-page.html',
   styleUrl: './seller-order-page.css'
 })
 export class SellerOrderPage {
-  @Input() ordersBySection!: SellerOrderModel[];
+  @Input() ordersBySection: SellerOrderModel[] = [];
 
   showShippingAddress: boolean = false;
   activeShippingAddress: number | null = null;

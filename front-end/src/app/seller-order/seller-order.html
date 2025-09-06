@@ -11,34 +11,20 @@
     <!--PENDING ORDERS-->
     <section *ngFor="let section of sections" class="panel" role="tabpanel" [hidden]="!isActive(section.id)">
 
-        <h2>{{ section.label }} Applications</h2>
-        <table class="seller-order">
-            <thead>
-                <tr>
-                    <th class="text-center">Order Date</th>
-                    <th class="text-center">Order Details</th>
-                    <th class="text-center">Image</th>
-                    <th class="text-center">Product Name</th>
-                    <th class="text-center">Delivery</th>
-                    <th class="text-center">Order Status</th>
-                    <th class="text-center">Action</th>
-                </tr>
-            </thead>
-            <tbody class="table-hover">
+        <h2 style="padding-bottom: var(--mb-2);">{{ section.label }} Orders ({{section.count}})</h2>
 
-                <div *ngIf="sellerOrders$ | async as allOrders">
-                    <ng-container *ngIf="filterBySection(allOrders,section.id).length > 0; else noApps">
-                        <app-seller-order-page *ngFor="let orders of filterBySection(allOrders,section.id)"
-                            [ordersBySection]="allOrders">
-                        </app-seller-order-page>
-                    </ng-container>
+        <ng-container *ngIf="sellerOrders$ | async as allOrders">
+            <ng-container *ngIf="filterBySection(allOrders, section.id).length > 0; else noOrders">
 
-                    <ng-template #noApps>
-                        <p>No applications in this section.</p>
-                    </ng-template>
-                </div>
+                <!-- Pass only filtered orders to the table component -->
+                <app-seller-order-page [ordersBySection]="filterBySection(allOrders, section.id)">
+                </app-seller-order-page>
 
-            </tbody>
-        </table>
+            </ng-container>
+        </ng-container>
+
+        <ng-template #noOrders>
+            <p>No Orders in this section.</p>
+        </ng-template>
     </section>
 </div>
