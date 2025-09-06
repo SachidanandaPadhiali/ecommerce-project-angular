@@ -9,143 +9,36 @@
     </nav>
 
     <!--PENDING ORDERS-->
-    <section class="panel" role="tabpanel" [hidden]="!isActive('PENDING')">
-        <div *ngIf="sellerOrders$ | async as orders">
+    <section *ngFor="let section of sections" class="panel" role="tabpanel" [hidden]="!isActive(section.id)">
 
-            <table class="seller-order">
-                <thead>
-                    <tr>
-                        <th class="text-center">Order Date</th>
-                        <th class="text-center">Order Details</th>
-                        <th class="text-center">Image</th>
-                        <th class="text-center">Product Name</th>
-                        <th class="text-center">Delivery</th>
-                        <th class="text-center">Order Status</th>
-                        <th class="text-center">Action</th>
-                    </tr>
-                </thead>
-                <tbody class="table-hover">
-                    <tr *ngFor="let order of orders; let i = index">
-                        @if(order.item.status === 'PENDING'){
-                        <td class="text-left hoverable">Order#{{ order.orderId }} <br> SKU- {{ order.item.id }} </td>
-                        <td class="text-left">
-                            <h4>Billing Address</h4>
-                            <div class="button-container" #triggerRef>
-                                <a (mouseenter)="showAddress(i)" (mouseleave)="hideAddress()">{{
-                                    order.shippingAddress.userName }}</a>
-                                @if(activeShippingAddress === i){
-                                <div class="popup">
-                                    <h3>{{ order?.shippingAddress?.userName }}</h3>
-                                    <p> {{ order?.shippingAddress?.flatNo }} <br> {{
-                                        order?.shippingAddress?.addressLine1 }}
-                                        <span *ngIf="order?.shippingAddress?.addressLine2">, {{
-                                            order?.shippingAddress?.addressLine2
-                                            }}</span>
-                                    </p>
-                                    <p>{{ order?.shippingAddress?.state }}, {{ order?.shippingAddress?.country }} -
-                                        {{
-                                        order?.shippingAddress?.zipCode }}</p>
-                                    <p>Mobile: {{ order?.shippingAddress?.phoneNumber }}</p>
-                                </div>}
-                            </div>
-                        </td>
-                        <td class="text-center hoverable">
-                            <img [src]="'assets/products/' + order.item.product.imageUrl" alt="Product Image"
-                                height="50" />
-                        </td>
-                        <td class="text-left hoverable">{{ order.item.product.name }}</td>
-                        <td class="text-center hoverable">Standard</td>
-                        <td class="text-center hoverable">{{order.item.status}}</td>
-                        <td class="text-center order-action">
-                            <button class="order-action-btn table-btn yes-btn">
-                                <span>Confirm Shipment</span>
-                            </button>
-                            <button class="order-action-btn table-btn">
-                                <span>Print Invoice</span>
-                            </button>
-                            <button class="order-action-btn table-btn no-btn">
-                                <span>Cancel Order</span>
-                            </button>
-                        </td>}
-                    </tr>
+        <h2>{{ section.label }} Applications</h2>
+        <table class="seller-order">
+            <thead>
+                <tr>
+                    <th class="text-center">Order Date</th>
+                    <th class="text-center">Order Details</th>
+                    <th class="text-center">Image</th>
+                    <th class="text-center">Product Name</th>
+                    <th class="text-center">Delivery</th>
+                    <th class="text-center">Order Status</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody class="table-hover">
 
-                </tbody>
-            </table>
-        </div>
-    </section>
+                <div *ngIf="sellerOrders$ | async as allOrders">
+                    <ng-container *ngIf="filterBySection(allOrders,section.id).length > 0; else noApps">
+                        <app-seller-order-page *ngFor="let orders of filterBySection(allOrders,section.id)"
+                            [ordersBySection]="allOrders">
+                        </app-seller-order-page>
+                    </ng-container>
 
-    <!--RECIEVED ORDERS-->
-    <section class="panel" role="tabpanel" [hidden]="!isActive('RECIEVED')">
-        <div *ngIf="sellerOrders$ | async as orders">
-            <div *ngFor="let order of orders; let i = index">
-                @if (order.item.status === 'RECIEVED') {
-                <p>Seller Order ID: {{ order.id }} | Order ID: {{ order.orderId }}</p>
-                <h3>{{ order?.shippingAddress?.userName }}</h3>
-                <p> {{ order?.shippingAddress?.flatNo }} <br> {{
-                    order?.shippingAddress?.addressLine1 }}
-                    <span *ngIf="order?.shippingAddress?.addressLine2">, {{
-                        order?.shippingAddress?.addressLine2
-                        }}</span>
-                </p>
-                <p>{{ order?.shippingAddress?.state }}, {{ order?.shippingAddress?.country }} -
-                    {{
-                    order?.shippingAddress?.zipCode }}</p>
-                <p>Mobile: {{ order?.shippingAddress?.phoneNumber }}</p>
-                <h3>Product Name: {{ order.item.product.name }} | {{ order.item.quantity}} | {{order.item.price}}</h3>
-                <h2>{{order.item.status}}</h2>
-                <hr>
-                <hr>}
-            </div>
-        </div>
-    </section>
+                    <ng-template #noApps>
+                        <p>No applications in this section.</p>
+                    </ng-template>
+                </div>
 
-    <!--CANCELLED ORDERS-->
-    <section class="panel" role="tabpanel" [hidden]="!isActive('CANCELLED')">
-        <div *ngIf="sellerOrders$ | async as orders">
-            <div *ngFor="let order of orders; let i = index">
-                @if (order.item.status === 'CANCELLED') {
-                <p>Seller Order ID: {{ order.id }} | Order ID: {{ order.orderId }}</p>
-                <h3>{{ order?.shippingAddress?.userName }}</h3>
-                <p> {{ order?.shippingAddress?.flatNo }} <br> {{
-                    order?.shippingAddress?.addressLine1 }}
-                    <span *ngIf="order?.shippingAddress?.addressLine2">, {{
-                        order?.shippingAddress?.addressLine2
-                        }}</span>
-                </p>
-                <p>{{ order?.shippingAddress?.state }}, {{ order?.shippingAddress?.country }} -
-                    {{
-                    order?.shippingAddress?.zipCode }}</p>
-                <p>Mobile: {{ order?.shippingAddress?.phoneNumber }}</p>
-                <h3>Product Name: {{ order.item.product.name }} | {{ order.item.quantity}} | {{order.item.price}}</h3>
-                <h2>{{order.item.status}}</h2>
-                <hr>
-                <hr>}
-            </div>
-        </div>
-    </section>
-
-    <!--SHIPPED ORDERS-->
-    <section class="panel" role="tabpanel" [hidden]="!isActive('SHIPPED')">
-        <div *ngIf="sellerOrders$ | async as orders">
-            <div *ngFor="let order of orders; let i = index">
-                @if (order.item.status === 'SHIPPED') {
-                <p>Seller Order ID: {{ order.id }} | Order ID: {{ order.orderId }}</p>
-                <h3>{{ order?.shippingAddress?.userName }}</h3>
-                <p> {{ order?.shippingAddress?.flatNo }} <br> {{
-                    order?.shippingAddress?.addressLine1 }}
-                    <span *ngIf="order?.shippingAddress?.addressLine2">, {{
-                        order?.shippingAddress?.addressLine2
-                        }}</span>
-                </p>
-                <p>{{ order?.shippingAddress?.state }}, {{ order?.shippingAddress?.country }} -
-                    {{
-                    order?.shippingAddress?.zipCode }}</p>
-                <p>Mobile: {{ order?.shippingAddress?.phoneNumber }}</p>
-                <h3>Product Name: {{ order.item.product.name }} | {{ order.item.quantity}} | {{order.item.price}}</h3>
-                <h2>{{order.item.status}}</h2>
-                <hr>
-                <hr>}
-            </div>
-        </div>
+            </tbody>
+        </table>
     </section>
 </div>

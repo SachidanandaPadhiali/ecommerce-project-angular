@@ -1,0 +1,42 @@
+<tr *ngFor="let order of orders; let i = index">
+    @if(order.item.status === 'PENDING'){
+    <td class="text-left hoverable">Order#{{ order.orderId }} <br> SKU- {{ order.item.id }} </td>
+    <td class="text-left">
+        <h4>Billing Address</h4>
+        <div class="button-container" #triggerRef>
+            <a (mouseenter)="showAddress(i)" (mouseleave)="hideAddress()">{{
+                order.shippingAddress.userName }}</a>
+            @if(activeShippingAddress === i){
+            <div class="popup">
+                <h3>{{ order?.shippingAddress?.userName }}</h3>
+                <p> {{ order?.shippingAddress?.flatNo }} <br> {{
+                    order?.shippingAddress?.addressLine1 }}
+                    <span *ngIf="order?.shippingAddress?.addressLine2">, {{
+                        order?.shippingAddress?.addressLine2
+                        }}</span>
+                </p>
+                <p>{{ order?.shippingAddress?.state }}, {{ order?.shippingAddress?.country }} -
+                    {{
+                    order?.shippingAddress?.zipCode }}</p>
+                <p>Mobile: {{ order?.shippingAddress?.phoneNumber }}</p>
+            </div>}
+        </div>
+    </td>
+    <td class="text-center hoverable">
+        <img [src]="'assets/products/' + order.item.product.imageUrl" alt="Product Image" height="50" />
+    </td>
+    <td class="text-left hoverable">{{ order.item.product.name }}</td>
+    <td class="text-center hoverable">Standard</td>
+    <td class="text-center hoverable">{{order.item.status}}</td>
+    <td class="text-center order-action">
+        <button class="order-action-btn table-btn yes-btn">
+            <span>Confirm Shipment</span>
+        </button>
+        <button class="order-action-btn table-btn">
+            <span>Print Invoice</span>
+        </button>
+        <button class="order-action-btn table-btn no-btn">
+            <span>Cancel Order</span>
+        </button>
+    </td>}
+</tr>

@@ -9,6 +9,7 @@
     --gray-900: oklch(19.37% 0.006 300.98);
     --gray-700: oklch(36.98% 0.014 302.71);
     --gray-400: oklch(57.625% 0.02379 303.674);
+    --gray-100: oklch(90% 0 271.152);
 
     --red-to-pink-to-purple-vertical-gradient: linear-gradient(180deg,
         var(--orange-red) 0%,

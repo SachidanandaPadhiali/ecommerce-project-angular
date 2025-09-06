@@ -93,9 +93,6 @@ main {
     color: var(--white-text);
     border: none;
     border-radius: 8px;
-    font-size: var(--normal-font-size);
-    font-weight: var(--font-medium);
-    cursor: pointer;
     transition: .3s;
 }
 
@@ -113,7 +110,7 @@ main {
 }
 
 .no-btn {
-    background: var(--bg-grey);
+    background: var(--gray-100);
     color: var(--dark-text);
 }
 
