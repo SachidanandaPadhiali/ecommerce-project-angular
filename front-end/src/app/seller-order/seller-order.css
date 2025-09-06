@@ -51,39 +51,76 @@
     color: var(--white-text);
     background: var(--dark-text);
     border: 1px solid var(--border);
-    border-top: none;
+    border: none;
     border-bottom: 4px solid var(--bg-btn);
     font-size: var(--h2-font-size);
     text-transform: uppercase;
     font-weight: var(--font-normal);
+    padding: var(--mb-1);
 }
 
 .seller-order th:first-child {
     border-left: none;
-    border-top-left-radius: 20px;
+    border-top-left-radius: 8px;
 }
 
 .seller-order th:last-child {
     border-right: none;
-    border-top-right-radius: 20px;
+    border-top-right-radius: 8px;
 }
 
 .seller-order tr {
-    color: var(--dark-text);
+    color: var(--gray-900);
+    border: none;
+    border-bottom: 1px solid var(--border);
 }
 
 .seller-order tr:hover td.hoverable {
-    color: var(--light-text);
+    color: var(--gray-400);
     background: var(--hover-bg);
 }
 
 .seller-order td {
     background: var(--bg-white);
     padding: var(--mb-1);
-    max-height: 50px;
-    text-align: left;
     vertical-align: middle;
-    font-weight: var(--font-slim);
     font-size: var(--normal-font-size);
+}
+
+.button-container {
+    position: relative;
+    display: block;
+    cursor: pointer;
+}
+
+.button-container a {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+.popup {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 200px;
+    max-width: 350px;
+    z-index: 100;
+    margin-top: 5px;
+    background: var(--bg);
+    color: var(--gray-700);
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.order-action {
+    background: none;
+    box-shadow: none;
+    text-shadow: none;
     border: none;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: var(--mb-1);
+    transition: all 0.3s ease;
 }
