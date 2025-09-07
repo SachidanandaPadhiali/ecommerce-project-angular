@@ -87,6 +87,16 @@
     font-size: var(--normal-font-size);
 }
 
+.seller-order tr :nth-child(6) {
+    align-items: center;
+}
+
+.seller-order tr :nth-child(6) p {
+    color: var(--error);
+    font: 1em sans-serif;
+    font-weight: var(--font-semi-bold);
+}
+
 .button-container {
     position: relative;
     display: block;

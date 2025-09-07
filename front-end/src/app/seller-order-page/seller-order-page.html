@@ -1,14 +1,12 @@
 <table class="seller-order">
     <thead>
-        <tr>
-            <th class="text-center">Order Date</th>
-            <th class="text-center">Order Details</th>
-            <th class="text-center">Image</th>
-            <th class="text-center">Product Name</th>
-            <th class="text-center">Delivery</th>
-            <th class="text-center">Order Status</th>
-            <th class="text-center">Action</th>
-        </tr>
+        <th class="text-center">Order Date</th>
+        <th class="text-center">Order Details</th>
+        <th class="text-center">Image</th>
+        <th class="text-center">Product Name</th>
+        <th class="text-center">Delivery</th>
+        <th class="text-center">Order Status</th>
+        <th class="text-center">Action</th>
     </thead>
     <tbody class="table-hover">
         <tr *ngFor="let order of ordersBySection; let i = index">
@@ -39,8 +37,19 @@
             </td>
             <td class="text-left hoverable">{{ order.item.product.name }}</td>
             <td class="text-center hoverable">Standard</td>
-            <td class="text-center hoverable">{{order.item.status}}</td>
+            <td class="text-center hoverable order-item-status">
+                <p>{{order.item.status}}</p>
+            </td>
             <td class="text-center order-action">
+                @if(order.item.status === "PENDING"){
+                <button class="order-action-btn table-btn yes-btn">
+                    <span>Recieve Order</span>
+                </button>
+                <button class="order-action-btn table-btn no-btn">
+                    <span>Cancel Order</span>
+                </button>
+                }
+                @if(order.item.status === "RECIEVED"){
                 <button class="order-action-btn table-btn yes-btn">
                     <span>Confirm Shipment</span>
                 </button>
@@ -50,6 +59,7 @@
                 <button class="order-action-btn table-btn no-btn">
                     <span>Cancel Order</span>
                 </button>
+                }
             </td>
         </tr>
 
