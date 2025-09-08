@@ -76,4 +76,12 @@ export class SellerOrder implements OnInit {
     return orders.filter(order => order.status === sectionId);
   }
 
+  handleStatusChange(updatedOrder: SellerOrderModel) {
+    console.log('handling status change for order', updatedOrder);
+    this.sellerService.updateOrderStatus(this.sellerId, updatedOrder.orderId, updatedOrder.item.id, updatedOrder.status)
+      .subscribe(() => {
+        // ✅ after updating, reload the list so parent has fresh data
+        this.loadOrders();
+      });
+  }
 }

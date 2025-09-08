@@ -42,7 +42,7 @@
             </td>
             <td class="text-center order-action">
                 @if(order.item.status === "PENDING"){
-                <button class="order-action-btn table-btn yes-btn">
+                <button class="order-action-btn table-btn yes-btn" (click)="confirmOrder(order)">
                     <span>Recieve Order</span>
                 </button>
                 <button class="order-action-btn table-btn no-btn">
@@ -50,7 +50,7 @@
                 </button>
                 }
                 @if(order.item.status === "RECIEVED"){
-                <button class="order-action-btn table-btn yes-btn">
+                <button class="order-action-btn table-btn yes-btn" (click)="confirmShipment(order)">
                     <span>Confirm Shipment</span>
                 </button>
                 <button class="order-action-btn table-btn">

@@ -1,4 +1,4 @@
-import { Component, Input, ElementRef, HostListener, ViewChildren, QueryList } from '@angular/core';
+import { Component, Input, ElementRef, HostListener, ViewChildren, QueryList, Output, EventEmitter } from '@angular/core';
 import { SellerOrderModel } from '../models/SellerOrder.model';
 import { CommonModule } from '@angular/common';
 
@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 })
 export class SellerOrderPage {
   @Input() ordersBySection: SellerOrderModel[] = [];
+  @Output() statusChanged = new EventEmitter<SellerOrderModel>();
 
   showShippingAddress: boolean = false;
   activeShippingAddress: number | null = null;
@@ -26,12 +27,17 @@ export class SellerOrderPage {
     this.activeShippingAddress = this.activeShippingAddress === index ? null : index;
   }
 
+  /**
+   * Hides the currently open shipping address popup.
+   * This is called when the user clicks outside the popup
+   * or when the user clicks on the close button.
+   */
   hideAddress() {
     this.activeShippingAddress = null;
   }
   closePopup() {
     this.activeShippingAddress = null;
-  }
+  } 
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
@@ -49,4 +55,33 @@ export class SellerOrderPage {
       this.closePopup();
     }
   }
+
+  /**
+   * Emits an event to update the status of the order to 'RECIEVED'
+   * @param order the order to update
+   */
+  confirmOrder(order: SellerOrderModel) {
+    console.log('confirming order', order);
+    this.changeStatus(order, 'RECIEVED');
+  }
+
+  /**
+   * Emits an event to update the status of the order to 'SHIPPED'
+   * @param order the order to update
+   */
+  confirmShipment(order: SellerOrderModel) {
+    console.log('shipping order', order);
+    this.changeStatus(order, 'SHIPPED');
+  }
+  
+  /**
+   * Emits an event to update the status of the order
+   * @param order the order to update
+   * @param newStatus the new status of the order
+   */
+  changeStatus(order: SellerOrderModel, newStatus: string) {
+    console.log('changing status of order', order, 'to', newStatus);
+    const updatedOrder = { ...order, status: newStatus };
+    this.statusChanged.emit(updatedOrder);
+  }  
 }

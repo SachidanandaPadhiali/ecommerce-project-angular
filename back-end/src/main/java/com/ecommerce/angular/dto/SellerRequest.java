@@ -21,4 +21,10 @@ public class SellerRequest {
 
     private Long sellerId;
     private Long orderId;
+    private Long orderItemId;
+    private OrderStatus status;
+
+    public String toString() {
+        return "SellerRequest{" + "sellerId=" + sellerId + ", orderId=" + orderId + ", orderItemId" + orderItemId + ", status=" + status + '}';
+    }
 }

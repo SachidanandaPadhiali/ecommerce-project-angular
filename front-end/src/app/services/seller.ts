@@ -20,5 +20,7 @@ export class Seller {
   getSellerOrders(sellerId: number): Observable<SellerOrderModel[]> {
     return this.http.post<SellerOrderModel[]>(`${this.sellerApiUrl}/getOrders`, { sellerId });
   }
-
+  updateOrderStatus(sellerId: number, orderId: number, orderItemId: number, status: string): Observable<any> {
+    return this.http.put<SellerOrderModel[]>(`${this.sellerApiUrl}/updateOrderStatus`, { sellerId, orderId, orderItemId, status });
+  }
 }

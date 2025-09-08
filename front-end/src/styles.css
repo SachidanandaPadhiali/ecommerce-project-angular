@@ -94,6 +94,7 @@ main {
     border: none;
     border-radius: 8px;
     transition: .3s;
+    cursor: pointer;
 }
 
 .table-btn:hover {
@@ -189,6 +190,33 @@ main {
 
 .order-btn:hover .icon {
     font-size: 20px;
+}
+
+.empty-section {
+    text-align: center;
+    align-items: center;
+    padding: 5vh 0;
+}
+
+.empty-section h2 {
+    line-height: 2rem;
+    font-weight: var(--font-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+}
+
+.empty-section p {
+    line-height: 2rem;
+    max-width: 500px;
+    margin: auto;
+}
+
+.empty-section-icon {
+    width: 150px;
+    height: 150px;
+    border: 2px solid var(--primary);
+    margin-bottom: 2rem;
+    border-radius: 50%;
 }
 
 * {

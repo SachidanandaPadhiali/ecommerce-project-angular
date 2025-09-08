@@ -60,4 +60,10 @@ public class SellerController {
     public ResponseEntity<?> getOrders(@RequestBody SellerRequest request) {
         return new ResponseEntity<>(sellerService.getSellerOrders(request.getSellerId()), HttpStatus.OK);
     }
+
+    @PutMapping("/updateOrderStatus")
+    public EcommResponse updateOrderStatus(@RequestBody SellerRequest request) {
+        System.out.println("Request received in controller: " + request);
+        return sellerService.updateOrderStatus(request);
+    }
 }

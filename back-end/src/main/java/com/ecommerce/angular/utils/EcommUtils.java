@@ -106,4 +106,7 @@ public class EcommUtils {
     public static final String ORDER_RECEIVED_CODE = "034";
     public static final String ORDER_RECEIVED_MESSAGE = "Order Received By User";
 
+    
+    public static final String ORDER_STATUS_UPDATED_CODE = "40";
+    public static final String ORDER_STATUS_UPDATED_MESSAGE = "Order Status Updated";
 }

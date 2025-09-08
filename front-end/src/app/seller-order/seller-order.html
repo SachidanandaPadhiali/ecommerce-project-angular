@@ -17,14 +17,18 @@
             <ng-container *ngIf="filterBySection(allOrders, section.id).length > 0; else noOrders">
 
                 <!-- Pass only filtered orders to the table component -->
-                <app-seller-order-page [ordersBySection]="filterBySection(allOrders, section.id)">
+                <app-seller-order-page [ordersBySection]="filterBySection(allOrders, section.id)"
+                    (statusChanged)="handleStatusChange($event)" style="animation: fadeIn 1s ease-in forwards;@keyframes revealDown { 0% {clip-path: inset(100% 0 0 0);} 100% {clip-path: inset(0 0 0 0);}}">
                 </app-seller-order-page>
 
             </ng-container>
         </ng-container>
 
         <ng-template #noOrders>
-            <p>No Orders in this section.</p>
+            <div class=" empty-section">
+                <img class="empty-section-icon" src="assets/image/noorders.png" style="border: none;">
+                <h2>There are no {{section.id}} orders to display</h2>
+            </div>
         </ng-template>
     </section>
 </div>

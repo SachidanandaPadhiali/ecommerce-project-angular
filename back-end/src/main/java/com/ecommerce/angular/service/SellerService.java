@@ -47,4 +47,6 @@ public interface SellerService {
     public List<Product> getProducts(Long sellerId);
 
     public List<SellerOrdersDTO> getSellerOrders(Long sellerId);
+
+    public EcommResponse updateOrderStatus(SellerRequest request);
 }

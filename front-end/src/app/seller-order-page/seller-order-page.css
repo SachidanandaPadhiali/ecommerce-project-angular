@@ -73,6 +73,30 @@
     color: var(--gray-900);
     border: none;
     border-bottom: 1px solid var(--border);
+    opacity: 0;
+    animation: fadeInRow 0.5s ease-in forwards;
+}
+
+table tr:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+table tr:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+table tr:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+table tr:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+@keyframes fadeInRow {
+    to {
+        opacity: 1;
+    }
 }
 
 .seller-order tr:hover td.hoverable {

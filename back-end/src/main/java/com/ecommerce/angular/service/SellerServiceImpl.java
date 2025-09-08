@@ -5,14 +5,17 @@
 package com.ecommerce.angular.service;
 
 import com.ecommerce.angular.dto.EcommResponse;
+import com.ecommerce.angular.dto.OrderStatus;
 import com.ecommerce.angular.dto.ProductDTO;
 import com.ecommerce.angular.dto.SellerOrdersDTO;
+import com.ecommerce.angular.dto.SellerRequest;
 import com.ecommerce.angular.entity.OrderItem;
 import com.ecommerce.angular.entity.Product;
 import com.ecommerce.angular.entity.SellerItems;
 import com.ecommerce.angular.entity.SellerOrders;
 import com.ecommerce.angular.entity.User;
 import com.ecommerce.angular.entity.UserOrders;
+import com.ecommerce.angular.repo.OrderItemRepo;
 import com.ecommerce.angular.repo.OrderRepo;
 import com.ecommerce.angular.repo.ProductRepo;
 import com.ecommerce.angular.repo.SellerItemRepo;
@@ -45,6 +48,9 @@ public class SellerServiceImpl implements SellerService {
 
         @Autowired
         OrderRepo orderRepo;
+
+        @Autowired
+        OrderItemRepo orderItemRepo;
 
         @Override
         public EcommResponse addProduct(ProductDTO product) {
@@ -140,5 +146,36 @@ public class SellerServiceImpl implements SellerService {
                         }
                 }
                 return sellerOrderDetails;
+        }
+
+        @Override
+        public EcommResponse updateOrderStatus(SellerRequest request) {
+
+                UserOrders order = orderRepo.findById(request.getOrderId())
+                                .orElseThrow(() -> new RuntimeException("Order Item not found"));
+
+                System.out.println("Order found: " + order);
+                
+                OrderItem orderItem = orderItemRepo.findByIdAndOrderId(request.getOrderItemId(), request.getOrderId());
+                
+                System.out.println("Order Item found: " + orderItem);
+
+                orderItem.setStatus(request.getStatus());
+                orderItemRepo.save(orderItem);
+
+                Boolean isPartiallyShipped = false;
+                for (OrderItem item : order.getItems()) {
+                        if (item.getStatus() != OrderStatus.PENDING) {
+                                isPartiallyShipped = true;
+                        }
+                }
+                if (isPartiallyShipped) {
+                        order.setStatus(OrderStatus.PARTIALLYSHIPPED);
+                        orderRepo.save(order);
+                }
+                return EcommResponse.builder()
+                                .responseCode(EcommUtils.ORDER_STATUS_UPDATED_CODE)
+                                .responseMessage(EcommUtils.ORDER_STATUS_UPDATED_MESSAGE)
+                                .build();
         }
 }
