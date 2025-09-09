@@ -87,4 +87,8 @@ export class SellerOrder implements OnInit {
         this.loadOrders();
       });
   }
+
+  generateInvoice(order: SellerOrderModel) {
+    console.log('generating invoice for order', order);
+  }
 }

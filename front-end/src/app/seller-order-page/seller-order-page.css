@@ -73,20 +73,6 @@
     color: var(--gray-900);
     border: none;
     border-bottom: 1px solid var(--border);
-    opacity: 0;
-    animation: fadeInRow 0.75s ease-in forwards;
-    animation-delay: var(--delay);
-}
-
-.seller-order tr:hover td.hoverable {
-    color: var(--gray-400);
-    background: var(--hover-bg);
-}
-
-@keyframes fadeInRow {
-    to {
-        opacity: 1;
-    }
 }
 
 .seller-order td {
@@ -94,6 +80,33 @@
     padding: var(--mb-1);
     vertical-align: middle;
     font-size: var(--normal-font-size);
+    z-index: 0;
+}
+
+.seller-order td .animate-content {
+    z-index: 0;
+    opacity: 0;
+    animation: fadeInRow 0.75s ease-in forwards;
+    animation-delay: var(--delay);
+}
+
+.seller-order tr:hover td.hoverable {
+    position: relative;
+    color: var(--gray-400);
+    background: var(--hover-bg);
+    z-index: 10;
+}
+
+@keyframes fadeInRow {
+    from {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    to {
+        opacity: 1;
+        visibility: visible;
+    }
 }
 
 .seller-order tr :nth-child(6) {
@@ -123,16 +136,17 @@
     left: 0;
     min-width: 200px;
     max-width: 350px;
-    z-index: 100;
-    margin-top: 5px;
+    margin-top: 6px;
+    z-index: 9999;
     background: var(--bg);
     color: var(--gray-700);
     padding: 16px;
     border-radius: 8px;
-    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, .2);
+    white-space: normal;
 }
 
-.order-action {
+.order-action .animate-content {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -142,6 +156,6 @@
     font-family: var(--inter-font);
 }
 
-.order-action button {
+.order-action .animate-content button {
     width: 140px;
 }

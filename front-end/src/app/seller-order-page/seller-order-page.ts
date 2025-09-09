@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 export class SellerOrderPage {
   @Input() ordersBySection: SellerOrderModel[] = [];
   @Output() statusChanged = new EventEmitter<SellerOrderModel>();
+  @Output() generateInvoice = new EventEmitter<SellerOrderModel>();
 
   constructor(private cdRef: ChangeDetectorRef) { }
   showShippingAddress: boolean = false;
@@ -90,4 +91,9 @@ export class SellerOrderPage {
     const updatedOrder = { ...order, status: newStatus };
     this.statusChanged.emit(updatedOrder);
   }  
+
+  generateOrderInvoice(order: SellerOrderModel) {
+    console.log('emitting generate invoice for order', order);
+    this.generateInvoice.emit(order);
+  }
 }

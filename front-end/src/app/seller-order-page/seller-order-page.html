@@ -10,56 +10,74 @@
     </thead>
     <tbody class="table-hover">
         <tr *ngFor="let order of ordersBySection; let i = index" [style.--delay]="(i + 1) * 0.2 + 's'">
-            <td class="text-left hoverable">Order#{{ order.orderId }} <br> SKU- {{ order.item.id }} </td>
-            <td class="text-left">
-                <h4>Billing Address</h4>
-                <div class="button-container" #triggerRef>
-                    <a (mouseenter)="showAddress(i)" (mouseleave)="hideAddress()">{{
-                        order.shippingAddress.userName }}</a>
-                    @if(activeShippingAddress === i){
-                    <div class="popup">
-                        <h3>{{ order?.shippingAddress?.userName }}</h3>
-                        <p> {{ order?.shippingAddress?.flatNo }} <br> {{
-                            order?.shippingAddress?.addressLine1 }}
-                            <span *ngIf="order?.shippingAddress?.addressLine2">, {{
-                                order?.shippingAddress?.addressLine2
-                                }}</span>
-                        </p>
-                        <p>{{ order?.shippingAddress?.state }}, {{ order?.shippingAddress?.country }} -
-                            {{
-                            order?.shippingAddress?.zipCode }}</p>
-                        <p>Mobile: {{ order?.shippingAddress?.phoneNumber }}</p>
-                    </div>}
+            <td class="text-left hoverable">
+                <div class="animate-content">
+                    Order#{{ order.orderId }} <br> SKU- {{ order.item.id }}
+                </div>
+            </td>
+            <td class="text-left hoverable">
+                <div class="animate-content">
+                    <h4>Billing Address</h4>
+                    <div class="button-container" #triggerRef>
+                        <a (mouseenter)="showAddress(i)" (mouseleave)="hideAddress()">{{
+                            order.shippingAddress.userName }}</a>
+                        @if(activeShippingAddress === i){
+                        <div class="popup">
+                            <h3>{{ order?.shippingAddress?.userName }}</h3>
+                            <p> {{ order?.shippingAddress?.flatNo }} <br> {{
+                                order?.shippingAddress?.addressLine1 }}
+                                <span *ngIf="order?.shippingAddress?.addressLine2">, {{
+                                    order?.shippingAddress?.addressLine2
+                                    }}</span>
+                            </p>
+                            <p>{{ order?.shippingAddress?.state }}, {{ order?.shippingAddress?.country }} -
+                                {{
+                                order?.shippingAddress?.zipCode }}</p>
+                            <p>Mobile: {{ order?.shippingAddress?.phoneNumber }}</p>
+                        </div>}
+                    </div>
                 </div>
             </td>
             <td class="text-center hoverable">
-                <img [src]="'assets/products/' + order.item.product.imageUrl" alt="Product Image" height="50" />
+                <div class="animate-content">
+                    <img [src]="'assets/products/' + order.item.product.imageUrl" alt="Product Image" height="50" />
+                </div>
             </td>
-            <td class="text-left hoverable">{{ order.item.product.name }}</td>
-            <td class="text-center hoverable">Standard</td>
+            <td class="text-left hoverable">
+                <div class="animate-content">
+                    {{ order.item.product.name }}</div>
+            </td>
+            <td class="text-center hoverable">
+                <div class="animate-content">
+                    Standard</div>
+            </td>
             <td class="text-center hoverable order-item-status">
-                <p>{{order.item.status}}</p>
+                <div class="animate-content">
+                    <p>{{order.item.status}}</p>
+                </div>
             </td>
             <td class="text-center order-action">
-                @if(order.item.status === "PENDING"){
-                <button class="order-action-btn table-btn yes-btn" (click)="confirmOrder(order)">
-                    <span>Recieve Order</span>
-                </button>
-                <button class="order-action-btn table-btn no-btn">
-                    <span>Cancel Order</span>
-                </button>
-                }
-                @if(order.item.status === "RECIEVED"){
-                <button class="order-action-btn table-btn yes-btn" (click)="confirmShipment(order)">
-                    <span>Confirm Shipment</span>
-                </button>
-                <button class="order-action-btn table-btn">
-                    <span>Print Invoice</span>
-                </button>
-                <button class="order-action-btn table-btn no-btn">
-                    <span>Cancel Order</span>
-                </button>
-                }
+                <div class="animate-content">
+                    @if(order.item.status === "PENDING"){
+                    <button class="order-action-btn table-btn yes-btn" (click)="confirmOrder(order)">
+                        <span>Recieve Order</span>
+                    </button>
+                    <button class="order-action-btn table-btn no-btn">
+                        <span>Cancel Order</span>
+                    </button>
+                    }
+                    @if(order.item.status === "RECIEVED"){
+                    <button class="order-action-btn table-btn yes-btn" (click)="confirmShipment(order)">
+                        <span>Confirm Shipment</span>
+                    </button>
+                    <button class="order-action-btn table-btn" (click)="generateOrderInvoice(order)">
+                        <span>Print Invoice</span>
+                    </button>
+                    <button class="order-action-btn table-btn no-btn">
+                        <span>Cancel Order</span>
+                    </button>
+                    }
+                </div>
             </td>
         </tr>
 

@@ -98,21 +98,6 @@
     text-decoration: underline;
 }
 
-.popup {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    min-width: 200px;
-    max-width: 350px;
-    z-index: 100;
-    margin-top: 5px;
-    background: var(--bg);
-    color: var(--gray-700);
-    padding: 16px;
-    border-radius: 8px;
-    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
-}
-
 .order-action {
     display: flex;
     justify-content: center;

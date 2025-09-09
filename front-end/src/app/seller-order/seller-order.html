@@ -17,7 +17,7 @@
             <ng-container *ngIf="filterBySection(allOrders, section.id).length > 0; else noOrders">
 
                 <!-- Pass only filtered orders to the table component -->
-                <app-seller-order-page [ordersBySection]="filterBySection(allOrders, section.id)"
+                <app-seller-order-page [ordersBySection]="filterBySection(allOrders, section.id)" (generateInvoice)="generateInvoice($event)"
                     (statusChanged)="handleStatusChange($event)" style="animation: fadeIn 1s ease-in forwards;@keyframes revealDown { 0% {clip-path: inset(100% 0 0 0);} 100% {clip-path: inset(0 0 0 0);}}">
                 </app-seller-order-page>
 
