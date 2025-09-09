@@ -77,6 +77,9 @@ export class SellerOrder implements OnInit {
   }
 
   handleStatusChange(updatedOrder: SellerOrderModel) {
+    this.sections.filter(section => section.id === updatedOrder.oldStatus)[0].count -= 1;
+    this.sections.filter(section => section.id === updatedOrder.status)[0].count += 1;
+    this.cdRef.detectChanges();
     console.log('handling status change for order', updatedOrder);
     this.sellerService.updateOrderStatus(this.sellerId, updatedOrder.orderId, updatedOrder.item.id, updatedOrder.status)
       .subscribe(() => {

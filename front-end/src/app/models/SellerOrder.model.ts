@@ -7,5 +7,6 @@ export interface SellerOrderModel {
     orderId: number;
     shippingAddress: UserAddress;
     item: OrderItems;
+    oldStatus: string;
     status: string;
 }

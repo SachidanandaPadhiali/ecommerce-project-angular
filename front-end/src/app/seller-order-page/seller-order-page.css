@@ -74,34 +74,19 @@
     border: none;
     border-bottom: 1px solid var(--border);
     opacity: 0;
-    animation: fadeInRow 0.5s ease-in forwards;
+    animation: fadeInRow 0.75s ease-in forwards;
+    animation-delay: var(--delay);
 }
 
-table tr:nth-child(1) {
-    animation-delay: 0.2s;
-}
-
-table tr:nth-child(2) {
-    animation-delay: 0.4s;
-}
-
-table tr:nth-child(3) {
-    animation-delay: 0.6s;
-}
-
-table tr:nth-child(4) {
-    animation-delay: 0.4s;
+.seller-order tr:hover td.hoverable {
+    color: var(--gray-400);
+    background: var(--hover-bg);
 }
 
 @keyframes fadeInRow {
     to {
         opacity: 1;
     }
-}
-
-.seller-order tr:hover td.hoverable {
-    color: var(--gray-400);
-    background: var(--hover-bg);
 }
 
 .seller-order td {

@@ -9,7 +9,7 @@
         <th class="text-center">Action</th>
     </thead>
     <tbody class="table-hover">
-        <tr *ngFor="let order of ordersBySection; let i = index">
+        <tr *ngFor="let order of ordersBySection; let i = index" [style.--delay]="(i + 1) * 0.2 + 's'">
             <td class="text-left hoverable">Order#{{ order.orderId }} <br> SKU- {{ order.item.id }} </td>
             <td class="text-left">
                 <h4>Billing Address</h4>

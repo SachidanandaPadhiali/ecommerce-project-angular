@@ -1,4 +1,4 @@
-import { Component, Input, ElementRef, HostListener, ViewChildren, QueryList, Output, EventEmitter } from '@angular/core';
+import { Component, Input, ElementRef, HostListener, ViewChildren, QueryList, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { SellerOrderModel } from '../models/SellerOrder.model';
 import { CommonModule } from '@angular/common';
 
@@ -12,6 +12,7 @@ export class SellerOrderPage {
   @Input() ordersBySection: SellerOrderModel[] = [];
   @Output() statusChanged = new EventEmitter<SellerOrderModel>();
 
+  constructor(private cdRef: ChangeDetectorRef) { }
   showShippingAddress: boolean = false;
   activeShippingAddress: number | null = null;
 
@@ -61,6 +62,8 @@ export class SellerOrderPage {
    * @param order the order to update
    */
   confirmOrder(order: SellerOrderModel) {
+    order.oldStatus = order.status;
+    order.status = 'RECIEVED';
     console.log('confirming order', order);
     this.changeStatus(order, 'RECIEVED');
   }
@@ -70,6 +73,9 @@ export class SellerOrderPage {
    * @param order the order to update
    */
   confirmShipment(order: SellerOrderModel) {
+    order.oldStatus = order.status;
+    order.status = 'SHIPPED';
+    this.cdRef.detectChanges();
     console.log('shipping order', order);
     this.changeStatus(order, 'SHIPPED');
   }
