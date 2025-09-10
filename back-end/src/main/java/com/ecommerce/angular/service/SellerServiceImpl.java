@@ -22,6 +22,8 @@ import com.ecommerce.angular.repo.SellerItemRepo;
 import com.ecommerce.angular.repo.SellerOrdersRepo;
 import com.ecommerce.angular.repo.SellerRepo;
 import com.ecommerce.angular.utils.EcommUtils;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -155,9 +157,9 @@ public class SellerServiceImpl implements SellerService {
                                 .orElseThrow(() -> new RuntimeException("Order Item not found"));
 
                 System.out.println("Order found: " + order);
-                
+
                 OrderItem orderItem = orderItemRepo.findByIdAndOrderId(request.getOrderItemId(), request.getOrderId());
-                
+
                 System.out.println("Order Item found: " + orderItem);
 
                 orderItem.setStatus(request.getStatus());

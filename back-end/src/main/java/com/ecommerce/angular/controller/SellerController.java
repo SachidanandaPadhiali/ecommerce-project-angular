@@ -5,13 +5,17 @@
 package com.ecommerce.angular.controller;
 
 import com.ecommerce.angular.dto.EcommResponse;
+import com.ecommerce.angular.dto.InvoiceRequest;
 import com.ecommerce.angular.dto.ProductDTO;
 import com.ecommerce.angular.dto.SellerRequest;
 import com.ecommerce.angular.service.SellerService;
-
+import com.ecommerce.angular.service.InvoiceService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,6 +37,9 @@ public class SellerController {
 
     @Autowired
     SellerService sellerService;
+
+    @Autowired
+    private InvoiceService invoiceService;
 
     @PostMapping("/addProduct")
     public EcommResponse addProduct(@RequestBody ProductDTO product) {
@@ -65,5 +72,17 @@ public class SellerController {
     public EcommResponse updateOrderStatus(@RequestBody SellerRequest request) {
         System.out.println("Request received in controller: " + request);
         return sellerService.updateOrderStatus(request);
+    }
+
+    @PostMapping("/generateInvoice")
+    public ResponseEntity<byte[]> generateInvoice(@RequestBody InvoiceRequest request) {
+        byte[] pdfBytes = invoiceService.generateInvoicePdf(request);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDisposition(ContentDisposition.builder("inline")
+                .filename("invoice.pdf").build());
+
+        return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
     }
 }

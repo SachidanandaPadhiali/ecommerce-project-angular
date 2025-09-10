@@ -23,4 +23,10 @@ export class Seller {
   updateOrderStatus(sellerId: number, orderId: number, orderItemId: number, status: string): Observable<any> {
     return this.http.put<SellerOrderModel[]>(`${this.sellerApiUrl}/updateOrderStatus`, { sellerId, orderId, orderItemId, status });
   }
+
+  generateInvoice(data: any) {
+    return this.http.post(`${this.sellerApiUrl}/generateInvoice`, data, {
+      responseType: 'blob' // tells Angular to treat response as binary
+    });
+  }
 }

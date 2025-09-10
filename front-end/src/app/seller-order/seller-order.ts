@@ -90,5 +90,20 @@ export class SellerOrder implements OnInit {
 
   generateInvoice(order: SellerOrderModel) {
     console.log('generating invoice for order', order);
+
+    // create invoice data from order
+    const invoiceData = {
+      sellerId : this.sellerId,
+      orderItemId: order.item.id,
+      shippingId: order.shippingAddress.id,
+    }
+    this.sellerService.generateInvoice(invoiceData).subscribe(blob => {
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `invoice${invoiceData.orderItemId}.pdf`;
+      link.click();
+      window.URL.revokeObjectURL(url);
+    });
   }
 }
