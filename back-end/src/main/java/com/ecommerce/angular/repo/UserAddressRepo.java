@@ -29,4 +29,14 @@ public interface UserAddressRepo extends JpaRepository<UserAddress, Long> {
 """)
     void setDefaultForUser(@Param("userId") Long userId, @Param("addressId") Long addressId);
 
+    @Query(value = """
+        SELECT * FROM ecommerce_java.user_address ua 
+        WHERE ua.user_id = (
+            SELECT o.user_id 
+            FROM ecommerce_java.order_item oi 
+            JOIN ecommerce_java.user_orders o ON oi.product_id = o.id 
+            WHERE oi.id = :orderItemId
+        ) AND ua.is_default = 1
+        """, nativeQuery = true)
+    UserAddress findDefaultAddressByOrderItemId(@Param("orderItemId") Long orderItemId);
 }
