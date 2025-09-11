@@ -9,6 +9,7 @@ import com.ecommerce.angular.dto.ProductDTO;
 import com.ecommerce.angular.dto.SellerOrdersDTO;
 import com.ecommerce.angular.dto.SellerRequest;
 import com.ecommerce.angular.entity.Product;
+import com.ecommerce.angular.entity.User;
 import java.util.List;
 
 /**
@@ -45,6 +46,8 @@ public interface SellerService {
      * @return Product entity containing the product details.
      */
     public List<Product> getProducts(Long sellerId);
+
+    public User getSeller(Long productId);
 
     public List<SellerOrdersDTO> getSellerOrders(Long sellerId);
 

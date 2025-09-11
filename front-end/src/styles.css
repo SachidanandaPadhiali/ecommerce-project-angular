@@ -637,51 +637,6 @@ td.text-right {
     text-align: right;
 }
 
-.prod-action {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: none;
-    box-shadow: none;
-    text-shadow: none;
-    border: none;
-    gap: 4rem;
-    height: 100%;
-}
-
-.btn {
-    padding: 10px 30px;
-    border: none;
-    border-radius: 20px;
-    font-size: 1rem;
-    font-weight: 600;
-    color: inherit;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    background: transparent;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-}
-
-.action-btn {
-    backdrop-filter: blur(20px);
-    transition: all 0.3s ease;
-}
-
-.edit-btn:hover {
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-color: cyan;
-    color: rgb(0, 127, 127);
-}
-
-.delete-btn:hover {
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-color: red;
-    color: red;
-}
-
 /* =+=+=+= PRODUCT PAGE ==++==++==++== */
 .product-list {
     margin: 4rem 1rem;

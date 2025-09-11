@@ -76,21 +76,21 @@
             <td class="text-center order-action">
                 <div class="animate-content">
                     @if(order.item.status === "PENDING"){
-                    <button class="order-action-btn table-btn yes-btn" (click)="confirmOrder(order)">
+                    <button class="table-btn yes-btn" (click)="confirmOrder(order)">
                         <span>Recieve Order</span>
                     </button>
-                    <button class="order-action-btn table-btn no-btn">
+                    <button class="table-btn no-btn">
                         <span>Cancel Order</span>
                     </button>
                     }
                     @if(order.item.status === "RECIEVED"){
-                    <button class="order-action-btn table-btn yes-btn" (click)="confirmShipment(order)">
+                    <button class="table-btn yes-btn" (click)="confirmShipment(order)">
                         <span>Confirm Shipment</span>
                     </button>
-                    <button class="order-action-btn table-btn" (click)="generateOrderInvoice(order)">
+                    <button class="table-btn" (click)="generateOrderInvoice(order)">
                         <span>Print Invoice</span>
                     </button>
-                    <button class="order-action-btn table-btn no-btn">
+                    <button class="table-btn no-btn">
                         <span>Cancel Order</span>
                     </button>
                     }

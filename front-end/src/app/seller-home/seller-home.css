@@ -1,0 +1,12 @@
+
+.prod-action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    box-shadow: none;
+    text-shadow: none;
+    border: none;
+    gap: 2rem;
+    height: 100%;
+}

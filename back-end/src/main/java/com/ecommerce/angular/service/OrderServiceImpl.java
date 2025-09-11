@@ -21,13 +21,20 @@ import com.ecommerce.angular.entity.Cart;
 import com.ecommerce.angular.entity.CartItem;
 import com.ecommerce.angular.entity.OrderItem;
 import com.ecommerce.angular.entity.Product;
+import com.ecommerce.angular.entity.SellerItems;
+import com.ecommerce.angular.entity.SellerOrders;
 import com.ecommerce.angular.repo.ProductRepo;
 import com.ecommerce.angular.repo.UserAddressRepo;
 import com.ecommerce.angular.repo.CartRepo;
+import com.ecommerce.angular.repo.OrderItemRepo;
 import com.ecommerce.angular.repo.OrderRepo;
+import com.ecommerce.angular.repo.SellerOrdersRepo;
 import com.ecommerce.angular.repo.UserRepo;
 
 import jakarta.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -35,21 +42,30 @@ import jakarta.transaction.Transactional;
  */
 @Service
 public class OrderServiceImpl implements OrderService {
-    
+
     @Autowired
     UserRepo userRepo;
-    
+
     @Autowired
     CartRepo cartRepo;
-    
+
     @Autowired
     ProductRepo productRepo;
-    
+
     @Autowired
     UserAddressRepo userAddressRepo;
-    
+
     @Autowired
     OrderRepo orderRepo;
+
+    @Autowired
+    OrderItemRepo orderItemRepo;
+
+    @Autowired
+    SellerOrdersRepo sellerOrdersRepo;
+
+    @Autowired
+    SellerService sellerService;
 
     /**
      * API to generate an order
@@ -63,54 +79,72 @@ public class OrderServiceImpl implements OrderService {
     public Long generateOrder(OrderRequest orderRequest) {
         User user = userRepo.findById(orderRequest.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        
+
         Cart cart = cartRepo.findById(orderRequest.getCartId())
                 .orElseThrow(() -> new RuntimeException("Product not found"));
-        
+
         UserAddress userAddress = userAddressRepo.findById(orderRequest.getAddressId())
                 .orElseThrow(() -> new RuntimeException("Product not found"));
-        
-        System.out.println(user);
-        System.out.println(cart);
-        System.out.println(userAddress);
-        
-        List<OrderItem> orderItems = new ArrayList<>();
+
+        Map<User, List<CartItem>> sellerToItems = new HashMap<>();
         for (CartItem item : cart.getItems()) {
-            OrderItem orderItem = OrderItem.builder()
-                    .product(item.getProduct())
-                    .quantity(item.getQuantity())
-                    .price(item.getPrice())
-                    .build();
-            orderItems.add(orderItem);
-
-            // Update Inventory
-            Product product = item.getProduct();
-            product.setQuantity(product.getQuantity() - item.getQuantity());
-            productRepo.save(product);
+            User seller = sellerService.getSeller(item.getProduct().getId());
+            sellerToItems.computeIfAbsent(seller, k -> new ArrayList<>()).add(item);
         }
 
-        // SellerItems sellerItem =
-        // sellerItemRepo.findByProductId(item.getProduct().getId());
-        UserOrders userOrder = UserOrders.builder()
-                .user(user).items(orderItems).total(orderRequest.getOrderTotal()).status(OrderStatus.PENDING)
-                .shippingAddress(userAddress).isExpressDelivery(orderRequest.isExpressDelivery()).build();
-        
-        for (OrderItem item : orderItems) {
-            item.setOrder(userOrder);
+        UserOrders userOrder = new UserOrders();
+        userOrder.setUser(user);
+        userOrder.setTotal(orderRequest.getOrderTotal());
+        userOrder.setStatus(OrderStatus.PENDING);
+        userOrder.setShippingAddress(userAddress);
+        userOrder.setExpressDelivery(orderRequest.isExpressDelivery());
+
+        userOrder = orderRepo.save(userOrder);
+
+        List<OrderItem> allOrderItems = new ArrayList<>();
+
+        for (Map.Entry<User, List<CartItem>> entry : sellerToItems.entrySet()) {
+            User seller = entry.getKey();
+            List<CartItem> items = entry.getValue();
+
+            SellerOrders sellerOrder = new SellerOrders();
+            sellerOrder.setUserOrder(userOrder);
+            sellerOrder.setSeller(seller);
+            sellerOrder = sellerOrdersRepo.save(sellerOrder); // persist before linking
+
+            for (CartItem item : items) {
+                Product product = item.getProduct();
+                product.setQuantity(product.getQuantity() - item.getQuantity());
+                productRepo.save(product);
+
+                OrderItem orderItem = OrderItem.builder()
+                        .product(product)
+                        .quantity(item.getQuantity())
+                        .price(item.getPrice())
+                        .sellerOrder(sellerOrder)
+                        .order(userOrder)
+                        .status(OrderStatus.PENDING)
+                        .build();
+
+                allOrderItems.add(orderItem);
+            }
+
+            sellerOrdersRepo.save(sellerOrder); // update with items
         }
-        
-        UserOrders savedOrder = orderRepo.save(userOrder);
+
+        userOrder.setItems(allOrderItems);
+        orderRepo.save(userOrder);
 
         // Update Cart and remove all items from cart
-        cart.setUserOrder(savedOrder);
+        cart.setUserOrder(userOrder);
         cart.getItems().clear();
         CartStatus status = CartStatus.ORDERED;
         cart.setStatus(status);
         cartRepo.save(cart);
-        
-        return savedOrder.getId();
+
+        return userOrder.getId();
     }
-    
+
     @Override
     @Transactional
     public OrderResponse getOrderData(Long orderId) {
@@ -125,13 +159,13 @@ public class OrderServiceImpl implements OrderService {
                 .status(userOrder.getStatus())
                 .build();
     }
-    
+
     @Override
     @Transactional
     public List<OrderResponse> getUserOrders(Long userId) {
         List<UserOrders> userOrders = orderRepo.findByUserId(userId);
         List<OrderResponse> userOrdersData = new ArrayList<OrderResponse>();
-        
+
         for (UserOrders userOrder : userOrders) {
             OrderResponse newOrderResponse = OrderResponse.builder()
                     .id(userOrder.getId())
