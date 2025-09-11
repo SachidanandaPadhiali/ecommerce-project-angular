@@ -109,6 +109,34 @@
     }
 }
 
+.order-status {
+    font: 1em sans-serif;
+    font-weight: var(--font-semi-bold);
+    text-align: center;
+    width: max-content;
+    padding: var(--mb-1);
+    border-radius: 6px;
+    margin: auto;
+}
+
+.pending, .cancelled {
+    background: #FEE2E2;
+    color: var(--error);
+    border: 1px solid #FCA5A5;
+}
+
+.received {
+    background: #FEF3C7;
+    color: var(--warning);
+    border: 1px solid #FBBF24;
+}
+
+.shipped {
+    background: #DCFCE7;
+    color: var(--success);
+    border: 1px solid #86EFAC;
+}
+
 .seller-order tr :nth-child(6) {
     align-items: center;
 }

@@ -14,9 +14,6 @@ import com.ecommerce.angular.entity.UserAddress;
 import com.ecommerce.angular.repo.OrderItemRepo;
 import com.ecommerce.angular.repo.UserAddressRepo;
 import com.ecommerce.angular.repo.UserRepo;
-import com.itextpdf.io.font.FontProgram;
-import com.itextpdf.io.font.FontProgramFactory;
-import com.itextpdf.io.font.PdfEncodings;
 
 import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -44,8 +41,6 @@ import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.io.font.FontProgram;
 import com.itextpdf.io.font.FontProgramFactory;
-import com.itextpdf.io.font.constants.StandardFonts;
-import com.itextpdf.io.font.constants.FontStyles;
 
 import com.itextpdf.io.font.PdfEncodings;
 import com.itextpdf.layout.properties.VerticalAlignment;
@@ -130,7 +125,7 @@ public class InvoiceService {
                 .setTextAlignment(TextAlignment.RIGHT)).setBorder(Border.NO_BORDER)
         );
 
-        doc.add(headerTable.setMarginBottom(20));
+        doc.add(headerTable.setMarginBottom(10));
 
         // Seller & Buyer Info
         Table infoTable = new Table(2);
@@ -147,7 +142,7 @@ public class InvoiceService {
                 .add(new Text("\nShipping Address:\n").setBold().setFontSize(11))
                 .add(new Text(shippingAdd).setFontSize(8))
                 .add(new Text("\nInvoice #: ").setBold().setFontSize(10))
-                .add(new Text("" + request.getInvoiceNumber()).setFontSize(8))
+                .add(new Text("" + String.format("INV-%04d-ESHOP-%04d", request.getOrderItemId(), request.getSellerId())).setFontSize(8))
                 .add(new Text("\nInvoice Date: ").setBold().setFontSize(10))
                 .add(new Text("" + LocalDate.now()).setFontSize(8))
                 .setTextAlignment(TextAlignment.RIGHT)).setBorder(Border.NO_BORDER)
@@ -155,8 +150,9 @@ public class InvoiceService {
 
         doc.add(infoTable.setMarginBottom(20));
 
+        doc.setFontSize(10);
         // Item Table
-        float[] columnWidths = {5F, 50F, 5F, 20F, 20F};
+        float[] columnWidths = {5F, 50F, 20F, 5F, 20F};
         Table itemTable = new Table(columnWidths);
         itemTable.setWidth(UnitValue.createPercentValue(100));
 
@@ -177,25 +173,94 @@ public class InvoiceService {
         itemTable.addCell("1");
         itemTable.addCell(item.getProduct().getName());
         itemTable.addCell(new Paragraph()
-                .add(new Text("₹" + item.getProduct().getDiscPrice()).setBold().setFont(font)));
-        itemTable.addCell(String.valueOf(item.getQuantity()));
+                .add(new Text("₹" + item.getProduct().getDiscPrice()).setBold().setFont(font)).setTextAlignment(TextAlignment.CENTER));
+        itemTable.addCell(new Paragraph(String.valueOf(item.getQuantity())).setTextAlignment(TextAlignment.CENTER));
         itemTable.addCell(new Paragraph()
-                .add(new Text("₹" + amount).setBold().setFont(font)));
+                .add(new Text("₹" + amount).setBold().setFont(font)).setTextAlignment(TextAlignment.CENTER));
 
         itemTable.addCell(new Cell(1, 4).add(new Paragraph("TOTAL:")).setBold().setTextAlignment(TextAlignment.LEFT));
         itemTable.addCell(new Cell().add(new Paragraph(formatter.format(total))).setBold().setBackgroundColor(headerBg).setBold().setTextAlignment(TextAlignment.RIGHT));
 
-        doc.add(itemTable);
+        itemTable.addCell(new Cell(1, 5).add(new Paragraph()
+                .add(new Text("Amount In Workds:\n").setFontSize(11))
+                .add(new Text(toWords(total)).setFontSize(10))
+        ).setBold().setTextAlignment(TextAlignment.LEFT)
+        );
 
-        // Summary
-        doc.add(new Paragraph("Subtotal: ₹" + total));
-        doc.add(new Paragraph("Tax (18% GST): ₹" + (total * 0.18)));
-        doc.add(new Paragraph("Total: ₹" + (total * 1.18)).setBold());
+        doc.add(itemTable);
 
         // Footer
         doc.add(new Paragraph("\nThank you for your purchase!").setTextAlignment(TextAlignment.CENTER));
 
         doc.close();
         return baos.toByteArray();
+    }
+
+    String toWords(double price) {
+        String[] units = {
+            "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
+            "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen",
+            "Sixteen", "Seventeen", "Eighteen", "Nineteen"
+        };
+
+        String[] tens = {
+            "", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"
+        };
+
+        String[] scales = {"", "Thousand", "Million", "Billion"};
+
+        StringBuilder priceInWords = new StringBuilder();
+        int scaleIndex = 0;
+
+        int paisa = (int) (price - Math.floor(price)) * 100;
+        int rupee = (int) Math.floor(price);
+
+        while (rupee > 0) {
+            int chunk = rupee % 1000;
+            if (chunk != 0) {
+                StringBuilder chunkWords = new StringBuilder();
+
+                if (chunk >= 100) {
+                    chunkWords.append(units[chunk / 100]).append(" Hundred ");
+                    chunk %= 100;
+                }
+
+                if (chunk >= 20) {
+                    chunkWords.append(tens[chunk / 10]).append("-");
+                    chunk %= 10;
+                }
+
+                if (chunk > 0) {
+                    chunkWords.append(units[chunk]);
+                }
+
+                chunkWords.append(scales[scaleIndex]).append(" ");
+                priceInWords.insert(0, chunkWords);
+            }
+
+            rupee /= 1000;
+            scaleIndex++;
+        }
+        scaleIndex = 0;
+        while (paisa > 0) {
+            if (paisa != 0) {
+                StringBuilder chunkWords = new StringBuilder();
+
+                if (paisa >= 20) {
+                    chunkWords.append(tens[paisa / 10]).append(" ");
+                    paisa %= 10;
+                }
+
+                if (paisa > 0) {
+                    chunkWords.append(units[paisa]).append(" ");
+                }
+
+                chunkWords.append(scales[scaleIndex]).append(" ");
+                priceInWords.insert(0, chunkWords);
+            }
+            scaleIndex++;
+        }
+        priceInWords.append("Only");
+        return priceInWords.toString().trim();
     }
 }

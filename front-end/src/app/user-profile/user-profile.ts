@@ -205,13 +205,15 @@ export class UserProfile {
     this.userOrders$ = this.userService.getUserOrders(this.userId).pipe(
       finalize(() => this.isLoadingOrders = false)
     );
-    console.log(this.userOrders$);
+
+    this.userOrders$.forEach(order => console.log(order));
 
     this.sortedOrders$ = this.userOrders$.pipe(
       map(orders =>
         orders.sort((a, b) => b.id - a.id)
       )
     );
+    this.sortedOrders$.subscribe(data => console.log('Orders:', data));
   }
 
   /**

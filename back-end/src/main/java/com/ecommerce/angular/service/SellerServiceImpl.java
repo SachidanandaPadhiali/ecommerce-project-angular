@@ -23,7 +23,6 @@ import com.ecommerce.angular.repo.SellerOrdersRepo;
 import com.ecommerce.angular.repo.SellerRepo;
 import com.ecommerce.angular.utils.EcommUtils;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,7 +137,7 @@ public class SellerServiceImpl implements SellerService {
                         for (OrderItem orderItem : order.getItems()) {
                                 SellerOrdersDTO orderData = SellerOrdersDTO.builder()
                                                 .id(sellerOrder.getId())
-                                                .orderId(order.getId())
+                                                .order(order)
                                                 .item(orderItem)
                                                 .status(orderItem.getStatus())
                                                 .shippingAddress(order.getShippingAddress())

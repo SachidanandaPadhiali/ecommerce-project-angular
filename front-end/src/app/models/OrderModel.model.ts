@@ -6,7 +6,8 @@ export interface OrderModel {
     id: number;
     items: CartEntry[];
     shippingAddress: UserAddress;
-    orderDate: string;
+    orderDate: any;
+    createdAt: any;
     userOrder: any;
     total: number|0;
     status:string;

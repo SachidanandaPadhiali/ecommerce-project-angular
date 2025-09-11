@@ -34,10 +34,10 @@
                     <fa-icon [icon]="userIcon"></fa-icon> {{ name }}
                 </button>
                 <div class="dropdown-menu">
-                    <a routerLink="user/profile">
+                    <a routerLink="user/profile" style="border: none;">
                         <fa-icon [icon]="profileIcon"></fa-icon>&nbsp;&nbsp; Profile
                     </a>
-                    <a class="logouttbtn" (click)="logOut()">
+                    <a class="logouttbtn" (click)="logOut()" style="border: none;">
                         <fa-icon [icon]="logoutIcon"></fa-icon>&nbsp;&nbsp; Logout
                     </a>
                 </div>

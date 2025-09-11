@@ -89,7 +89,7 @@ main {
 .table-btn {
     text-align: center;
     padding: 0.3rem var(--mb-2);
-    background: var(--accent);
+    background: var(--bg-btn);
     color: var(--white-text);
     border: none;
     border-radius: 8px;
@@ -111,7 +111,9 @@ main {
 }
 
 .no-btn {
-    background: var(--gray-100);
+    background: none;
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     color: var(--dark-text);
 }
 

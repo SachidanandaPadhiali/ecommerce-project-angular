@@ -81,7 +81,7 @@ export class SellerOrder implements OnInit {
     this.sections.filter(section => section.id === updatedOrder.status)[0].count += 1;
     this.cdRef.detectChanges();
     console.log('handling status change for order', updatedOrder);
-    this.sellerService.updateOrderStatus(this.sellerId, updatedOrder.orderId, updatedOrder.item.id, updatedOrder.status)
+    this.sellerService.updateOrderStatus(this.sellerId, updatedOrder.order.id, updatedOrder.item.id, updatedOrder.status)
       .subscribe(() => {
         // ✅ after updating, reload the list so parent has fresh data
         this.loadOrders();

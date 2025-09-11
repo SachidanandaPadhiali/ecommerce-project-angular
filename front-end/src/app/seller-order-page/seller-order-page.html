@@ -1,7 +1,7 @@
 <table class="seller-order">
     <thead>
         <th class="text-center">Order Date</th>
-        <th class="text-center">Order Details</th>
+        <th class="text-left">Order Details</th>
         <th class="text-center">Image</th>
         <th class="text-center">Product Name</th>
         <th class="text-center">Delivery</th>
@@ -11,12 +11,13 @@
     <tbody class="table-hover">
         <tr *ngFor="let order of ordersBySection; let i = index" [style.--delay]="(i + 1) * 0.2 + 's'">
             <td class="text-left hoverable">
-                <div class="animate-content">
-                    Order#{{ order.orderId }} <br> SKU- {{ order.item.id }}
+                <div class="animate-content text-center">
+                    <h4>{{ order.order.createdAt | date: 'dd-MM-yy' }}</h4>
                 </div>
             </td>
             <td class="text-left hoverable">
                 <div class="animate-content">
+                    Order#{{ order.order.id }} <br> SKU- {{ order.item.id }}
                     <h4>Billing Address</h4>
                     <div class="button-container" #triggerRef>
                         <a (mouseenter)="showAddress(i)" (mouseleave)="hideAddress()">{{
@@ -53,7 +54,23 @@
             </td>
             <td class="text-center hoverable order-item-status">
                 <div class="animate-content">
-                    <p>{{order.item.status}}</p>
+                    @switch (order.item.status) {
+                    @case ("PENDING") {
+                    <p class="order-status pending">{{ order.item.status }}</p>
+                    }
+                    @case ("RECIEVED") {
+                    <p class="order-status received">{{ order.item.status }}</p>
+                    }
+                    @case ("CANCELLED") {
+                    <p>{{ order.item.status }}</p>
+                    }
+                    @case ("SHIPPED") {
+                    <p>{{ order.item.status }}</p>
+                    }
+                    @default {
+                    <div>Default</div>
+                    }
+                    }
                 </div>
             </td>
             <td class="text-center order-action">
