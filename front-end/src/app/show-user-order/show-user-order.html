@@ -1,0 +1,67 @@
+<div mat-dialog-title class="dialog-header">
+    <h2>Order Details</h2>
+    <button mat-icon-button mat-dialog-close aria-label="Close">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<mat-dialog-content>
+    <p style="font-size: 18px; letter-spacing: 1px"><b>Order Placed </b> {{ data.selectedOrder.orderDate}}</p>
+    <div class="upper-section">
+        <div class="upper-left">
+            <div class="order-info">
+            </div>
+            <div class="order-info">
+                <h4>Order total</h4>
+                <p>{{ data.selectedOrder.total | currency:'INR':'symbol' }}</p>
+            </div>
+            <div class="order-info">
+                <h4>Billing Address</h4>
+                <h3>{{ data.selectedOrder.shippingAddress?.userName }}</h3>
+                <p> {{ data.selectedOrder.shippingAddress?.flatNo }} <br> {{
+                    data.selectedOrder.shippingAddress?.addressLine1 }}
+                    <span *ngIf="data.selectedOrder.shippingAddress?.addressLine2">, {{
+                        data.selectedOrder.shippingAddress?.addressLine2
+                        }}</span>
+                </p>
+                <p>{{ data.selectedOrder.shippingAddress?.state }}, {{ data.selectedOrder.shippingAddress?.country
+                    }} -
+                    {{
+                    data.selectedOrder.shippingAddress?.zipCode }}</p>
+                <p>Mobile: {{ data.selectedOrder.shippingAddress?.phoneNumber }}</p>
+            </div>
+        </div>
+        <div class="order-summary">
+            <div class="order-info">
+                <h4>Order #{{ data.selectedOrder.id }}</h4>
+                <h3>{{ data.selectedOrder.status }}</h3>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-content>
+    <div class="order-items">
+        <div *ngFor="let item of data.selectedOrder.items" class="order-item-container">
+            <div class="order-item">
+                <img [src]="'assets/products/' + item.product.imageUrl" alt="{{item.product.imageUrl}}"
+                    class="image-store" />
+                <div class="order-item-details">
+                    <h3>{{ item.product.name }}</h3>
+                    <p>{{ item.product.description }}</p>
+                </div>
+            </div>
+            @if(data.selectedOrder.status !== 'Delivered'){
+            <div class="order-support">
+                <button class="table-btn">Track Order</button>
+                <button class="table-btn">Get Invoice</button>
+                <button class="table-btn">Reorder</button>
+            </div>}
+            @if(data.selectedOrder.status === 'Delivered'){
+            <div class="order-support">
+                <button class="table-btn">Return Item</button>
+                <button class="table-btn">Get Invoice</button>
+                <button class="table-btn">Reorder</button>
+            </div>}
+        </div>
+    </div>
+</mat-dialog-content>

@@ -48,7 +48,7 @@
         <h2>Order management</h2>
         <div *ngIf="isLoadingOrders">sLoading orders...</div>
         <div *ngIf="sortedOrders$ | async as orders">
-            <div *ngFor="let order of orders; let i = index" class="order-container">
+            <div *ngFor="let order of orders; let i = index" class="order-container" (click)="showOrderDetails(i)">
                 <div class="upper-section">
                     <div class="upper-left">
                         <div class="order-info">

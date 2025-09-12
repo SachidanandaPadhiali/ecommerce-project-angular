@@ -7,6 +7,7 @@ import { UserService } from '../services/user-service';
 import { AddressForm } from '../address-form/address-form';
 import { OrderModel } from '../models/OrderModel.model';
 import { finalize, map, Observable } from 'rxjs';
+import { ShowUserOrder } from '../show-user-order/show-user-order';
 
 type Section = 'basic' | 'shipping' | 'orders' | 'personalization';
 
@@ -31,6 +32,7 @@ export class UserProfile {
 
   @ViewChildren('popupRef') popupRefs!: QueryList<ElementRef>;
   @ViewChildren('triggerRef') triggerRefs!: QueryList<ElementRef>;
+
 
   sections: { id: Section; label: string }[] = [
     { id: 'basic', label: 'Basic info' },
@@ -251,5 +253,19 @@ export class UserProfile {
     if (!clickedInsidePopup && !clickedInsideTrigger) {
       this.closePopup();
     }
+  }
+
+  showOrderDetails(index: number) {
+    let selectedOrder: OrderModel | undefined;
+
+    this.sortedOrders$?.subscribe(orders => {
+      selectedOrder = orders[index];
+      this.dialog.open(ShowUserOrder, {
+        width: '800px',
+        minWidth: '1000px',
+        height: '500px',
+        data: { selectedOrder }
+      });
+    });
   }
 }

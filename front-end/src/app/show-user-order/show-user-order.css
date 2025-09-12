@@ -1,0 +1,103 @@
+.dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+}
+
+.dialog-header button {
+    color: #431370 !important;
+    background: #d6bffa !important;
+}
+
+.dialog-header :hover {
+    background: #a686ef !important;
+    color: white !important;
+}
+
+.upper-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--mb-2) var(--mb-4);
+    border-bottom: 1px solid var(--border);
+    background: color-mix(in srgb, var(--french-violet) 7%, transparent);
+}
+
+.upper-section .upper-left {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.upper-section .upper-left .order-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.order-info h4 {
+    color: var(--primary);
+    text-transform: uppercase;
+}
+
+.order-summary h3 {
+    font-size: var(--h3-font-size);
+    color: var(--gray-900);
+    font-weight: var(--font-semi-bold);
+}
+
+.order-items {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--mb-2);
+}
+
+.order-item-container {
+    padding: var(--mb-1);
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    border-bottom: 1px solid var(--border);
+}
+
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.order-item-container .order-item:last-child {
+    border-bottom: none;
+}
+
+.order-item .image-store {
+    width: 150px;
+    object-fit: contain;
+}
+
+.order-item .order-item-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: var(--mb-2);
+    text-align: left;
+}
+
+.order-item .order-item-details p {
+    color: var(--gray-700);
+}
+
+.order-support {
+    display: flex;
+    flex-direction: column;
+    gap: var(--mb-2);
+    min-width: 170px;
+    cursor: pointer;
+}
+
+.order-support :not(:first-child) {
+    background: none;
+    color: var(--accent);
+    border: 1px solid var(--primary);
+}
