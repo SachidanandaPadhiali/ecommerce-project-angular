@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
@@ -15,7 +15,8 @@ import { OrderModel } from '../models/OrderModel.model';
   selector: 'app-show-user-order',
   imports: [CommonModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatIconModule, ReactiveFormsModule, MatButtonModule, MatSelectModule, MatOptionModule],
   templateUrl: './show-user-order.html',
-  styleUrl: './show-user-order.css'
+  styleUrl: './show-user-order.css',
+  encapsulation: ViewEncapsulation.None
 })
 export class ShowUserOrder implements OnInit {
   constructor(

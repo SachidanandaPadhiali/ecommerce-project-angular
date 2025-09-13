@@ -263,7 +263,6 @@ export class UserProfile {
       this.dialog.open(ShowUserOrder, {
         width: '800px',
         minWidth: '1000px',
-        height: '500px',
         data: { selectedOrder }
       });
     });
