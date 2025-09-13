@@ -11,4 +11,5 @@ export interface OrderModel {
     userOrder: any;
     total: number|0;
     status:string;
+    paymentType: string;
 }

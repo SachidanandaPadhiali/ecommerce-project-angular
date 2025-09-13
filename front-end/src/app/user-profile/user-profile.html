@@ -48,7 +48,7 @@
         <h2>Order management</h2>
         <div *ngIf="isLoadingOrders">sLoading orders...</div>
         <div *ngIf="sortedOrders$ | async as orders">
-            <div *ngFor="let order of orders; let i = index" class="order-container" (click)="showOrderDetails(i)">
+            <div *ngFor="let order of orders; let i = index" class="order-container">
                 <div class="upper-section">
                     <div class="upper-left">
                         <div class="order-info">
@@ -81,11 +81,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="order-summary">
+                    <div class="upper-right">
                         <div class="order-info">
                             <h4>Order #{{ order?.id }}</h4>
                             <h3>{{ order?.status }}</h3>
                         </div>
+                        <button class="utility-btn" (click)="showOrderDetails(i)">View Order</button>
                     </div>
                 </div>
                 <div class="order-items">
@@ -101,8 +102,7 @@
                         @if(order?.status !== 'Delivered'){
                         <div class="order-support">
                             <button class="table-btn">Track Order</button>
-                            <button class="table-btn">Get Invoice</button>
-                            <button class="table-btn">Reorder</button>
+                            <button class="table-btn"><span>Cancel Order</span></button>
                         </div>}
                         @if(order?.status === 'Delivered'){
                         <div class="order-support">

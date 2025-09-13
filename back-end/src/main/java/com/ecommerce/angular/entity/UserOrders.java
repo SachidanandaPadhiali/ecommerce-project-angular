@@ -5,6 +5,7 @@
 package com.ecommerce.angular.entity;
 
 import com.ecommerce.angular.dto.OrderStatus;
+import com.ecommerce.angular.dto.PaymentType;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -52,6 +53,8 @@ public class UserOrders {
     private BigDecimal total;
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
+    @Enumerated(EnumType.STRING)
+    private PaymentType paymentType;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

@@ -34,4 +34,5 @@ public class OrderResponse {
     private LocalDate orderDate;
     private BigDecimal total;
     private OrderStatus status;
+    private PaymentType paymentType;
 }

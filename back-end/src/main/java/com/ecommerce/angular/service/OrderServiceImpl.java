@@ -174,6 +174,7 @@ public class OrderServiceImpl implements OrderService {
                     .total(userOrder.getTotal())
                     .orderDate(userOrder.getCreatedAt().toLocalDate())
                     .status(userOrder.getStatus())
+                    .paymentType(userOrder.getPaymentType())
                     .build();
             userOrdersData.add(newOrderResponse);
         }

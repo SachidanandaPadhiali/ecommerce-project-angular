@@ -30,7 +30,6 @@
     justify-content: space-between;
     padding: var(--mb-2) var(--mb-4);
     margin: var(--mb-2) 0;
-    border: 1px solid var(--border);
     border-radius: 12px;
 }
 
@@ -44,7 +43,7 @@
     text-transform: uppercase;
     font-size: var(--h3-font-size);
     letter-spacing: 1px;
-    padding-bottom: var(--mb-1);
+    padding-bottom: var(--mb-0);
 }
 
 .order-detail-info-table {
@@ -57,15 +56,17 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        gap: var(--mb-4);
 
         td {
             color: var(--gray-900);
-            font-size: var(--normal-font-size);
+            font-size: var(--h3-font-size);
         }
-        td :first-child {
-            padding-right: 1rem;
-            font-weight: var(--font-bold);
-        }
+    }
+
+    tr:last-of-type td:first-of-type {
+        padding-right: 3rem;
+        font-weight: var(--font-bold);
     }
 }
 
@@ -95,8 +96,10 @@
 }
 
 .order-item-detail .image-store {
-    width: 100px;
+    height: 80px;
     object-fit: contain;
+    border: 1px solid var(--border);
+    border-radius: 12px;
 }
 
 .order-item-detail .order-item-details {
@@ -116,7 +119,6 @@
     flex-direction: column;
     gap: var(--mb-2);
     min-width: 170px;
-    cursor: pointer;
 }
 
 .order-support :not(:first-child) {

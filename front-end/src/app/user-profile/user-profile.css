@@ -180,7 +180,8 @@
     background: color-mix(in srgb, var(--french-violet) 7%, transparent);
 }
 
-.upper-section .upper-left {
+.upper-section .upper-left,
+.upper-section .upper-right {
     display: flex;
     flex-direction: row;
     gap: 1rem;
@@ -230,6 +231,7 @@
 .order-item .image-store {
     width: 150px;
     object-fit: contain;
+    border-radius: 12px;
 }
 
 .order-item .order-item-details {
@@ -249,24 +251,34 @@
     flex-direction: column;
     gap: var(--mb-2);
     min-width: 170px;
-    cursor: pointer;
 }
 
-.order-support :not(:first-child){
+.order-support>*:not(:first-child) {
     background: none;
     color: var(--accent);
     border: 1px solid var(--primary);
+    transition: all 0.3s ease-in-out;
+    text-transform: none;
+    letter-spacing: normal;
+    font-weight: var(--font-medium);
 }
 
-.utility-btn {
+.order-support>*:not(:first-child):hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    color: var(--error);
+    font-weight: var(--font-bold);
     letter-spacing: 1px;
-    font-weight: var(--font-medium);
-    font-size: var(--h3-font-size);
+}
+
+
+.utility-btn {
+    font-size: var(--normal-font-size);
 }
 
 .button-container {
     position: relative;
     display: block;
+    cursor: pointer;
 }
 
 .popup {
