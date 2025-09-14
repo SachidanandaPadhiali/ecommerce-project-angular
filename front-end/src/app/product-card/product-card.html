@@ -4,7 +4,7 @@
     }
     <fa-icon [icon]="isWished ? prodWished : prodWish" (click)="onHeartClick()" class="wishBadge">
     </fa-icon>
-    <div class="prod-img"> <img [src]="'assets/products/' + product.imageUrl" alt="{{product.imageUrl}}" />
+    <div class="prod-img"> <img [src]="'assets/products/' + product.imageUrl" alt="{{product.imageUrl}}" (click)="onShowProduct()"/>
     </div>
     <div class="prod-info">
         <div class="prod-category">{{ product.brand }}</div>

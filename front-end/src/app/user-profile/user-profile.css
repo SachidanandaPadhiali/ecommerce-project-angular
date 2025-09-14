@@ -184,7 +184,7 @@
 .upper-section .upper-right {
     display: flex;
     flex-direction: row;
-    gap: 1rem;
+    gap: 2rem;
 }
 
 .upper-section .upper-left .order-info {

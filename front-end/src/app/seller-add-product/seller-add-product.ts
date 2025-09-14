@@ -21,7 +21,7 @@ export class SellerAddProduct implements OnInit {
   headingType: String = 'addProduct';
 
   productForm!: FormGroup;
-  productId: string | null = null;
+  productId: number = 0;
 
   /**
    * Represents a product to be added by the seller.
@@ -67,7 +67,7 @@ export class SellerAddProduct implements OnInit {
     });
 
     this.route.paramMap.subscribe(params => {
-      const id = params.get('id');
+      const id = (params.get('productId') || 0) as number;
       if (id) {
         this.headingType = 'updateProduct';
         this.productId = id;

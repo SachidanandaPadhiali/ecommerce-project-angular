@@ -26,6 +26,7 @@ export class ProductCard {
   @Output() wishToggled = new EventEmitter<number>();
   @Output() cartAdded = new EventEmitter<number>();
   @Output() cartRemoved = new EventEmitter<number>();
+  @Output() showProduct = new EventEmitter<number>();
 
   get isWished(): boolean {
     return this.wishList.has(Number(this.product.id));
@@ -52,7 +53,9 @@ export class ProductCard {
   onHeartClick() {
     this.wishToggled.emit(this.product.id);
   }
-
+  onShowProduct() {
+    this.showProduct.emit(this.product.id);
+  }
   truncateName(name: string): string {
     return name.length > 25 ? name.substring(0, 22) + '...' : name;
   }

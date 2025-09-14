@@ -67,7 +67,7 @@ export class ProductService {
    * @param {string} id - The unique identifier of the product.
    * @return {Observable<Product>} An observable containing the product data.
    * */
-  getProductById(productId: string): Observable<Product> {
+  getProductById(productId: number): Observable<Product> {
     const params = new HttpParams().set('productId', productId);
     return this.http.get<Product>(`${this.productApiUrl}/getProductById`, { params });
   }

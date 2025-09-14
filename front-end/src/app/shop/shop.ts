@@ -79,12 +79,12 @@ export class Shop implements OnInit {
     });
   }
 
-  viewProduct(productId: string | undefined): void {
+  viewProduct(productId: number) {
     if (!productId) {
       console.error('Invalid product ID');
       return;
     }
-    this.router.navigate(['/product', productId]);
+    this.router.navigate(['/shop/product', productId]);
   }
 
   toggleWish(productId: number) {

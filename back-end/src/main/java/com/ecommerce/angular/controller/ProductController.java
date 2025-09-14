@@ -34,8 +34,6 @@ public class ProductController {
      * 
      * @param productId the unique identifier of the product
      * @return the product if found, otherwise null
-     * @param productId
-     * @return 
      */
     @GetMapping("/getProductById")
     public ResponseEntity<?> getProductById(@RequestParam Long productId) {
