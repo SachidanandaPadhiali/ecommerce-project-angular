@@ -30,6 +30,7 @@
     justify-content: space-between;
     padding: var(--mb-2) var(--mb-4);
     margin: var(--mb-2) 0;
+    border: 1px solid var(--border);
     border-radius: 12px;
 }
 
@@ -70,11 +71,9 @@
     }
 }
 
-.order-items-detail {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: var(--mb-2);
+.bottom-box {
+    border: 1px solid var(--border);
+    border-radius: 12px;
 }
 
 .order-item-detail-container {
@@ -82,7 +81,11 @@
     display: flex;
     justify-content: space-between;
     flex-direction: row;
-    border: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.order-item-detail-container:last-child {
+    border-bottom: none;
 }
 
 .order-item-detail {

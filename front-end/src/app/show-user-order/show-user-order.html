@@ -32,11 +32,22 @@
             <table class="order-detail-info-table">
                 <tr>
                     <td>Item(s) Price</td>
-                    <td>{{ data.selectedOrder.items[0].product.discPrice | currency:'INR':'symbol' }}</td>
+                    @if(data.selectedOrder.paymentType === 'CASH_ON_DELIVERY'){
+                    <td>{{ data.selectedOrder.total -7 | currency:'INR':'symbol' }}</td>
+                    }
+                    @else{
+                    <td>{{ data.selectedOrder.total | currency:'INR':'symbol' }}</td>
+                    }
                 </tr>
                 <tr>
                     <td>Shipping Charge</td>
                     <td>{{ 0 | currency:'INR':'symbol' }}</td>
+                </tr>
+                <tr>
+                    @if(data.selectedOrder.paymentType === 'CASH_ON_DELIVERY'){
+                    <td><i>c onvinience fee</i></td>
+                    <td>{{ 7 | currency:'INR':'symbol' }}</td>
+                    }
                 </tr>
                 <tr>
                     <td>Grand Total</td>
