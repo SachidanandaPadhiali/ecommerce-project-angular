@@ -24,19 +24,19 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CartServiceImpl implements CartService {
-    
+
     @Autowired
     CartRepo cartRepo;
-    
+
     @Autowired
     CartItemRepo cartItemRepo;
-    
+
     @Autowired
     UserRepo userRepo;
-    
+
     @Autowired
     ProductRepo productRepo;
-    
+
     @Override
     @Transactional
     public Optional<Cart> getCart(Long userId) {
@@ -44,7 +44,19 @@ public class CartServiceImpl implements CartService {
         System.err.println(userCart);
         return userCart;
     }
-    
+
+    @Override
+    public Optional<CartItem> isInCart(Long userId, Long productId) {
+
+        Cart cart = cartRepo.findByUserIdAndStatus(userId, CartStatus.ACTIVE)
+                .orElseThrow(() -> new RuntimeException("Cart not found"));
+
+        // Check if the product is already in the cart, if yes, update the quantity,
+        return cart.getItems().stream()
+                .filter(item -> item.getProduct().getId().equals(productId))
+                .findFirst();
+    }
+
     /**
      *
      * @param userId
@@ -54,12 +66,13 @@ public class CartServiceImpl implements CartService {
      */
     @Override
     @Transactional
+
     public CartItemResponse addOrUpdateCart(Long userId, Long productId, int quantity) {
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         Product product = productRepo.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
-        
+
         Cart cart = cartRepo.findByUserIdAndStatus(userId, CartStatus.ACTIVE)
                 .orElseGet(() -> {
                     Cart newCart = new Cart();
@@ -82,10 +95,10 @@ public class CartServiceImpl implements CartService {
             existingItem.setQuantity(existingItem.getQuantity() + quantity);
             existingItem.setOriginalPrice(product.getPrice() * existingItem.getQuantity());
             existingItem.setPrice(product.getDiscPrice() * existingItem.getQuantity());
-            
+
             cartResponse.setQuantity(existingItem.getQuantity());
             cartResponse.setProductTotal(existingItem.getPrice());
-            
+
         } else {
             CartItem newItem = CartItem.builder()
                     .cart(cart)
@@ -95,7 +108,7 @@ public class CartServiceImpl implements CartService {
                     .originalPrice(product.getPrice() * quantity)
                     .build();
             cart.getItems().add(newItem);
-            
+
             cartResponse.setQuantity(newItem.getQuantity());
             cartResponse.setProductTotal(newItem.getPrice());
         }
@@ -112,11 +125,11 @@ public class CartServiceImpl implements CartService {
         cartResponse.setUserId(userId);
         cartResponse.setProductId(productId);
         cartResponse.setCartTotal(total);
-        
+
         cartRepo.save(cart);
         return cartResponse; // cascade saves items
     }
-    
+
     /**
      *
      * @param userId
@@ -129,7 +142,7 @@ public class CartServiceImpl implements CartService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         Product product = productRepo.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
-        
+
         Cart cart = cartRepo.findByUserIdAndStatus(userId, CartStatus.ACTIVE)
                 .orElseGet(() -> {
                     Cart newCart = new Cart();
@@ -137,12 +150,12 @@ public class CartServiceImpl implements CartService {
                     newCart.setTotal(BigDecimal.ZERO);
                     return newCart;
                 });
-        
+
         Optional<CartItem> existingItemOpt = cart.getItems().stream()
                 .filter(item -> item.getProduct().getId().equals(productId))
                 .findFirst();
         CartItem existingItem = existingItemOpt.get();
-        
+
         // If the existing item has more than one quantity, reduce the quantity by one
         // Else remove the item from the cart
         if (existingItem.getQuantity() > 1) {
@@ -153,12 +166,12 @@ public class CartServiceImpl implements CartService {
             cart.getItems().remove(existingItem); // Remove from in-memory list
             cartItemRepo.deleteById(existingItem.getId());
         }
-        
+
         BigDecimal total = cart.getItems().stream()
                 .map(item -> BigDecimal.valueOf(item.getPrice()))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         cart.setTotal(total);
-        
+
         cartRepo.save(cart);
         if (cart.getItems().isEmpty()) {
             cartRepo.delete(cart);
@@ -166,5 +179,5 @@ public class CartServiceImpl implements CartService {
             cartRepo.save(cart);
         }
     }
-    
+
 }

@@ -14,6 +14,7 @@ import com.ecommerce.angular.dto.UserAddressDTO;
 import com.ecommerce.angular.dto.UserDTO;
 import com.ecommerce.angular.dto.UserRequest;
 import com.ecommerce.angular.entity.Cart;
+import com.ecommerce.angular.entity.CartItem;
 import com.ecommerce.angular.entity.User;
 import com.ecommerce.angular.entity.UserAddress;
 import com.ecommerce.angular.service.AddressService;
@@ -60,10 +61,10 @@ public class UserController {
 
     /**
      * API to validate the user credentials and return the user object if valid
-     * 
+     *
      * @param userRequests UserDTO containing the email and password of the user
      * @return ResponseEntity containing the user object if valid, else HTTP 401
-     *         Unauthorized response
+     * Unauthorized response
      */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserDTO userRequests) {
@@ -77,10 +78,10 @@ public class UserController {
 
     /**
      * API to create a new user account
-     * 
+     *
      * @param userDTO UserDTO containing the email and password of the user
      * @return ResponseEntity containing the user object if valid, else HTTP 401
-     *         Unauthorized response
+     * Unauthorized response
      */
     @PostMapping("/user")
     public EcommResponse createAccount(@RequestBody UserDTO userDTO) {
@@ -89,7 +90,7 @@ public class UserController {
 
     /**
      * API to get the wish list of the user
-     * 
+     *
      * @param userRequest UserRequest containing the user id
      * @return ResponseEntity containing the list of products in the wish list
      */
@@ -100,9 +101,9 @@ public class UserController {
 
     /**
      * API to get the wish list of the user
-     * 
+     *
      * @param userRequest UserRequest containing the user id
-     * @return ResponseEntity containing the list of products in the wish list
+     * @return ResponseEntity containing the product if it is in the wish list
      */
     @PostMapping("/isWhishListed")
     public ResponseEntity<?> isWhishListed(@RequestBody UserRequest userRequest) {
@@ -111,10 +112,10 @@ public class UserController {
 
     /**
      * API to add a product to the user's wish list
-     * 
+     *
      * @param userRequest UserRequest containing the user id and product id
      * @return ResponseEntity containing the EcommResponse object with success
-     *         message
+     * message
      */
     @PostMapping("/addProductWishList")
     public EcommResponse addProductWishList(@RequestBody UserRequest userRequest) {
@@ -123,10 +124,10 @@ public class UserController {
 
     /**
      * API to delete a product from the user's wish list
-     * 
+     *
      * @param userRequest UserRequest containing the user id and product id
      * @return ResponseEntity containing the EcommResponse object with success
-     *         message
+     * message
      */
     @PostMapping("/deleteProductWishList")
     public EcommResponse deleteProductWishList(@RequestBody UserRequest userRequest) {
@@ -135,10 +136,10 @@ public class UserController {
 
     /**
      * API to add a product to the user's cart
-     * 
-     * @param userId    the user id
+     *
+     * @param userId the user id
      * @param productId the product id
-     * @param quantity  the quantity of the product to add, default is 1
+     * @param quantity the quantity of the product to add, default is 1
      * @return ResponseEntity containing the updated cart object
      */
     @PostMapping("/addToCart")
@@ -152,11 +153,11 @@ public class UserController {
 
     /**
      * API to remove a product from the user's cart
-     * 
-     * @param userId    the user id
+     *
+     * @param userId the user id
      * @param productId the product id
      * @return ResponseEntity containing the EcommResponse object with success
-     *         message
+     * message
      */
     @PostMapping("/removeFromCart")
     public ResponseEntity<EcommResponse> removeFromCart(
@@ -180,7 +181,7 @@ public class UserController {
 
     /**
      * API to get the user's cart
-     * 
+     *
      * @param userRequest UserRequest containing the user id
      * @return ResponseEntity containing the cart object
      */
@@ -189,18 +190,43 @@ public class UserController {
         CartResponse userCart = cartService.getCart(userRequest.getUserId())
                 .map(this::mapToResponse)
                 .orElseGet(() -> CartResponse.builder()
-                        .id(0L)
-                        .user(new UserDTO())
-                        .items(List.of())
-                        .total(BigDecimal.ZERO)
-                        .status(CartStatus.EMPTY)
-                        .build());
+                .id(0L)
+                .user(new UserDTO())
+                .items(List.of())
+                .total(BigDecimal.ZERO)
+                .status(CartStatus.EMPTY)
+                .build());
         return userCart;
     }
 
     /**
+     * API to get the user's cart
+     *
+     * @param userRequest UserRequest containing the user id
+     * @return ResponseEntity containing the cart object
+     */
+    @PostMapping("/isInCart")
+    public CartItemResponse isInCart(@RequestBody UserRequest userRequest) {
+        Optional<CartItem> product = cartService.isInCart(userRequest.getUserId(), userRequest.getProductId());
+        CartItemResponse cartProduct;
+        if (product.isPresent()) {
+            cartProduct = CartItemResponse.builder()
+                    .userId(userRequest.getUserId())
+                    .productId(userRequest.getProductId())
+                    .quantity(product.get().getQuantity())
+                    .build();
+        } else {
+            cartProduct = CartItemResponse.builder()
+                    .quantity(0)
+                    .build();
+        }
+
+        return cartProduct;
+    }
+
+    /**
      * API to get the list of user addresses
-     * 
+     *
      * @param userRequest UserRequest containing the user id
      * @return ResponseEntity containing the list of UserAddress objects
      */
@@ -211,11 +237,11 @@ public class UserController {
 
     /**
      * API to remove a user address
-     * 
-     * @param userId    the user id
+     *
+     * @param userId the user id
      * @param addressId the address id to remove
      * @return ResponseEntity containing the EcommResponse object with success
-     *         message
+     * message
      */
     @PostMapping("/removeUserAddress")
     public ResponseEntity<EcommResponse> removeUserAddres(
@@ -231,10 +257,10 @@ public class UserController {
 
     /**
      * API to add a user address
-     * 
+     *
      * @param userAddress UserAddressDTO containing the address details
      * @return ResponseEntity containing the EcommResponse object with success
-     *         message
+     * message
      */
     @PostMapping("/addUserAddress")
     public ResponseEntity<EcommResponse> addUserAddres(@RequestBody UserAddressDTO userAddress) {
@@ -247,11 +273,11 @@ public class UserController {
 
     /**
      * API to update a user address
-     * 
-     * @param addressId   the id of the address to update
+     *
+     * @param addressId the id of the address to update
      * @param userAddress UserAddressDTO containing the updated address details
      * @return ResponseEntity containing the EcommResponse object with success
-     *         message
+     * message
      */
     @PutMapping("/addUserAddress")
     public ResponseEntity<EcommResponse> updateUserAddres(@RequestParam Long addressId,
@@ -265,11 +291,11 @@ public class UserController {
 
     /**
      * API to generate an order
-     * 
-     * @param orderRequest OrderRequest containing the user id, cart id and address
-     *                     id
+     *
+     * @param orderRequest OrderRequest containing the user id, cart id and
+     * address id
      * @return ResponseEntity containing the EcommResponse object with success
-     *         message
+     * message
      */
     @PostMapping("/generateOrder")
     public Map<Long, EcommResponse> generateOrder(@RequestBody OrderRequest orderRequest) {
@@ -282,7 +308,7 @@ public class UserController {
 
     /**
      * API to get the order
-     * 
+     *
      * @param orderId containing the order id
      * @return ResponseEntity containing the Order Data
      */
@@ -290,7 +316,7 @@ public class UserController {
     public OrderResponse getOrderData(@RequestBody Long orderId) {
         return orderService.getOrderData(orderId);
     }
-    
+
     @PostMapping("/getUserOrders")
     public List<OrderResponse> getUserOrders(@RequestBody UserRequest userRequest) {
         return orderService.getUserOrders(userRequest.getUserId());
