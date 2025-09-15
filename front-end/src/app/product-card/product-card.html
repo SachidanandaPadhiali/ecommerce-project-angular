@@ -26,7 +26,7 @@
                 <span class="disc-price"> ₹{{ product.discPrice }}</span>
                 }
             </div>
-            @if(product.quantity > 0) {
+            @if(product.quantity > 0 && cartItems) {
             @if(isInCart){
             <div class="cartCount">
                 <div class="num-in">

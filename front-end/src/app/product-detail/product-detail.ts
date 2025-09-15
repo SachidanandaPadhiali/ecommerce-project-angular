@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router, RouterModule } from '@angular/router';
 import { ProductService } from '../services/product-service';
 import { CommonModule } from '@angular/common';
 import { switchMap } from 'rxjs/operators';
@@ -7,17 +7,17 @@ import { Product } from '../models/product.model';
 import { UserService } from '../services/user-service';
 import { ProductCard } from '../product-card/product-card';
 import { Cart } from '../models/Cart.model';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-product-detail',
-  imports: [CommonModule, ProductCard],
+  imports: [CommonModule, ProductCard, RouterModule],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css'
 })
 export class ProductDetail implements OnInit {
   productId: number = 0;
-  product: Product | null = null;
+  product$!: Observable<Product>;
   category: string = '';
   loading: boolean = true;
   wished: boolean = false;
@@ -36,17 +36,14 @@ export class ProductDetail implements OnInit {
     private router: Router,
     private cdr: ChangeDetectorRef
   ) { }
+
   ngOnInit(): void {
-    this.route.paramMap.pipe(
-      switchMap((params: ParamMap) => {
-        this.productId = (params.get('productId') || 0) as number;
-        this.loading = true;
-        return this.productService.getProductById(this.productId); // ✅ returns Observable
+    this.product$ = this.route.paramMap.pipe(
+      switchMap(params => {
+        const id = params.get('productId');
+        return this.productService.getProductById(id ? +id : 0);
       })
-    ).subscribe(product => {
-      this.product = product;
-      this.loading = false;
-    });
+    );
 
     this.userId = JSON.parse(localStorage.getItem('user') || '{}')?.id;
   }

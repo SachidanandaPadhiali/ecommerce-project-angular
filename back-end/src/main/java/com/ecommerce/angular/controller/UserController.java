@@ -99,6 +99,17 @@ public class UserController {
     }
 
     /**
+     * API to get the wish list of the user
+     * 
+     * @param userRequest UserRequest containing the user id
+     * @return ResponseEntity containing the list of products in the wish list
+     */
+    @PostMapping("/isWhishListed")
+    public ResponseEntity<?> isWhishListed(@RequestBody UserRequest userRequest) {
+        return new ResponseEntity<>(userService.isWhishListed(userRequest.getUserId(), userRequest.getProductId()), HttpStatus.OK);
+    }
+
+    /**
      * API to add a product to the user's wish list
      * 
      * @param userRequest UserRequest containing the user id and product id

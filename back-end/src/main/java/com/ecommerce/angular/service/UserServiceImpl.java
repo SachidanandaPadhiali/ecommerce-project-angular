@@ -10,12 +10,12 @@ import com.ecommerce.angular.dto.UserRequest;
 import com.ecommerce.angular.entity.Product;
 import com.ecommerce.angular.entity.User;
 import com.ecommerce.angular.entity.WishList;
-import com.ecommerce.angular.repo.CartRepo;
 import com.ecommerce.angular.repo.ProductRepo;
 import com.ecommerce.angular.repo.UserRepo;
 import com.ecommerce.angular.repo.WishListRepo;
 import com.ecommerce.angular.utils.EcommUtils;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -80,6 +80,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Product> getWishList(Long userId) {
         return userRepo.getWishList(userId);
+    }
+
+    @Override
+    public Optional<Product> isWhishListed(Long userId, Long productId) {
+        return userRepo.isWishlisted(userId, productId);
     }
 
     @Override

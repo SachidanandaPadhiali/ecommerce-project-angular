@@ -10,6 +10,7 @@ import com.ecommerce.angular.dto.UserRequest;
 import com.ecommerce.angular.entity.Product;
 import com.ecommerce.angular.entity.User;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -20,6 +21,8 @@ public interface UserService {
     EcommResponse createAccount(UserDTO userDTO);
     public User validateUser(String username, String password);
     public List<Product> getWishList(Long userId);
+    public Optional<Product> isWhishListed(Long userId, Long productId);
     EcommResponse addProductWishList(UserRequest userRequest);
     EcommResponse deleteProductWishList(UserRequest userRequest);
+    
 }

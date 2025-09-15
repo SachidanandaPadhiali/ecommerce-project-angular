@@ -4,7 +4,7 @@ import { UserService } from '../services/user-service';
 import { Product } from '../models/product.model';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '../services/product-service';
-import { forkJoin } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-wishlist',
@@ -21,7 +21,7 @@ export class Wishlist implements OnInit {
   userId: number = 0;
   error: string = '';
 
-  constructor(private productService: ProductService, private userService: UserService, private cdr: ChangeDetectorRef) { }
+  constructor(private router: Router, private userService: UserService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.userId = Number(JSON.parse(localStorage.getItem('user') || '{}')?.id);
@@ -71,4 +71,13 @@ export class Wishlist implements OnInit {
 
     this.cdr.detectChanges();
   }
+
+  viewProduct(productId: number) {
+    if (!productId) {
+      console.error('Invalid product ID');
+      return;
+    }
+    this.router.navigate(['/shop/product', productId]);
+  }
+
 }

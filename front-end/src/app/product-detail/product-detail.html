@@ -1,4 +1,67 @@
 <div class="main-content">
-    <p>product-detail works!</p>
-    {{product | json}}
+    <div *ngIf="product$ | async as product">
+        <div class="breadcrumb">
+            <p class="links" [routerLink]="'/shop/category/'+product.category">{{ product.category }}</p>
+        </div>
+
+        <!-- Product Details -->
+        <div class="product-detail">
+            <!-- Images -->
+            <div class="product-images">
+                <img [src]="'assets/products/' + product.imageUrl" alt="{{product.imageUrl}}" class="main-image">
+                <div class="thumbnail-images">
+                    <img [src]="'assets/products/' + product.imageUrl" alt="{{product.imageUrl}}">
+                </div>
+            </div>
+
+            <!-- Info -->
+            <div class="product-info">
+                <div class="product-name">{{ product.name }}</div>
+                <div class="brand">{{ product.brand }}</div>
+                <div class="discPrice">{{ product.discPrice }}</div>
+                <div class="price">{{ product.price }}</div>
+
+                <!-- Options -->
+                <div class="options">
+                    <p class="option-label">Color Options:</p>
+                    <div class="option-buttons">
+                        <button class="active">{{ product.color }}</button>
+                        <button>White</button>
+                        <button>Blue</button>
+                    </div>
+                </div>
+                <div class="actions_wrraper">
+                    <!-- Quantity -->
+                    <div class="quantity-section">
+                        <button>-</button>
+                        <input type="text" class="quantity-input" value="1">
+                        <button>+</button>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="actions">
+                        <button class="add-to-cart">Add to Cart</button>
+                        <button class="buy-now">Buy Now</button>
+                    </div>
+                </div>
+                <!-- Additional Info (Free Shipping, Support, Warranty, Delivery) -->
+                <div class="additional-info">
+                    <p><strong>Free Shipping on Orders Over 500</strong></p>
+                    <p><strong>1-Year Manufacturer Warranty</strong></p>
+                    <p><strong>Delivery:</strong> 8 - 10 Business Days</p>
+                </div>
+                <div class="tab-content">
+                    <p>{{ product.description }}</p>
+                </div>
+
+                <!-- Tabs for Additional Info -->
+                <div class="tabs">
+                    <button class="active">Description</button>
+                    <button>Specifications</button>
+                    <button>Shipping & Returns</button>
+                    <button>Warranty</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
