@@ -22,6 +22,11 @@ export class UserService {
     return this.http.post<{ responseCode: string; responseMessage: string }>(`${this.apiUrl}/user`, data)
   }
 
+  isProductWished(userId: number, productId: number): Observable<Product> {
+    return this.http.post<Product>(`${this.apiUrl}/isWhishListed`, { userId, productId });
+  }
+
+
   wishProduct(userId: number, productId: number) {
     return this.http.post(`${this.apiUrl}/addProductWishList`, { userId, productId });
   }
@@ -84,5 +89,4 @@ export class UserService {
   getUserOrders(userId: number): Observable<OrderModel[]> {
     return this.http.post<OrderModel[]>(`${this.apiUrl}/getUserOrders`, { userId });
   }
-
 }

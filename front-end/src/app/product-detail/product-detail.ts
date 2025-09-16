@@ -12,16 +12,14 @@ import { forkJoin, Observable } from 'rxjs';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faHeart as fasHeart, faCartShopping, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'; // regular (outline)
-import { Shop } from '../shop/shop';
 
 @Component({
   selector: 'app-product-detail',
-  imports: [CommonModule, ProductCard, RouterModule, FontAwesomeModule, Shop],
+  imports: [CommonModule, ProductCard, RouterModule, FontAwesomeModule],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css'
 })
 export class ProductDetail implements OnInit {
-
   prodWish = farHeart;
   prodWished = fasHeart;
   cart = faCartShopping;
@@ -33,7 +31,7 @@ export class ProductDetail implements OnInit {
 
   userId: number = 0;
   prodId: number = 0;
-  isWished: boolean = true;
+  isWished: boolean = false;
   isInCart: boolean = false;
   cartCount: number = 2;
 
@@ -45,29 +43,49 @@ export class ProductDetail implements OnInit {
     private productService: ProductService,
     private userService: UserService,
     private router: Router,
-    private cdr: ChangeDetectorRef,
-    private shop: Shop
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
     this.product$ = this.route.paramMap.pipe(
       switchMap(params => {
-    console.log('Product ID:', params);
         this.prodId = Number(params.get('productId')) || 0;
         return this.productService.getProductById(this.prodId ? +this.prodId : 0);
       })
     );
 
     this.userId = JSON.parse(localStorage.getItem('user') || '{}')?.id;
+
+    this.userService.isProductWished(this.userId, this.prodId).subscribe({
+      next: (exists) => {
+        console.log('Is product wished', exists);
+        this.isWished = exists;
+      },
+      error: (err) => console.error('Error:', err)
+    });
   }
   getFill(n: number, rating: number | undefined): string {
     const safeRating = rating ?? 0;  // fallback to 0 if undefined
     // your logic here
     return (Math.min(safeRating - n + 1, 1) * 100) + '%';
   }
+  toggleWish() {
+    console.log("toggling wish");
 
-  toggleWish(){
-    this.shop.toggleWish(this.prodId);
+    this.isWished = !this.isWished;
     this.cdr.detectChanges();
+
+    if (this.isWished) {
+      this.userService.wishProduct(this.userId, this.prodId).subscribe({
+        next: () => console.log('Added to wishlist'),
+        error: (err) => console.error('Error adding:', err)
+      });
+    }
+    else {
+      this.userService.removeFromWishList(this.userId, this.prodId).subscribe({
+        next: () => console.log('Removed from wishlist'),
+        error: (err) => console.error('Error removing:', err)
+      });
+    }
   }
 }

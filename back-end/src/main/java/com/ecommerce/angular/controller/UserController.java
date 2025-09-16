@@ -15,6 +15,7 @@ import com.ecommerce.angular.dto.UserDTO;
 import com.ecommerce.angular.dto.UserRequest;
 import com.ecommerce.angular.entity.Cart;
 import com.ecommerce.angular.entity.CartItem;
+import com.ecommerce.angular.entity.Product;
 import com.ecommerce.angular.entity.User;
 import com.ecommerce.angular.entity.UserAddress;
 import com.ecommerce.angular.service.AddressService;
@@ -106,8 +107,9 @@ public class UserController {
      * @return ResponseEntity containing the product if it is in the wish list
      */
     @PostMapping("/isWhishListed")
-    public ResponseEntity<?> isWhishListed(@RequestBody UserRequest userRequest) {
-        return new ResponseEntity<>(userService.isWhishListed(userRequest.getUserId(), userRequest.getProductId()), HttpStatus.OK);
+    public ResponseEntity<Boolean> isWhishListed(@RequestBody UserRequest userRequest) {
+        boolean exists = userService.isWhishListed(userRequest.getUserId(), userRequest.getProductId()).isPresent();
+        return ResponseEntity.ok(exists);
     }
 
     /**
