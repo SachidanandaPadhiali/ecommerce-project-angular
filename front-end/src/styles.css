@@ -5,6 +5,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'titles';
+    src: url('assets/Raleway-Medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 :root {
     --bright-blue: oklch(51.01% 0.274 263.83);
     --electric-violet: oklch(53.18% 0.28 296.97);
@@ -64,6 +71,7 @@
     --text: 'Poppins', sans-serif;
     --font-family: "Poppins", sans-serif;
     --biggest-font-size: 2.5rem;
+    --big-font-size: 2.0rem;
     --h1-font-size: 1.5rem;
     --h2-font-size: 1.25rem;
     --h3-font-size: 1.125rem;
@@ -1025,34 +1033,39 @@ td.text-right {
     color: #18181b;
 }
 
-.addToCart {
-    background: var(--warning);
+.orderAction {
     color: #fff;
+    width: 125px;
     border: none;
     border-radius: 10px;
     padding: 8px 15px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 6px;
     transition: 0.3s;
+    justify-content: center;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
-.addToCart:hover {
+.orderAction:hover {
     background: linear-gradient(45deg, #27272a, #3f3f46);
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
 }
 
-.cartIcon {
+.actionIcon {
     transition: transform 0.3s;
 }
 
-.addToCart:hover .cartIcon {
+.orderAction:hover .actionIcon {
     transform: rotate(-10deg) scale(1.1);
+}
+
+.addToCart {
+    background: var(--warning);
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .cartCount .num-in {
@@ -1112,12 +1125,34 @@ td.text-right {
     align-items: center;
 }
 
+.buynow {
+    background: var(--bg-btn);
+    text-align: center;
+}
+
+.wishList {
+    color: var(--dark-text);
+    width: 125px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+}
+
+.wishList:hover {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
+}
 .meta {
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-top: 1px solid #f4f4f5;
-    padding-top: 12px;
 }
 
 .prod-rating {

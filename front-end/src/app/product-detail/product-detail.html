@@ -1,8 +1,10 @@
 <div class="main-content">
     <div *ngIf="product$ | async as product">
-        <div class="breadcrumb">
-            <p class="links" [routerLink]="'/shop/category/'+product.category">{{ product.category }}</p>
-        </div>
+        <nav class="breadcrumb">
+            <a class="links" [routerLink]="'/'">Home / </a>
+            <a class="links" [routerLink]="'/shop/category/'+product.category">{{ product.category }} / </a>
+            <a class="base-link">{{ product.name }}</a>
+        </nav>
 
         <!-- Product Details -->
         <div class="product-detail">
@@ -16,10 +18,39 @@
 
             <!-- Info -->
             <div class="product-info">
-                <div class="product-name">{{ product.name }}</div>
                 <div class="brand">{{ product.brand }}</div>
-                <div class="discPrice">{{ product.discPrice }}</div>
-                <div class="price">{{ product.price }}</div>
+                <div class="product-name">{{ product.name }}</div>
+                <div class="main-info">
+                    <div class="left-section">
+                        <div class="price">{{ product.price| currency:'INR':'symbol' }}</div>
+                        <div class="discPrice">{{ product.discPrice| currency:'INR':'symbol' }}</div>
+                    </div>
+                    <div class="right-section">
+                        <div class="meta">
+                            @if(product.rating === 0.0){
+                            <div class="brand">Be the First One To purchase</div>
+                            }
+                            @if(product.rating !== undefined && product.rating > 0.5) {
+                            <div class="prod-rating">
+                                <div class="brand" style="padding-top: 9px;">{{ product.rating }} (2 reviews)</div>
+                                <svg *ngFor="let n of maxStars" class="star" viewBox="0 0 24 24">
+                                    <defs>
+                                        <linearGradient [id]="'grad-' + product.id + '-' + n" x1="0" x2="100%" y1="0"
+                                            y2="0">
+                                            <stop offset="0%" stop-color="orange" />
+                                            <stop [attr.offset]="getFill(n, product.rating)" stop-color="#F55E0B" />
+                                            <stop [attr.offset]="getFill(n, product.rating)" stop-color="#888" />
+                                            <stop offset="100%" stop-color="#888" />
+                                        </linearGradient>
+                                    </defs>
+                                    <path [attr.fill]="'url(#grad-' + product.id + '-' + n + ')'"
+                                        d="M12 2l2.9 6.9L22 9.3l-5 5 1.2 7.7L12 18l-6.2 4 1.2-7.7-5-5 7.1-0.4L12 2z" />
+                                </svg>
+                                <span class="rating-count"></span>
+                            </div>}
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Options -->
                 <div class="options">
@@ -30,37 +61,75 @@
                         <button>Blue</button>
                     </div>
                 </div>
-                <div class="actions_wrraper">
-                    <!-- Quantity -->
-                    <div class="quantity-section">
-                        <button>-</button>
-                        <input type="text" class="quantity-input" value="1">
-                        <button>+</button>
-                    </div>
 
-                    <!-- Actions -->
-                    <div class="actions">
-                        <button class="add-to-cart">Add to Cart</button>
-                        <button class="buy-now">Buy Now</button>
-                    </div>
-                </div>
                 <!-- Additional Info (Free Shipping, Support, Warranty, Delivery) -->
                 <div class="additional-info">
                     <p><strong>Free Shipping on Orders Over 500</strong></p>
                     <p><strong>1-Year Manufacturer Warranty</strong></p>
-                    <p><strong>Delivery:</strong> 8 - 10 Business Days</p>
                 </div>
                 <div class="tab-content">
                     <p>{{ product.description }}</p>
                 </div>
 
-                <!-- Tabs for Additional Info -->
+                <!-- Tabs for Additional Info 
                 <div class="tabs">
                     <button class="active">Description</button>
                     <button>Specifications</button>
                     <button>Shipping & Returns</button>
                     <button>Warranty</button>
+                </div>-->
+            </div>
+
+            <!-- Cart and Buy -->
+            <div class="actions_wrraper">
+                @if(product.quantity === 0) {
+                <div class="stock outOfStock">Out Of Stock</div>
+                }
+                @if(product.quantity > 0) {
+                <div class="discPrice">{{ product.discPrice| currency:'INR':'symbol' }}</div>
+                Delivering to userdefaultaddress
+                <table class="action-table">
+                    <tr>
+                        <td><b>Delivery</b></td>
+                        <td> 8 - 10 Business Days</td>
+                    </tr>
+                    <tr>
+                        <td><b>Sold By</b></td>
+                        <td> seller XyZ</td>
+                    </tr>
+                    <tr>
+                        <td><b>Payment</b></td>
+                        <td >Credit/Debit Card, UPI & more</td>
+                    </tr>
+                </table>
+                @if(isInCart){
+                <div class="cartCount">
+                    <div class="num-in">
+                        @if((cartCount) > 1){
+                        <span role="button">-</span>
+                        }@else{
+                        <span role="button">
+                            <fa-icon class="cartDelete" [icon]="delete"></fa-icon>
+                        </span>
+                        }
+                        <input type="text" class="in-num" value={{cartCount}} readonly="">
+                        <span role="button">+</span>
+                    </div>
                 </div>
+                }
+                @else{
+                <button class="orderAction addToCart">
+                    <span>Add to Cart</span><fa-icon class="actionIcon" [icon]="cart"></fa-icon>
+                </button>}
+                }
+                <button class="orderAction buynow">Buy Now</button>
+                @if(isWished){
+                <button class="wishList" (click)="toggleWish()">
+                    <span>Wishlisted</span><fa-icon class="actionIcon" [icon]="prodWished"></fa-icon>
+                </button>}@else{
+                <button class="wishList" (click)="toggleWish()">
+                    <span>Add to Wishlist</span><fa-icon class="actionIcon" [icon]="prodWish"></fa-icon>
+                </button>}
             </div>
         </div>
     </div>

@@ -1,18 +1,33 @@
 .breadcrumb {
-    font-size: 14px;
-    margin-bottom: 20px;
-    color: #555;
+    font-size: var(--noraml-font-size);
+    margin: var(--mb-2) var(--mb-3) var(--mb-1) 5rem;
 }
 
+.breadcrumb .links {
+    color: var(--gray-400);
+    text-decoration: none;
+}
+
+.breadcrumb .base-link {
+    color: var(--gray-700);
+}
 
 .product-detail {
+    width: 1350px;
+    max-width: 1300px;
     display: flex;
-    flex-wrap: wrap;
+    margin: 0 auto;
+    padding: var(--mb-2) var(--mb-6);
+    border-radius: 20px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
     gap: 30px;
 }
 
 .product-images {
-    flex: 1;
+    flex: 1 1 350px;
+    border-right: 1px solid var(--border);
+    margin-right: var(--mb-1);
+    padding-right: var(--mb-1);
 }
 
 .main-image {
@@ -32,47 +47,67 @@
     height: 60px;
     cursor: pointer;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 8px;
 }
 
 .product-info {
-    flex: 1.5;
+    flex: 1 1 670px;
     border-bottom: 1px solid #ddd;
     padding-bottom: 20px;
 }
 
-.product-info .product-name {
-    font-size: 28px;
-    margin-bottom: 15px;
-    color: #000;
-}
-
 .product-info .brand {
-    font-size: 14px;
-    color: #999;
+    font-size: var(--normal-font-size);
+    color: var(--gray-400);
+    margin-bottom: var(--mb-1);
 }
 
-.product-info .discPrice {
-    font-size: 30px;
+.product-info .product-name {
+    font-family: 'titles', sans-serif;
+    font-size: var(--h1-font-size);
+    font-weight: var(--font-bold);
+    margin-bottom: var(--mb-3);
     color: var(--gray-900);
-    margin-bottom: 10px;
+}
+
+.product-info .main-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.left-section,
+.right-section {
+    display: flex;
+    gap: var(--mb-1);
+    align-items: center;
+}
+
+.action-table tr {
+    color: var(--dark-text);
+}
+
+.action-table td {
+    background: var(--bg-white);
+    text-align: left;
+    vertical-align: top;
+    font-size: var(--medium-font-size);
+}
+
+.action-table td :first-child {
+    padding: 4px;
+}
+
+.discPrice {
+    font-family: 'aldivaro', sans-serif;
+    font-size: var(--big-font-size);
+    color: var(--gray-900);
 }
 
 .product-info .price {
-    font-size: 20px;
+    font-size: var(--normal-font-size);
     color: var(--gray-400);
     text-decoration: line-through;
-    margin-bottom: 10px;
-}
-
-.payment-info {
-    font-size: 14px;
-    color: #555;
-}
-
-.payment-info a {
-    text-decoration: none;
-    color: #000;
 }
 
 .options {
@@ -101,78 +136,12 @@
 }
 
 .option-buttons button.active {
-    border-color: #f4b400;
-    background: #f4b400;
+    border-color: var(--border);
+    background: var(--primary);
     color: #fff;
     font-weight: bold;
 }
 
-/* Quantity section */
-.quantity-section {
-    display: flex;
-    align-items: center;
-    margin-right: 10px;
-
-}
-
-.quantity-section button {
-    padding: 10px 15px;
-    border: 1px solid #e6e6e6;
-    background: #fff;
-    cursor: pointer;
-    border-radius: 5px;
-
-}
-
-.quantity-input {
-    width: 50px;
-    text-align: center;
-    margin: 0 10px;
-    border: 1px solid #e6e6e6;
-    border-radius: 5px;
-    padding: 10px 15px;
-}
-
-/* Actions */
-.actions_wrraper {
-    display: flex;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 20px;
-}
-
-.actions {
-    display: flex;
-    gap: 10px;
-}
-
-.actions button {
-    padding: 10px 15px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    font-weight: bold;
-}
-
-.add-to-cart {
-    background: #f4b400;
-    color: #fff;
-}
-
-.buy-now {
-    background: #b12704;
-    color: #fff;
-}
-
-.wishlist {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
 
 .tabs {
     margin-top: 20px;
@@ -206,6 +175,23 @@
     margin-top: 20px;
     border-bottom: 1px solid #ddd;
     padding-bottom: 20px;
+}
+
+/* Actions */
+.actions_wrraper {
+    flex: 1 1 170px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: var(--mb-2);
+    align-items: center;
+    border-left: 1px solid var(--border);
+    padding-left: var(--mb-2);
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
 }
 
 .reviews {
