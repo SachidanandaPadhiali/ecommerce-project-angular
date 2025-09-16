@@ -107,9 +107,11 @@ public class UserController {
      * @return ResponseEntity containing the product if it is in the wish list
      */
     @PostMapping("/isWhishListed")
-    public ResponseEntity<Boolean> isWhishListed(@RequestBody UserRequest userRequest) {
-        boolean exists = userService.isWhishListed(userRequest.getUserId(), userRequest.getProductId()).isPresent();
-        return ResponseEntity.ok(exists);
+    public Boolean isWhishListed(@RequestBody UserRequest userRequest) {
+        System.out.println(userService.isWhishListed(userRequest.getUserId(), userRequest.getProductId()));
+        boolean isThere = userService.isWhishListed(userRequest.getUserId(), userRequest.getProductId()).isPresent();
+        System.out.println("Product" + isThere);
+        return isThere;
     }
 
     /**

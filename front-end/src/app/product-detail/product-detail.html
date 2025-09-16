@@ -1,5 +1,5 @@
 <div class="main-content">
-    <div *ngIf="product$ | async as product">
+    <div *ngIf="product$ |async as product">
         <nav class="breadcrumb">
             <a class="links" [routerLink]="'/'">Home / </a>
             <a class="links" [routerLink]="'/shop/category/'+product.category">{{ product.category }} / </a>
@@ -99,7 +99,7 @@
                     </tr>
                     <tr>
                         <td><b>Payment</b></td>
-                        <td >Credit/Debit Card, UPI & more</td>
+                        <td>Credit/Debit Card, UPI & more</td>
                     </tr>
                 </table>
                 @if(isInCart){

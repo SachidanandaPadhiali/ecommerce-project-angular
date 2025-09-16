@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Product } from '../models/product.model';
 import { CartEntry } from '../models/CartEntry.model';
@@ -22,8 +22,12 @@ export class UserService {
     return this.http.post<{ responseCode: string; responseMessage: string }>(`${this.apiUrl}/user`, data)
   }
 
-  isProductWished(userId: number, productId: number): Observable<Product> {
-    return this.http.post<Product>(`${this.apiUrl}/isWhishListed`, { userId, productId });
+  isProductWished(userId: number, productId: number): Observable<boolean> {
+    this.http.post<string>(`${this.apiUrl}/isWhishListed`, { userId, productId })
+      .pipe(map(res => res === 'true'))
+      .subscribe(val => console.log('Parsed from Boolean:', val));
+
+    return this.http.post<boolean>(`${this.apiUrl}/isWhishListed`, { userId, productId });
   }
 
 

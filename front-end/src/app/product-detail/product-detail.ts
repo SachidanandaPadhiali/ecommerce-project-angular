@@ -31,7 +31,7 @@ export class ProductDetail implements OnInit {
 
   userId: number = 0;
   prodId: number = 0;
-  isWished: boolean = false;
+  isWished: boolean = true;
   isInCart: boolean = false;
   cartCount: number = 2;
 
@@ -63,6 +63,9 @@ export class ProductDetail implements OnInit {
       },
       error: (err) => console.error('Error:', err)
     });
+    setTimeout(() => {
+      this.cdr.detectChanges();
+    }, 1000);
   }
   getFill(n: number, rating: number | undefined): string {
     const safeRating = rating ?? 0;  // fallback to 0 if undefined
