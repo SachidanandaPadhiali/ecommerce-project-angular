@@ -32,7 +32,7 @@ export class ProductDetail implements OnInit {
   userId: number = 0;
   prodId: number = 0;
   isWished: boolean = true;
-  isInCart: boolean = false;
+  isInCart: Product = {} as Product;
   cartCount: number = 2;
 
   maxStars = [1, 2, 3, 4, 5];
@@ -49,7 +49,7 @@ export class ProductDetail implements OnInit {
   ngOnInit(): void {
     this.product$ = this.route.paramMap.pipe(
       switchMap(params => {
-        this.prodId = Number(params.get('productId')) || 0;
+        this.prodId = parseInt(params.get('productId') || "");
         return this.productService.getProductById(this.prodId ? +this.prodId : 0);
       })
     );
@@ -58,13 +58,23 @@ export class ProductDetail implements OnInit {
 
     this.userService.isProductWished(this.userId, this.prodId).subscribe({
       next: (exists) => {
-        console.log('Is product wished', exists);
         this.isWished = exists;
+        console.warn(exists);
+      },
+      error: (err) => console.error('Error:', err)
+    });
+
+    this.userService.isInCart(this.userId, this.prodId).subscribe({
+      next: (product) => {
+        console.info(product);
+        this.isInCart = product;
       },
       error: (err) => console.error('Error:', err)
     });
     setTimeout(() => {
       this.cdr.detectChanges();
+      console.log('Is product in cart', this.isInCart);
+      console.log('Is product wished', this.isWished);
     }, 1000);
   }
   getFill(n: number, rating: number | undefined): string {

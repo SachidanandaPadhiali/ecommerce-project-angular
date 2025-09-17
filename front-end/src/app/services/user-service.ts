@@ -23,13 +23,8 @@ export class UserService {
   }
 
   isProductWished(userId: number, productId: number): Observable<boolean> {
-    this.http.post<string>(`${this.apiUrl}/isWhishListed`, { userId, productId })
-      .pipe(map(res => res === 'true'))
-      .subscribe(val => console.log('Parsed from Boolean:', val));
-
     return this.http.post<boolean>(`${this.apiUrl}/isWhishListed`, { userId, productId });
   }
-
 
   wishProduct(userId: number, productId: number) {
     return this.http.post(`${this.apiUrl}/addProductWishList`, { userId, productId });
@@ -50,6 +45,9 @@ export class UserService {
     );
   }
 
+  isInCart(userId: number, productId: number): Observable<Product> {
+    return this.http.post<Product>(`${this.apiUrl}/isInCart`, { userId, productId });
+  }
   removeFromCart(userId: number, productId: number): Observable<Cart> {
     return this.http.post<Cart>(
       `${this.apiUrl}/removeFromCart?userId=${userId}&productId=${productId}`,
